@@ -13,7 +13,7 @@ const posts = (await getCollection('project')).sort(
         {
             posts.map((post:any) => (
                 <li class="card">
-                    <a href={`/project/${post.id}/`}>
+                    <a href={`/projects/${post.id}/`}>
                         <div class="img-container">
                          <img  src={post.data.heroImage} alt="" />
                         </div>
