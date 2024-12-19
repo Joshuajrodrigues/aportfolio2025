@@ -112,11 +112,11 @@ hr {
 	body {
 		font-size: 18px;
 	}
-	main {
-		padding: 1em;
-	}
-}
 
+}
+main {
+	padding: 1em;
+}
 .sr-only {
 	border: 0;
 	padding: 0;

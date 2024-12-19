@@ -29,5 +29,43 @@ const posts = (await getCollection('project')).sort(
 </section>
 
 <style>
+  li{
+    list-style: none;
+  }
+  .preview-section{
+    display: flex;
+    flex-direction: column;
   
+  }
+  a{
+    text-decoration: none;
+  }
+  ul{
+    padding: 0;
+  }
+  .title{
+    font-size: 24px;
+    font-weight: 400;
+    margin-top: 15px;
+    line-height: 36px;
+  }
+  .description{
+    font-weight: 400;
+    line-height: 21px;
+    font-size: 12px;
+    margin-top: 15px;
+    color: #1E1E1E;
+  }
+  .img-container{
+    background-color: #F4F4F4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    border-radius: 24px;
+  }
+  img{
+    width: 320px;
+    border-radius: 24px;
+  }
 </style>
