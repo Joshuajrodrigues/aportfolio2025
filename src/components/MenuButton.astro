@@ -67,6 +67,27 @@ import HeaderLink from "./HeaderLink.astro";
   }
   .menu-content.open {
     display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    opacity: 90%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  .desktop-header{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.25em;
+    margin-top: 25vh;
+    gap:45px;
+    color: black;
   }
   .menu-content {
    display: none;
