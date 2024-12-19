@@ -1,0 +1,40 @@
+
+
+<script>
+    const menu = document.querySelector('#responsive-menu');
+menu.addEventListener('click', () => {
+     menu.classList.toggle('open');
+})
+</script>
+<div id="responsive-menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <style>
+    #responsive-menu{
+  position: relative;
+  width: 24px;
+  height: 16px;
+  cursor: pointer;
+}
+ 
+#responsive-menu span {
+  background: black;
+  display: block;
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  transition: .5s;
+}
+ 
+#responsive-menu span:nth-child(1) {top: 0;}
+#responsive-menu span:nth-child(2) {top: 50%;}
+#responsive-menu span:nth-child(3) {top: 100%;}
+ 
+#responsive-menu.open span:nth-child(1) {transform: rotate(45deg); top: 50%;}
+#responsive-menu.open span:nth-child(2) {opacity: 0;}
+#responsive-menu.open span:nth-child(3) {transform: rotate(-45deg); top: 50%}
+  </style>

@@ -1,12 +1,19 @@
 ---
 import HeaderLink from './HeaderLink.astro';
+import MenuButton from './MenuButton.astro';
 import { SITE_TITLE } from '../consts';
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
+		<h2>
+			<a class="mobile-header" href="/">A</a>
+			<a class="desktop-header" href="/">{SITE_TITLE}</a>
+		</h2>
+		<div class="mobile-header menu">
+			<MenuButton/>
+		</div>
+		<div class="desktop-header internal-links">
 			<HeaderLink href="/work">Work</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 			<HeaderLink href="/contact">Say Hi</HeaderLink>
@@ -17,6 +24,8 @@ import { SITE_TITLE } from '../consts';
 	<div class="border"></div>
 </header>
 <style>
+
+
 	header {
 		margin: 0;
 		padding: 0 1em;
@@ -63,9 +72,19 @@ import { SITE_TITLE } from '../consts';
 	.social-links a {
 		display: flex;
 	}
-	@media (max-width: 720px) {
-		.social-links {
+	.mobile-header{
 			display: none;
 		}
+		.desktop-header{
+			display: block;
+		}
+	@media (max-width: 720px) {
+		.desktop-header{
+			display: none;
+		}
+		.mobile-header{
+			display: block;
+		}
 	}
+
 </style>
