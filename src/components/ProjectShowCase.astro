@@ -47,6 +47,8 @@ const posts = (await getCollection('project')).sort(
     gap:72px;
   }
 
+
+
   .title{
     font-size: 24px;
     font-weight: 400;
@@ -67,6 +69,8 @@ const posts = (await getCollection('project')).sort(
     justify-content: center;
     padding: 24px;
     border-radius: 24px;
+    min-height: 300px;
+    max-height: 300px;
   }
   img{
     width: 320px;
@@ -79,5 +83,14 @@ const posts = (await getCollection('project')).sort(
         flex-direction: row;
         gap:52px;
     }
+  
+  }
+  @media (max-width: 800px) {
+    .img-container{
+ 
+ min-height: 200px;
+ max-height: 200px;
+}
+  
   }
 </style>
