@@ -1,0 +1,71 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+	<nav>
+		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<div class="internal-links">
+			<HeaderLink href="/work">Work</HeaderLink>
+			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/contact">Say Hi</HeaderLink>
+			<!-- <HeaderLink href="/blog">Blog</HeaderLink> -->
+		</div>
+		
+	</nav>
+	<div class="border"></div>
+</header>
+<style>
+	header {
+		margin: 0;
+		padding: 0 1em;
+		background: white;
+	
+	
+	}
+	.border{
+		padding: 0px 20px;
+		border-bottom: 1px solid black;
+	}
+	h2 {
+		margin: 0;
+		font-size: clamp(1em, 1.25em, 1.5em);
+	}
+
+	h2 a,
+	h2 a.active {
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	nav a {
+		padding: 1em 0.5em;
+		color: var(--black);
+		border-bottom: 4px solid transparent;
+		text-decoration: none;
+	}
+	nav a.active {
+		text-decoration: none;
+		border-bottom-color: var(--accent);
+	}
+	.internal-links{
+		display: flex;
+		gap: 64px;
+		font-weight: 400;
+		line-height: 30px;
+		font-size: clamp(0.5em, 1em, 1.25em);
+	}
+	.social-links,
+	.social-links a {
+		display: flex;
+	}
+	@media (max-width: 720px) {
+		.social-links {
+			display: none;
+		}
+	}
+</style>
