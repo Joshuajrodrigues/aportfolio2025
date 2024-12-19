@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('project')).sort(
 	(a:any, b:any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-).slice(0,2);
+).filter((item)=>item.data.featured)
 ---
 
 <section class="preview-section">
@@ -13,7 +13,7 @@ const posts = (await getCollection('project')).sort(
         {
             posts.map((post:any) => (
                 <li class="card">
-                    <a href={`/blog/${post.id}/`}>
+                    <a href={`/project/${post.id}/`}>
                         <div class="img-container">
                          <img  src={post.data.heroImage} alt="" />
                         </div>
