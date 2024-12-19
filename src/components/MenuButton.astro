@@ -5,10 +5,13 @@ import HeaderLink from "./HeaderLink.astro";
 <script>
   const menu = document.querySelector("#responsive-menu")!;
   const menuContent = document.querySelector(".menu-content")!;
+  const body = document.body;
   menu.addEventListener("click", () => {
     menu.classList.toggle("open");
     menuContent.classList.toggle("open");
+    body.classList.toggle("no-scroll");
   });
+  
 </script>
 
 
