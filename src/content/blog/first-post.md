@@ -1,6 +1,6 @@
 ---
 title: 'First post'
-description: 'Lorem ipsum dolor sit amet'
+description: 'Tristique non adipiscing diam mauris nulla adipiscing euismod. Vitae maecenas pellentesque viverra ac commodo arcu ut vel elementum. Et erat integer hac urna. Metus elit sapien luctus gravida. Ultricies sem mattis at viverra convallis porttitor posuere dolor mattis. Lacus cursus phasellus tempor vitae sed. Pharetra vitae gravida tempus scelerisque leo nisl.'
 pubDate: 'Jul 08 2022'
 heroImage: '/blog-placeholder-3.jpg'
 ---
