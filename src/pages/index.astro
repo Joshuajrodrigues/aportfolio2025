@@ -15,8 +15,8 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	<body>
 		<Header />
 		<main class="intro">
-			<p class="hello" >Hello!</p>
-			<p>
+			<span class="hello" >Hello!</span>
+			<p class="intro">
 				I'm Akanksha and this is my portfolio of design work I have done over the years. 
 				I am primarily a UIUX designer but I dabble in Graphic Design and Branding as well. 
 				I currently work at Twimbit as a UIUX Designer.
@@ -36,6 +36,9 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 	}
 	.hello{
 		font-size: 96px;
+	}
+	.intro{
+		margin-top: 0px;
 	}
 	@media (max-width: 768px) {
 		p{
