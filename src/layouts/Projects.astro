@@ -7,7 +7,7 @@ import Footer from "../components/Footer.astro";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, contentBlocks, updatedDate, heroImage } = Astro.props;
 ---
 
 <html lang="en">
@@ -37,7 +37,15 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         <div class="prose">
           <hr />
         </div>
-        <slot />
+        <div class="content-container">
+          <div class="content m-w-700" >
+            {contentBlocks?.[0]}
+          </div>
+          <div class="content m-w-700 text-right align-self-end" >
+            {contentBlocks?.[0]}
+          </div>
+        </div>
+        <slot/>
       </article>
     </main>
 
@@ -52,6 +60,21 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   }
   h1 {
     margin: 0 0 1.5rem 0;
+  }
+  .content-container{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
+  .text-right{
+    text-align: right;
+  }
+  .align-self-end{
+   margin-left: auto;
+   margin-top: 60px;
+  }
+  .m-w-700{
+    max-width: 700px;
   }
   .tags-container {
     display: flex;
