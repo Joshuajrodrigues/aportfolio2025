@@ -1,0 +1,99 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+
+  <body>
+    <Header />
+    <main>
+      <article>
+        <div class="tags-container">
+          <ul class="tags-list">
+            <li class="tags-list-item">Editorial Design</li>
+            <li class="tags-list-item">Graphic Design</li>
+            <li class="tags-list-item">Copywriting</li>
+          </ul>
+        </div>
+        <h1>{title}</h1>
+        <div class="hero-image">
+          {
+            heroImage && (
+              <img width={1020} height={510} src={heroImage} alt="" />
+            )
+          }
+        </div>
+        <div class="prose">
+          <hr />
+        </div>
+        <slot />
+      </article>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+<style>
+  main {
+    width: calc(100% - 2em);
+    max-width: 100%;
+    margin: 0;
+  }
+  .tags-container {
+    display: flex;
+    margin: 50px 0;
+    .tags-list {
+      margin-left: auto;
+      text-align: right;
+      .tags-list-item {
+        list-style: none;
+        font-weight: lighter;
+        font-size: 32px;
+      }
+    }
+  }
+  .hero-image {
+    width: 100%;
+  }
+  .hero-image img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #f4f4f4;
+  }
+  .prose {
+    width: 720px;
+    max-width: calc(100% - 2em);
+    margin: auto;
+    padding: 1em;
+    color: rgb(var(--gray-dark));
+  }
+
+  .title {
+    margin-bottom: 1em;
+    padding: 1em 0;
+    text-align: center;
+    line-height: 1;
+  }
+  .title h1 {
+    margin: 0 0 0.5em 0;
+  }
+  .date {
+    margin-bottom: 0.5em;
+    color: rgb(var(--gray));
+  }
+  .last-updated-on {
+    font-style: italic;
+  }
+</style>
