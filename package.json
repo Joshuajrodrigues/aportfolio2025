@@ -12,8 +12,12 @@
     "@astrojs/mdx": "^4.0.2",
     "@astrojs/rss": "^4.0.10",
     "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/svelte": "^7.0.5",
     "@fontsource/poppins": "^5.1.0",
+    "@glidejs/glide": "^3.7.1",
     "astro": "^5.1.0",
-    "astro-icon": "^1.1.4"
+    "astro-icon": "^1.1.4",
+    "svelte": "^5.20.5",
+    "typescript": "^5.8.2"
   }
 }

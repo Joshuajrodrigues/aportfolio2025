@@ -3,11 +3,11 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Carousel from '../components/svelte/Carousel.svelte'
 
+type Props = CollectionEntry<"project">["data"];
 
-type Props = CollectionEntry<"blog">["data"];
-
-const { title, description, contentBlocks, updatedDate, heroImage } = Astro.props;
+const { title, description, contentBlocks, heroImage,caraousel } = Astro.props;
 ---
 
 <html lang="en">
@@ -47,6 +47,10 @@ const { title, description, contentBlocks, updatedDate, heroImage } = Astro.prop
         </div>
         <slot/>
       </article>
+      <div class="carousel">
+        <Carousel images={caraousel} client:only="svelte" />
+      </div>
+      
     </main>
 
     <Footer />
@@ -57,6 +61,9 @@ const { title, description, contentBlocks, updatedDate, heroImage } = Astro.prop
     width: calc(100% - 2em);
     max-width: 100%;
     margin: 0;
+  }
+  .carousel{
+    margin-top: 64px;
   }
   h1 {
     margin: 0 0 1.5rem 0;

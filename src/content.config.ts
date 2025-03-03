@@ -24,6 +24,7 @@ const project = defineCollection({
 		description: z.string(),
 		featured:z.boolean().default(false),
 		contentBlocks:z.array(z.string()).optional(),
+		caraousel:z.array(z.string()).optional(),
 		// Transform string to Date object
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
