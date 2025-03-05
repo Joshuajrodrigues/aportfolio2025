@@ -7,7 +7,7 @@ import Carousel from '../components/svelte/Carousel.svelte'
 
 type Props = CollectionEntry<"project">["data"];
 
-const { title, description, contentBlocks, heroImage,caraousel } = Astro.props;
+const { title, description, contentBlocks, heroImage,caraousel,tags } = Astro.props;
 ---
 
 <html lang="en">
@@ -21,9 +21,12 @@ const { title, description, contentBlocks, heroImage,caraousel } = Astro.props;
       <article>
         <div class="tags-container">
           <ul class="tags-list">
-            <li class="tags-list-item">Editorial Design</li>
-            <li class="tags-list-item">Graphic Design</li>
-            <li class="tags-list-item">Copywriting</li>
+            {
+              tags?.map(tag=>(
+                <li class="tags-list-item">{tag}</li>
+              ))
+            }
+
           </ul>
         </div>
         <h1>{title}</h1>

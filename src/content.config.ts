@@ -23,6 +23,7 @@ const project = defineCollection({
 		title: z.string(),
 		description: z.string(),
 		featured:z.boolean().default(false),
+		tags:z.array(z.string()).optional(),
 		contentBlocks:z.array(z.string()).optional(),
 		caraousel:z.array(z.string()).optional(),
 		// Transform string to Date object
