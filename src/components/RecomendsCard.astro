@@ -1,5 +1,40 @@
+---
+const { title, src } = Astro.props;
+---
 
-
-<div>
-    Recomends
+<div class="container">
+  <div class="recomends-data">
+    <div class="recomendation-data-text">
+      <span>Recommendation</span>
+      <small>{title}</small>
+    </div>
+  </div>
 </div>
+
+<style>
+  .container {
+    background-image: url("/public/recomends.png");
+    border-radius: 6px;
+    height: fit-content;
+    .recomends-data {
+      padding: 24px;
+      position: relative;
+      color: #fff;
+
+      .recomendation-data-text {
+        display: flex;
+        flex-direction: column;
+      }
+      .recomeds-img {
+        position: absolute;
+        height: 64px;
+        width: fit-content;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -3;
+      }
+    }
+  }
+</style>
