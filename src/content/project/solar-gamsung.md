@@ -11,4 +11,5 @@ contentBlocks:
   ]
 caraousel: ["/magazine.png","/solar.png"]
 tags: ["Editorial Design","Graphic Design","Copywriting"]
+type: "project"
 ---

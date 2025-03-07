@@ -1,3 +1,4 @@
 ---
 title: "Landscapehead"
+type: "art"
 ---

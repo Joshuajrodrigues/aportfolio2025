@@ -4,23 +4,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
-import ArtCard from '../../components/ArtCard.astro'
-import BlogCard from '../../components/BlogCard.astro'
-import RecomendsCard from '../../components/RecomendsCard.astro'
-import ProjectCard from '../../components/ProjectCard.astro'
-import {shuffle} from '../../utils'
 
-const posts = (await getCollection("project")).sort(
-  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-const blog = (await getCollection("blog")).sort(
-  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-const art = await getCollection("art");
-const recomends = await getCollection("recomends");
-
-let content = [...blog, ...art, ...recomends, ...posts];
-shuffle(content)
 ---
 
 <!doctype html>
@@ -31,22 +15,7 @@ shuffle(content)
   <body>
     <Header />
     <main>
-      <section class="preview-section">
-        {
-          content.map((post) => {
-            switch (post.data.type) {
-              case "art":
-                return <ArtCard />;
-              case "project":
-                return <ProjectCard />;
-              case "blog":
-                return <BlogCard />;
-              case "recomends":
-                return <RecomendsCard />;
-            }
-          })
-        }
-      </section>
+      <section class="preview-section">I wolf you</section>
     </main>
     <Footer />
   </body><style>
