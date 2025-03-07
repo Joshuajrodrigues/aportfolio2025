@@ -7,7 +7,7 @@ const { title, src } = Astro.props;
   <p class="title">
     <span>{title}</span>
     <span class="type">Art</span>
-    <img src={'../../public/card buttons.svg'} alt="000" />
+    <img src={'/card buttons.svg'} alt="000" />
   </p>
   <img src={src} alt={title} />
 </div>
@@ -33,7 +33,7 @@ const { title, src } = Astro.props;
             font-weight:600;
         }
     }
-    img{
+    >img{
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
     }
