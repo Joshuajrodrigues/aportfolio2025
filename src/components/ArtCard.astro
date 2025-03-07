@@ -1,5 +1,42 @@
+---
+const { title, src } = Astro.props;
 
+---
 
-<div>
-    Art
+<div class="frame">
+  <p class="title">
+    <span>{title}</span>
+    <span class="type">Art</span>
+    <img src={'../../public/card buttons.svg'} alt="000" />
+  </p>
+  <img src={src} alt={title} />
 </div>
+
+<style>
+  .frame {
+    border: 1px solid black;
+    max-width: 400px;
+    height: fit-content;
+    border-radius: 12px;
+    background-color: #fff;
+    font-size: 0;
+    line-height: 0;
+    .title {
+        line-height: 12px;
+        max-height: 40px;
+        margin: 0px;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 20px;
+        .type{
+            font-weight:600;
+        }
+    }
+    img{
+        border-bottom-left-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+  }
+</style>
