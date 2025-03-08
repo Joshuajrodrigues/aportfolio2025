@@ -1,15 +1,29 @@
 ---
-const { title, src } = Astro.props;
+const { title,blog, description,tag } = Astro.props;
 ---
 
 
 <div class="frame">
   <p class="title">
-    <span>{title}</span>
+    <span>{blog}</span>
     <span class="type">Writting</span>
     <img src={"/card buttons.svg"} alt="000" />
   </p>
   <img class="folder" src="/Frame(1).png" alt="" srcset="" />
+  <div class="content">
+    <span class="tag">
+      {tag}
+    </span>
+    <span>
+      {title}
+    </span>
+    <p>
+      {description}
+    </p>
+    <button>
+      READ
+    </button>
+  </div>
 </div>
 
 <style>
