@@ -1,0 +1,14 @@
+---
+const { imageUrl } = Astro.props;
+---
+
+<style>
+    .centered-image {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 124px;
+    }
+  </style>
+  
+  <img src={imageUrl} alt="Centered Image" class="centered-image" />

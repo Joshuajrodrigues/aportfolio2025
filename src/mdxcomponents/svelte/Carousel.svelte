@@ -7,9 +7,14 @@
   onMount(() => {
     // Create a new Glide instance with options
     glide = new Glide(".glide", {
-      type: "carousel",
+      type: "slider",
       startAt: 0,
+      focusAt: 'center',
       perView: 3,
+
+      autoplay:5000,
+      hoverpause:true
+     
     });
     glide.mount();
   });
@@ -21,7 +26,7 @@
 </script>
 
 <!-- Markup for the carousel -->
-<div class="glide">
+<div class="glide container">
   <div class="glide__track" data-glide-el="track">
     <ul class="glide__slides">
       {#each images as image}
@@ -39,4 +44,8 @@
   /* Import Glide's core and theme CSS */
   @import "@glidejs/glide/dist/css/glide.core.min.css";
 
+  .container {
+    margin-top: 125px;
+    cursor: grab;
+  }
 </style>

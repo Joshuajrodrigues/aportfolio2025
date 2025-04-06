@@ -9,13 +9,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.0.2",
-    "@astrojs/rss": "^4.0.10",
+    "@astrojs/mdx": "^4.2.0",
+    "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/svelte": "^7.0.5",
+    "@astrojs/svelte": "^7.0.6",
     "@fontsource/poppins": "^5.1.0",
     "@glidejs/glide": "^3.7.1",
-    "astro": "^5.1.0",
+    "astro": "^5.5.2",
     "astro-icon": "^1.1.4",
     "masonry-layout": "^4.2.2",
     "svelte": "^5.20.5",
