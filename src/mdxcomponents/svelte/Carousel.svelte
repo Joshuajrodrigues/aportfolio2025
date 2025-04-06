@@ -1,7 +1,7 @@
 <script lang="js">
   import { onMount, onDestroy } from "svelte";
   import Glide from "@glidejs/glide";
-  export let images =[]
+  export let images = [];
   let glide;
 
   onMount(() => {
@@ -9,12 +9,18 @@
     glide = new Glide(".glide", {
       type: "slider",
       startAt: 0,
-      focusAt: 'center',
+      focusAt: "center",
       perView: 3,
-
-      autoplay:5000,
-      hoverpause:true
-     
+      autoplay: 5000,
+      hoverpause: true,
+      breakpoints: {
+        1024: {
+          perView: 2,
+        },
+        600: {
+          perView: 1,
+        },
+      },
     });
     glide.mount();
   });
@@ -30,11 +36,11 @@
   <div class="glide__track" data-glide-el="track">
     <ul class="glide__slides">
       {#each images as image}
-      <li class="glide__slide">
-        <img src={image} alt="" >
-      </li>
+        <li class="glide__slide">
+          <img src={image} alt="" />
+        </li>
       {/each}
-     
+
       <!-- Add more slides as needed -->
     </ul>
   </div>
@@ -45,7 +51,7 @@
   @import "@glidejs/glide/dist/css/glide.core.min.css";
 
   .container {
-    margin-top: 125px;
+    margin-top: 8rem;
     cursor: grab;
   }
 </style>
