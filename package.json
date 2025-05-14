@@ -17,6 +17,7 @@
     "@glidejs/glide": "^3.7.1",
     "astro": "^5.5.2",
     "astro-icon": "^1.1.4",
+    "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "svelte": "^5.20.5",
     "typescript": "^5.8.2"
