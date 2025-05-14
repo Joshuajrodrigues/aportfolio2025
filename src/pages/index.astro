@@ -25,6 +25,7 @@ shuffle(content);
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
     <script>
       import Masonry from "masonry-layout";
+      import imagesLoaded from "imagesloaded";
 
       document.addEventListener("DOMContentLoaded", () => {
         const grid = document.querySelector(".grid");
@@ -37,16 +38,19 @@ shuffle(content);
           fitWidth: true,
           horizontalOrder: true,
         });
+        let imgLoaded = imagesLoaded(grid)
+          imgLoaded.on("done", () => {
+          grid.classList.remove("is-loading");
+          grid.classList.add("is-ready");
+          msnry.layout();
+        });
       });
     </script>
   </head>
   <body>
     <Header />
     <main>
-      <div
-        class="grid container"
-        data-masonry='{ "itemSelector": ".grid-item", "gutter": 20,"fitWidth": true,"horizontalOrder": true}'
-      >
+      <div class="grid container is-loading">
         {
           content.map((post) => {
             switch (post.data.type) {
@@ -133,7 +137,16 @@ shuffle(content);
     img {
       width: 320px;
     }
-
+    .grid.is-loading {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .grid.is-ready {
+      visibility: visible;
+      opacity: 1;
+        transition: opacity 0.5s ease;
+    }
     @media (max-width: 800px) {
       .img-container {
         min-height: 200px;
