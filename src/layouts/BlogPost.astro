@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import FormattedDate from "../components/FormattedDate.astro";
+
 
 type Props = CollectionEntry<"blog">["data"];
 
@@ -13,32 +13,7 @@ const { title, description, pubDate, blog, colors, tag } = Astro.props;
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
-		<style>
-			main {
-			}
-			.title-container {
-				padding: 60px 70px 0px 70px;
-			}
-			.prose {
-				padding: 70px;
-				font-size: 1.5rem;
-				color: rgb(var(--gray-dark));
-				font-family: 'PT Serif', serif;
-			}
-			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
-				text-align: center;
-				line-height: 1;
-			}
-			.title h1 {
-				margin: 0 0 0.5em 0;
-			}
 
-			.last-updated-on {
-				font-style: italic;
-			}
-		</style>
 	</head>
 
 	<body>
@@ -67,12 +42,37 @@ const { title, description, pubDate, blog, colors, tag } = Astro.props;
 </html>
 
 <style>
+	.title-container {
+				padding: 1rem 1rem 0px 1rem;
+			}
+			.prose {
+				padding: 1rem;
+				font-size: clamp(1rem,-0.875rem + 8.333vw,1.5rem);
+				color: rgb(var(--gray-dark));
+				font-family: 'PT Serif', serif;
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+
+			.last-updated-on {
+				font-style: italic;
+			}
+
+	
 	.frame {
+		
 		border: 1px solid black;
 		height: fit-content;
 		position: relative;
 		border-radius: 12px;
-		margin: auto 80px;
+	
 		box-shadow: black -4px 4px;
 		.title {
 			border-top-left-radius: 12px;
@@ -96,7 +96,18 @@ const { title, description, pubDate, blog, colors, tag } = Astro.props;
 		}
 	}
 	.blog-prose-title {
-		font-size: 64px;
+		font-size: clamp(1.5rem,1.5rem,4rem) 
 		margin-bottom: 0;
 	}
+			@media (min-width:1024px) {
+				.frame{
+					margin: auto 80px ;
+				}
+			.title-container {
+				padding: 4rem 4rem 0px 4rem;
+			}
+				.prose {
+					padding: 4rem;
+				}
+			}
 </style>
