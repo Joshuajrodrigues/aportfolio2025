@@ -49,7 +49,7 @@ shuffle(content);
   </head>
   <body>
     <Header />
-    <main>
+    <main class="dotted">
       <div class="grid container is-loading">
         {
           content.map((post) => {
@@ -82,11 +82,7 @@ shuffle(content);
     </main>
     <Footer />
   </body><style>
-    main {
-      background-image: radial-gradient(#585858 5%, transparent 0);
-      background-size: 35px 35px;
-      height: 100%;
-    }
+
     li {
       list-style: none;
       display: flex;

@@ -1,11 +1,11 @@
 ---
-const { title,blog, description,tag,link } = Astro.props;
+const { title,blog, description,tag,link,colors } = Astro.props;
 
 ---
 
 
-<div class="frame">
-  <p class="title">
+<div style={{backgroundColor:colors[1]}} class="frame">
+  <p style={{backgroundColor:colors[0]}} class="title">
     <span>{blog[0]}</span>
     <span class="type">Writting</span>
     <img src={"/card buttons.svg"} alt="000" />
@@ -37,7 +37,6 @@ const { title,blog, description,tag,link } = Astro.props;
     height: fit-content;
     position: relative;
     border-radius: 12px;
-    background-color: #A6DBEA;
 
     .title {
       background-color: #fff;

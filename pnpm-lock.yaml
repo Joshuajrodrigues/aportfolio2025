@@ -23,6 +23,9 @@ importers:
       '@fontsource/poppins':
         specifier: ^5.1.0
         version: 5.2.1
+      '@fontsource/pt-serif':
+        specifier: ^5.2.5
+        version: 5.2.5
       '@glidejs/glide':
         specifier: ^3.7.1
         version: 3.7.1
@@ -273,6 +276,9 @@ packages:
 
   '@fontsource/poppins@5.2.1':
     resolution: {integrity: sha512-SyqXzysGCr+qmaZrGO13i73jcPeb1tfqlusJsTaeQOCJtbwenzcNh9KUsQCaFVrfd+KQExUYfF8oMcP2U2wZIA==}
+
+  '@fontsource/pt-serif@5.2.5':
+    resolution: {integrity: sha512-5wXOmZEBqS3WGycuB1YCO9Rimrn18KiEJ2gCJGXPw6d/lLeYT5wclMhL7BB2a8Oh3eTROxTsEaGa5PweE7L/5Q==}
 
   '@glidejs/glide@3.7.1':
     resolution: {integrity: sha512-8he0pZpLSqTesSFYiuWdhBmtdlYSPWxfPUCKtkkiX6ZmT8UdMdmoFPtJaOwLBXv4p2JiGxqbuPdiRGGo2e/htQ==}
@@ -2280,6 +2286,8 @@ snapshots:
     optional: true
 
   '@fontsource/poppins@5.2.1': {}
+
+  '@fontsource/pt-serif@5.2.5': {}
 
   '@glidejs/glide@3.7.1': {}
 
