@@ -8,10 +8,10 @@ import ArtCard from "../components/ArtCard.astro";
 import BlogCard from "../components/BlogCard.astro";
 import RecomendsCard from "../components/RecomendsCard.astro";
 import { shuffle } from "../utils";
-import { ClientRouter } from "astro:transitions";
+
 
 const blog = (await getCollection("blog")).sort(
-  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 const art = await getCollection("art");
 const recomends = await getCollection("recomends");
@@ -24,8 +24,8 @@ shuffle(content);
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  <ClientRouter />
-  <script  >
+
+    <script>
       import Masonry from "masonry-layout";
       import imagesLoaded from "imagesloaded";
 
@@ -37,7 +37,7 @@ shuffle(content);
         const msnry = new Masonry(grid, {
           itemSelector: ".grid-item",
           gutter: 40,
-          transitionDuration: '0s',
+          transitionDuration: "0s",
           fitWidth: true,
         });
         let imgLoaded = imagesLoaded(grid);
@@ -50,10 +50,9 @@ shuffle(content);
     </script>
   </head>
   <body>
-    
     <Header />
     <main class="dotted">
-      <div class="grid container is-loading" >
+      <div class="grid container is-loading">
         {
           content.map((post) => {
             switch (post.data.type) {
@@ -61,7 +60,7 @@ shuffle(content);
                 return (
                   <div class="grid-item">
                     {" "}
-                    <ArtCard  {...post.data} />
+                    <ArtCard {...post.data} />
                   </div>
                 );
 
@@ -84,9 +83,7 @@ shuffle(content);
       </div>
     </main>
     <Footer />
-      
   </body><style>
-
     li {
       list-style: none;
       display: flex;
@@ -132,7 +129,6 @@ shuffle(content);
       justify-content: center;
       padding: 24px;
       border-radius: 24px;
-
     }
     img {
       width: 320px;
@@ -148,7 +144,6 @@ shuffle(content);
       transition: opacity 0.5s ease;
     }
     @media (max-width: 800px) {
-      
       ul {
         grid-template-columns: 1fr;
       }
