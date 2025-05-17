@@ -15,12 +15,12 @@ import CTAButton from "./CTAButton.astro";
       <MenuButton />
     </div>
     <div class="desktop-header internal-links">
+      <HeaderLink href="/">All</HeaderLink>
       <HeaderLink href="/projects">Work</HeaderLink>
+      <HeaderLink href="/writing">Writing</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
       <HeaderLink href="/contact">
-        <CTAButton>
-          Say Hi
-        </CTAButton>
+        <CTAButton> Say Hi </CTAButton>
       </HeaderLink>
     </div>
   </nav>
@@ -58,7 +58,7 @@ import CTAButton from "./CTAButton.astro";
   }
   nav a.active {
     text-decoration: none;
-
+		color: #D5673E;
   }
   .internal-links {
     display: flex;

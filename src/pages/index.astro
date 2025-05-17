@@ -10,7 +10,7 @@ import RecomendsCard from "../components/RecomendsCard.astro";
 import { shuffle } from "../utils";
 
 const blog = (await getCollection("blog")).sort(
-  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 const art = await getCollection("art");
 const recomends = await getCollection("recomends");
@@ -34,15 +34,15 @@ shuffle(content);
         // initialize Masonry
         const msnry = new Masonry(grid, {
           itemSelector: ".grid-item",
-          gutter: 20,
+          gutter: 40,
+          transitionDuration: '0.8s',
           fitWidth: true,
-          horizontalOrder: true,
         });
-        let imgLoaded = imagesLoaded(grid)
-          imgLoaded.on("done", () => {
+        let imgLoaded = imagesLoaded(grid);
+        imgLoaded.on("done", () => {
           grid.classList.remove("is-loading");
           grid.classList.add("is-ready");
-          msnry.layout();
+          msnry.layout!();
         });
       });
     </script>
@@ -83,8 +83,9 @@ shuffle(content);
     <Footer />
   </body><style>
     main {
-      background-image: radial-gradient(#999 5%, transparent 0);
+      background-image: radial-gradient(#585858 5%, transparent 0);
       background-size: 35px 35px;
+      height: 100svh;
     }
     li {
       list-style: none;
@@ -97,7 +98,7 @@ shuffle(content);
       margin: 0 auto;
     }
     .grid-item {
-      margin-bottom: 10px;
+      margin-bottom: 40px;
     }
     a {
       text-decoration: none;
@@ -145,7 +146,7 @@ shuffle(content);
     .grid.is-ready {
       visibility: visible;
       opacity: 1;
-        transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease;
     }
     @media (max-width: 800px) {
       .img-container {

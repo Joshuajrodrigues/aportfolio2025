@@ -23,6 +23,7 @@
     "typescript": "^5.8.2"
   },
   "devDependencies": {
+    "@types/imagesloaded": "^4.1.7",
     "@types/masonry-layout": "^4.2.8"
   }
 }

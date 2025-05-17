@@ -45,6 +45,9 @@ importers:
         specifier: ^5.8.2
         version: 5.8.2
     devDependencies:
+      '@types/imagesloaded':
+        specifier: ^4.1.7
+        version: 4.1.7
       '@types/masonry-layout':
         specifier: ^4.2.8
         version: 4.2.8
@@ -573,6 +576,9 @@ packages:
 
   '@types/hast@3.0.4':
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
+
+  '@types/imagesloaded@4.1.7':
+    resolution: {integrity: sha512-N380qYSNvYsrF+TtQ7SvxP5rs/XVI/6+l/aUKJjXiVc2y3YHzhmeP283sX16ZimW89DAGguZEGc19esP1cJeLg==}
 
   '@types/jquery@3.5.32':
     resolution: {integrity: sha512-b9Xbf4CkMqS02YH8zACqN1xzdxc3cO735Qe5AbSUFmyOiaWAbcpqh9Wna+Uk0vgACvoQHpWDg2rGdHkYPLmCiQ==}
@@ -2576,6 +2582,10 @@ snapshots:
   '@types/hast@3.0.4':
     dependencies:
       '@types/unist': 3.0.3
+
+  '@types/imagesloaded@4.1.7':
+    dependencies:
+      '@types/jquery': 3.5.32
 
   '@types/jquery@3.5.32':
     dependencies:
