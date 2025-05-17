@@ -23,34 +23,13 @@ shuffle(content);
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <script>
-      import Masonry from "masonry-layout";
-      import imagesLoaded from "imagesloaded";
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const grid = document.querySelector(".grid");
-        if (!grid) return;
-
-        // initialize Masonry
-        const msnry = new Masonry(grid, {
-          itemSelector: ".grid-item",
-          gutter: 40,
-          transitionDuration: '0s',
-          fitWidth: true,
-        });
-        let imgLoaded = imagesLoaded(grid);
-        imgLoaded.on("done", () => {
-          grid.classList.remove("is-loading");
-          grid.classList.add("is-ready");
-          msnry.layout!();
-        });
-      });
-    </script>
+ 
   </head>
   <body>
+    
     <Header />
     <main class="dotted">
-      <div class="grid container is-loading">
+      <div class="grid container is-loading" >
         {
           content.map((post) => {
             switch (post.data.type) {
@@ -58,7 +37,7 @@ shuffle(content);
                 return (
                   <div class="grid-item">
                     {" "}
-                    <ArtCard {...post.data} />
+                    <ArtCard  {...post.data} />
                   </div>
                 );
 
@@ -81,6 +60,29 @@ shuffle(content);
       </div>
     </main>
     <Footer />
+       <script >
+      import Masonry from "masonry-layout";
+      import imagesLoaded from "imagesloaded";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const grid = document.querySelector(".grid");
+        if (!grid) return;
+
+        // initialize Masonry
+        const msnry = new Masonry(grid, {
+          itemSelector: ".grid-item",
+          gutter: 40,
+          transitionDuration: '0s',
+          fitWidth: true,
+        });
+        let imgLoaded = imagesLoaded(grid);
+        imgLoaded.on("done", () => {
+          grid.classList.remove("is-loading");
+          grid.classList.add("is-ready");
+          msnry.layout!();
+        });
+      });
+    </script>
   </body><style>
 
     li {
