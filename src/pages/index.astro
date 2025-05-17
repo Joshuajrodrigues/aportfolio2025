@@ -8,6 +8,7 @@ import ArtCard from "../components/ArtCard.astro";
 import BlogCard from "../components/BlogCard.astro";
 import RecomendsCard from "../components/RecomendsCard.astro";
 import { shuffle } from "../utils";
+import { ClientRouter } from "astro:transitions";
 
 const blog = (await getCollection("blog")).sort(
   (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -23,7 +24,30 @@ shuffle(content);
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
- 
+  <ClientRouter />
+  <script  >
+      import Masonry from "masonry-layout";
+      import imagesLoaded from "imagesloaded";
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const grid = document.querySelector(".grid");
+        if (!grid) return;
+
+        // initialize Masonry
+        const msnry = new Masonry(grid, {
+          itemSelector: ".grid-item",
+          gutter: 40,
+          transitionDuration: '0s',
+          fitWidth: true,
+        });
+        let imgLoaded = imagesLoaded(grid);
+        imgLoaded.on("done", () => {
+          grid.classList.remove("is-loading");
+          grid.classList.add("is-ready");
+          msnry.layout!();
+        });
+      });
+    </script>
   </head>
   <body>
     
@@ -60,29 +84,7 @@ shuffle(content);
       </div>
     </main>
     <Footer />
-       <script >
-      import Masonry from "masonry-layout";
-      import imagesLoaded from "imagesloaded";
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const grid = document.querySelector(".grid");
-        if (!grid) return;
-
-        // initialize Masonry
-        const msnry = new Masonry(grid, {
-          itemSelector: ".grid-item",
-          gutter: 40,
-          transitionDuration: '0s',
-          fitWidth: true,
-        });
-        let imgLoaded = imagesLoaded(grid);
-        imgLoaded.on("done", () => {
-          grid.classList.remove("is-loading");
-          grid.classList.add("is-ready");
-          msnry.layout!();
-        });
-      });
-    </script>
+      
   </body><style>
 
     li {
