@@ -1,14 +1,14 @@
 ---
 import { Masonry } from "astro-masonry";
 import { getCollection } from "astro:content";
-import ArtCard from "../../components/ArtCard.astro";
 import BaseHead from "../../components/BaseHead.astro";
+import BlogCard from "../../components/BlogCard.astro";
 import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
 
-const projects = await getCollection("project")
+const projects = await getCollection("blog")
 
 let content = [...projects];
 
@@ -35,11 +35,10 @@ let content = [...projects];
         {
           content.map((post) => {
             switch (post!.data.type) {
-              case "project":
+               case "blog":
                 return (
-                  <div class="grid-item">
-                    {" "}
-                    <ArtCard id={post!.id} {...post!.data} />
+                  <div class="grid-item ">
+                    <BlogCard {...post.data} />
                   </div>
                 );
             }

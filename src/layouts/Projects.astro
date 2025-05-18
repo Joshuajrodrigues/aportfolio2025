@@ -3,11 +3,20 @@ import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import Carousel from '../components/svelte/Carousel.svelte'
 
 type Props = CollectionEntry<"project">["data"];
 
-const { title, description, contentBlocks, heroImage,caraousel,tags } = Astro.props;
+const {
+  title,
+  description,
+  contentBlocks,
+  heroImage,
+  colors,
+  heroHelpText,
+  role,
+  team,
+  impact,
+} = Astro.props;
 ---
 
 <html lang="en">
@@ -17,68 +26,163 @@ const { title, description, contentBlocks, heroImage,caraousel,tags } = Astro.pr
 
   <body>
     <Header />
-    <main>
+    <main class="dotted">
       <article>
-        <div class="tags-container">
-          <ul class="tags-list">
-            {
-              tags?.map(tag=>(
-                <li class="tags-list-item">{tag}</li>
-              ))
-            }
+        <section class="project-title--container">
+          <h1>{title}</h1>
+          <h3>{description}</h3>
+        </section>
 
-          </ul>
-        </div>
-        <h1>{title}</h1>
-        <div class="hero-image">
+        <div style={{ backgroundColor: colors?.[0] }} class="hero-image frame">
+          <p class="title">
+            <span>{title}</span>
+            <span class="type">{"Project"}</span>
+            <img src={"/card buttons.svg"} alt="000" />
+          </p>
           {
             heroImage && (
               <img width={"100%"} height={510} src={heroImage} alt="" />
             )
           }
         </div>
-        <div class="prose">
-          <hr />
+        <div class="hero-image-help-text">{heroHelpText}</div>
+        <div class="centered-project-content">
+          {
+            role && (
+              <div class="rti">
+                <div>
+                  <h4>Role</h4>
+                  <p>{role}</p>
+                </div>
+                <div>
+                  <h4>Team</h4>
+                  <p>{team}</p>
+                </div>
+                <div>
+                  <h4>Impact</h4>
+                  <p>{impact}</p>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            contentBlocks && contentBlocks?.length > 0 && (
+              <div class="content-container">
+                <div class="content m-w-700">{contentBlocks?.[0]}</div>
+                <div class="content m-w-700 text-right align-self-end">
+                  {contentBlocks?.[0]}
+                </div>
+              </div>
+            )
+          }
+          <slot />
         </div>
-        <div class="content-container">
-          <div class="content m-w-700" >
-            {contentBlocks?.[0]}
-          </div>
-          <div class="content m-w-700 text-right align-self-end" >
-            {contentBlocks?.[0]}
-          </div>
-        </div>
-        <slot/>
       </article>
     </main>
     <Footer />
   </body>
 </html>
 <style>
+  .rti {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 100px 0px;
+
+    color: #594a4e;
+    h4 {
+      font-weight: 700;
+      color: #594a4e;
+      font-size: 32px;
+    }
+    p {
+      font-size: 24px;
+    }
+  }
+  .centered-project-content {
+    margin: auto 70px;
+    p {
+      color: #594a4e;
+    }
+    h1 {
+      color: #33272a;
+      font-weight: 600;
+      font-size: 36px;
+      margin-top: 58px;
+    }
+  }
+  .frame {
+    border: 1px solid black;
+    box-shadow: black -12px 12px;
+    height: fit-content;
+    border-radius: 12px;
+    background-color: #fff;
+    font-size: 0;
+    line-height: 0;
+    .title {
+      line-height: 12px;
+      max-height: 40px;
+      border-bottom: 1px solid black;
+      margin: 0px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      .type {
+        font-weight: 600;
+      }
+    }
+    > img {
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+  }
+  .project-title--container {
+    text-align: center;
+    margin: 60px 0px;
+    h1 {
+      font-size: 52px;
+      font-weight: normal;
+    }
+    h3 {
+      font-size: 28px;
+      color: #594a4e;
+      font-weight: normal;
+    }
+  }
+  .hero-image-help-text {
+    margin: auto 180px;
+    font-style: italic;
+    font-size: 20px;
+    margin-top: 40px;
+    color: #594a4e;
+    opacity: 0.75;
+    text-align: center;
+  }
   main {
     width: calc(100% - 2em);
     max-width: 100%;
     margin: 0;
   }
-  .carousel{
+  .carousel {
     margin-top: 64px;
   }
   h1 {
     margin: 0 0 1.5rem 0;
   }
-  .content-container{
+  .content-container {
     display: flex;
     width: 100%;
     flex-direction: column;
   }
-  .text-right{
+  .text-right {
     text-align: right;
   }
-  .align-self-end{
-   margin-left: auto;
-   margin-top: 60px;
+  .align-self-end {
+    margin-left: auto;
+    margin-top: 60px;
   }
-  .m-w-700{
+  .m-w-700 {
     max-width: 700px;
   }
   .tags-container {
@@ -100,20 +204,18 @@ const { title, description, contentBlocks, heroImage,caraousel,tags } = Astro.pr
     }
   }
   .hero-image {
-    width: 100%;
+    margin: auto 180px;
   }
   .hero-image img {
     display: block;
-    margin: 0 auto;
     border-radius: 5px;
-    background-color: #f4f4f4;
   }
   .prose {
     width: 720px;
     max-width: calc(100% - 2em);
     margin: auto;
     padding: 1em;
-    color: rgb(var(--gray-dark));
+    color: #594a4e;
   }
 
   .title {

@@ -1,14 +1,17 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { Masonry } from "astro-masonry";
 import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
+import ArtCard from "../../components/ArtCard.astro";
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { shuffle } from "../../utils";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const blog = await getCollection("blog")
+
+let content = [...blog];
+shuffle(content);
 ---
 
 <!doctype html>
@@ -17,39 +20,54 @@ const posts = (await getCollection("blog")).sort(
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
+   
     <Header />
-    <main>
-      <section class="preview-section">
-        <ul>
-          {
-            posts.map((post) => (
-              <li class="card">
-                <a href={`/blog/${post.id}/`}>
-                  <img src={post.data.heroImage} alt="" />
-                  <h4 class="title">{post.data.title}</h4>
-                  <p class="description">
-                    <FormattedDate date={post.data.pubDate} />
-                  </p>
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
+    <main class="dotted">
+      <Masonry
+       sortByHeight={true}
+        breakpointCols={{
+          default: 3,
+          1400: 3,
+          1100: 2,
+          700: 1,
+        }}
+      >
+        {
+          content.map((post) => {
+            switch (post!.data.type) {
+              case "project":
+                return (
+                  <div class="grid-item">
+                    {" "}
+                    <ArtCard id={post!.id} {...post!.data} />
+                  </div>
+                );
+            }
+          })
+        }
+      </Masonry>
     </main>
     <Footer />
-  </body>
-  <style>
+  </body><style>
     li {
       list-style: none;
-	  text-align: center;
-    }
-    .preview-section {
       display: flex;
-      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .grid {
+      margin: 0 auto;
+    }
+    .grid-item {
+      margin: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     a {
       text-decoration: none;
+	  color: inherit;
     }
     ul {
       padding: 0;
@@ -71,6 +89,8 @@ const posts = (await getCollection("blog")).sort(
       margin-top: 15px;
       color: #1e1e1e;
     }
+    .container {
+    }
     .img-container {
       background-color: #f4f4f4;
       display: flex;
@@ -78,23 +98,24 @@ const posts = (await getCollection("blog")).sort(
       justify-content: center;
       padding: 24px;
       border-radius: 24px;
-      min-height: 300px;
-      max-height: 300px;
     }
     img {
       width: 320px;
     }
-
-    @media (max-width: 800px) {
-      .img-container {
-        min-height: 200px;
-        max-height: 200px;
-      }
-	  ul {
-
-      grid-template-columns: 1fr;
-
+    .grid.is-loading {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease;
     }
+    .grid.is-ready {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    @media (max-width: 800px) {
+      ul {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </html>

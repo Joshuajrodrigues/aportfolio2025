@@ -15,8 +15,8 @@ const blog = defineCollection({
     heroImage: z.string().optional(),
     tag: z.array(z.string()).optional(),
     blog: z.array(z.string()).optional(),
-    link:z.string(),
-    colors:z.array(z.string())
+    link: z.string(),
+    colors: z.array(z.string()),
   }),
 });
 
@@ -33,10 +33,15 @@ const project = defineCollection({
     tags: z.array(z.string()).optional(),
     contentBlocks: z.array(z.string()).optional(),
     caraousel: z.array(z.string()).optional(),
+    heroHelpText: z.string().optional(),
+    role: z.string().optional(),
+    team: z.string().optional(),
+    impact: z.string().optional(),
     // Transform string to Date object
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
+    colors: z.array(z.string()).optional(),
   }),
 });
 

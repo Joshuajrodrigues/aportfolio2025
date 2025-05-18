@@ -1,0 +1,26 @@
+<div class="content-container">
+
+  <section>
+    <div class="content m-w-700">
+      <slot name="para1" />
+    </div>
+    <div class="content m-w-700">
+      <slot name="para2" />
+    </div>
+  </section>
+  <section>
+      <slot name="image" />
+  </section>
+</div>
+
+<style>
+  .content-container {
+    display: flex;
+    width: 100%;
+   justify-content: space-between;
+   align-items: center;
+  }
+  .m-w-700 {
+    max-width: 700px;
+  }
+</style>
