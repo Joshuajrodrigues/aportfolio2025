@@ -4,6 +4,7 @@ description: "Tristique non adipiscing diam mauris nulla adipiscing euismod. Vit
 pubDate: "Dec 09 2022"
 featured: true
 heroImage: "/magazine.png"
+src: "/magazine.png"
 type: "project"
 contentBlocks:
   [

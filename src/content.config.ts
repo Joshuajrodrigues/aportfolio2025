@@ -29,6 +29,7 @@ const project = defineCollection({
     type: z.string(),
     description: z.string(),
     featured: z.boolean().default(false),
+    src: z.string().optional(),
     tags: z.array(z.string()).optional(),
     contentBlocks: z.array(z.string()).optional(),
     caraousel: z.array(z.string()).optional(),

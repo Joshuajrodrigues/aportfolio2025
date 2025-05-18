@@ -1,17 +1,20 @@
 ---
-const { title, src } = Astro.props;
+const { title, src, type, tags, id } = Astro.props;
 
+const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
+const link = type !== "art" ? `/projects/${id}/` : 'javascript:void(0)'
 ---
 
-<div class="frame">
-  <p class="title">
-    <span>{title}</span>
-    <span class="type">Art</span>
-    <img src={'/card buttons.svg'} alt="000" />
-  </p>
-  <img src={src} alt={title} />
-</div>
-
+<a style={isArt} href={link}>
+  <div  class="frame">
+    <p class="title">
+      <span>{title}</span>
+      <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span>
+      <img src={"/card buttons.svg"} alt="000" />
+    </p>
+    <img src={src} alt={title} />
+  </div>
+</a>
 <style>
   .frame {
     border: 1px solid black;
@@ -22,22 +25,25 @@ const { title, src } = Astro.props;
     font-size: 0;
     line-height: 0;
     .title {
-        line-height: 12px;
-        max-height: 40px;
-        border-bottom: 1px solid black;
-        margin: 0px;
-        font-size: 14px;
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 20px;
-        .type{
-            font-weight:600;
-        }
+      line-height: 12px;
+      max-height: 40px;
+      border-bottom: 1px solid black;
+      margin: 0px;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      .type {
+        font-weight: 600;
+      }
     }
-    >img{
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
+    > img {
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
     }
-
+  }
+  a{
+    text-decoration: none;
+     color: inherit;
   }
 </style>

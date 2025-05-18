@@ -15,8 +15,9 @@ const blog = (await getCollection("blog")).sort(
 );
 const art = await getCollection("art");
 const recomends = await getCollection("recomends");
+const projects = await getCollection("project")
 
-let content = [...blog, ...art, ...recomends];
+let content = [...blog, ...art, ...recomends,...projects];
 shuffle(content);
 ---
 
@@ -64,10 +65,11 @@ shuffle(content);
           content.map((post) => {
             switch (post.data.type) {
               case "art":
+              case "project":
                 return (
                   <div class="grid-item">
                     {" "}
-                    <ArtCard {...post.data} />
+                    <ArtCard id={post.id} {...post.data} />
                   </div>
                 );
 
