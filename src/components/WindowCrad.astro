@@ -1,0 +1,159 @@
+---
+const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
+---
+
+<!-- <script lang="js">
+  const button = document.querySelector("#file-trigger");
+  button?.addEventListener("click", () => {
+    console.log("inner text", button.innerText);
+    if ("-" === button.innerText) {
+      button.innerText = "+";
+    } else {
+      button.innerText = "-";
+    }
+  });
+</script> -->
+<div class="about-container">
+  <div class="about-nav">
+    <img src={"/card buttons.svg"} alt="000" />
+    <span> About Me </span>
+  </div>
+  <div class="about-content">
+    <div class="about-sidebar">
+      <div class="side-nav">
+        <div class="expand-container">
+          <button id="file-trigger" class="folder-expand">-</button>
+          <span class="line"></span>
+        </div>
+        <ul class="folder">
+          <li>
+            <p>about akanksha</p>
+          </li>
+          <ul class="sub-folder">
+            {
+              sublinks.map((link) => (
+                <li>
+                  <>{link}</>
+                </li>
+              ))
+            }
+            <span class="line-container">
+              {sublinks.map((link) => <span />)}
+            </span>
+          </ul>
+        </ul>
+    </div>
+   
+    </div>
+    <div class="about-main">
+      <div class="about-main--info">content</div>
+      <div class="about-main--footer">footer</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .display--none {
+    display: none;
+  }
+  .about-container {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    .about-nav {
+      border: 2px solid black;
+      padding: 10px 22px 10px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #e8b33a;
+      border-radius: 12px 12px 0px 0px;
+    }
+    .about-content {
+      border: 2px solid black;
+      border-top: 1px solid black;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      background-color: white;
+      .about-sidebar {
+        border-right: 2px solid black;
+        padding: 10px 22px 10px 22px;
+
+        .side-nav {
+          display: grid;
+          grid-template-columns: 1fr 10fr;
+          padding: 60px 40px;
+          .expand-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+          }
+          .folder-expand {
+            height: 23px;
+            width: 23px;
+            border-radius: 2px;
+            cursor: pointer;
+            background-color: black;
+            color: white;
+            border: none;
+          }
+          .line {
+            display: inline-block;
+            content: "";
+            height: 66%;
+            width: 2px;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+          }
+          ul.folder {
+            list-style-image: url("/site-icons/folder.svg");
+            margin-top: 2px;
+
+            p {
+              color: #594a4e;
+              font-weight: bold;
+              margin: 0px;
+              transform: translateY(-8px);
+            }
+            ul.sub-folder {
+              list-style: url("/site-icons/hash.svg");
+              padding: 0px;
+              position: relative;
+              font-weight: 500;
+              color: #858081;
+              .line-container {
+                position: absolute;
+                height: 75%;
+                width: 30px;
+                left: -55px;
+                top: 15px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                span {
+                  width: 30px;
+                  height: 2px;
+                  background-color: #000;
+                }
+              }
+            }
+          }
+        }
+      }
+      .about-main {
+        position: relative;
+        padding: 10px 22px 10px 22px;
+        .about-main--info {
+          height: 100%;
+        }
+        .about-main--footer {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+</style>

@@ -3,9 +3,12 @@ import HeaderLink from "./HeaderLink.astro";
 import MenuButton from "./MenuButton.astro";
 import { SITE_TITLE } from "../consts";
 import CTAButton from "./CTAButton.astro";
+const {headerColor} = Astro.props
 ---
 
-<header>
+<header style={{
+  backgroundColor:headerColor
+}} >
   <nav>
     <h2>
       <a class="mobile-header" href="/">A</a>
