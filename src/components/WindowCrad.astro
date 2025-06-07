@@ -1,5 +1,16 @@
 ---
 const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
+const content = [
+  "I’m a UIUX designer and a great admirer of all art. I have a passion for designing products that can inspire awe but also be truly useful to the people.",
+  `I have a degree in computer engineering but during my course of traversing clumsily through college, I found my interests lying more in design. During the pandemic, I took up Photoshop innocently as a way to de-stress and be creative, but that let to graphic design which in turn led me to taking up UIUX design more seriously. It also helped that our final year project required someone to design the interface and I was more than happy to volunteer to test my skills built on side projects.
+
+I really love movies and music that's got a real aesthetic quality to it.`,
+  `Worked for 3 years with a fast-paced start-up in a ever evolving landscape of needs and missions.
+Strong command of design language and interpreting various aesthetics into a concrete design using various tools i.e Figma, Adobe XD and Photoshop.
+Good experience working with minimal or maximal direction. Working with requirements that may not be concrete as yet and need some digging, I’m good with the digging.
+Super efficient at communication and comfortable with engaging with various departments. Can wade through the chaos of launches with a plan and a dream.
+Focussed on staying approachable and open to conversations and discussions about design and the landscape of visuals with anyone and everyone.`,
+];
 ---
 
 <!-- <script lang="js">
@@ -16,7 +27,7 @@ const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
 <div class="about-container">
   <div class="about-nav">
     <img src={"/card buttons.svg"} alt="000" />
-    <span> About Me </span>
+    <span class="card-title"> About Me </span>
   </div>
   <div class="about-content">
     <div class="about-sidebar">
@@ -42,12 +53,15 @@ const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
             </span>
           </ul>
         </ul>
-    </div>
-   
+      </div>
     </div>
     <div class="about-main">
-      <div class="about-main--info">content</div>
-      <div class="about-main--footer">footer</div>
+      <div class="about-main--info">
+        <h1>Who am I ?</h1>
+        I’m a UIUX designer and a great admirer of all art. I have a passion for
+        designing products that can inspire awe but also be truly useful to the people.
+      </div>
+      <div class="about-main--footer">Wanna chat with me ?</div>
     </div>
   </div>
 </div>
@@ -57,9 +71,16 @@ const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
     display: none;
   }
   .about-container {
+    
+      max-width: 900px;
+      margin: 0 auto;
+      margin-top: 20dvh;
     display: grid;
     grid-template-rows: 1fr 4fr;
     .about-nav {
+      .card-title {
+        font-weight: bold;
+      }
       border: 2px solid black;
       padding: 10px 22px 10px 22px;
       display: flex;
@@ -74,10 +95,13 @@ const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
       display: grid;
       grid-template-columns: 1fr 2fr;
       background-color: white;
+      border-radius: 0px 0px 12px 12px;
       .about-sidebar {
         border-right: 2px solid black;
-        padding: 10px 22px 10px 22px;
-
+        border-bottom:2px solid black ;
+        border-radius: 0px 0px 12px 0px;
+        background-color: white;
+        z-index: 20;
         .side-nav {
           display: grid;
           grid-template-columns: 1fr 10fr;
@@ -126,7 +150,7 @@ const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
                 position: absolute;
                 height: 75%;
                 width: 30px;
-                left: -55px;
+                left: -52px;
                 top: 15px;
                 display: flex;
                 flex-direction: column;
@@ -141,6 +165,7 @@ const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
             }
           }
         }
+      
       }
       .about-main {
         position: relative;
@@ -153,7 +178,14 @@ const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
           bottom: 0;
           width: 100%;
         }
-      }
+    }
+    overflow:hidden;
+        .about-main--footer{
+            background-color: #EAE1D9;
+            margin-left: -28px;
+           
+            padding-left: 12px;
+        }
     }
   }
 </style>
