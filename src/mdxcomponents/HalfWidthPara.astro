@@ -1,5 +1,4 @@
 <div class="content-container">
-
   <section>
     <div class="content m-w-700">
       <slot name="para1" />
@@ -9,7 +8,7 @@
     </div>
   </section>
   <section>
-      <slot name="image" />
+    <slot name="image" />
   </section>
 </div>
 
@@ -17,10 +16,16 @@
   .content-container {
     display: flex;
     width: 100%;
-   justify-content: space-between;
-   align-items: center;
+    justify-content: space-between;
+    align-items: center;
   }
   .m-w-700 {
     max-width: 700px;
+  }
+
+   @media (max-width: 780px) {
+    .content-container{
+      flex-direction: column;
+    }
   }
 </style>
