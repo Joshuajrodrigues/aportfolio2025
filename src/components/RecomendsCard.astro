@@ -4,7 +4,7 @@ const { title, src } = Astro.props;
 
 <div class="container">
   <div class="recomends-data">
-    <img src={src} alt={title} >
+    <img src={src} alt={title} />
     <div class="recomendation-data-text">
       <span>Recommendation</span>
       <small>{title}</small>
@@ -14,19 +14,15 @@ const { title, src } = Astro.props;
 
 <style>
   .container {
-  
     border-radius: 6px;
-  max-width: 400px;
+    max-width: 400px;
     position: relative;
     text-align: left;
     color: #fff;
     line-height: 0;
     font-size: 0;
     .recomends-data {
-
-      
       .recomendation-data-text {
-        
         font-size: 12px;
         line-height: 24px;
         position: absolute;
@@ -34,13 +30,22 @@ const { title, src } = Astro.props;
         flex-direction: column;
         top: 12px;
         left: 14px;
-        small{
-
+        small {
           font-size: 24px;
         }
       }
-     
     }
   }
-
+  @media (max-width: 770px) {
+    .container {
+      .recomends-data {
+        .recomendation-data-text {
+          top: 5px;
+          small {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
 </style>
