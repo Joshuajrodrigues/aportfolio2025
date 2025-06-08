@@ -1,5 +1,5 @@
 ---
 title: "Glitchy Sun"
 type: "art"
-src: "/Frame 4(1).png"
+src: "/art/Frame 4(1).webp"
 ---

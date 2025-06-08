@@ -1,5 +1,5 @@
 ---
 title: "Twofish"
 type: "art"
-src: "/Frame 4.png"
+src: "/art/Frame 4.webp"
 ---
