@@ -69,7 +69,7 @@ shuffle(content);
                 return (
                   <div class="grid-item">
                     {" "}
-                    <ArtCard id={post.id} {...post.data} />
+                    <ArtCard art={post.data.type==="art"} id={post.id} {...post.data} />
                   </div>
                 );
 
