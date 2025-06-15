@@ -3,12 +3,14 @@ import HeaderLink from "./HeaderLink.astro";
 import MenuButton from "./MenuButton.astro";
 import { SITE_TITLE } from "../consts";
 import CTAButton from "./CTAButton.astro";
-const {headerColor} = Astro.props
+const { headerColor } = Astro.props;
 ---
 
-<header style={{
-  backgroundColor:headerColor
-}} >
+<header
+  style={{
+    backgroundColor: headerColor,
+  }}
+>
   <nav>
     <h2>
       <a class="mobile-header" href="/">A</a>
@@ -22,9 +24,9 @@ const {headerColor} = Astro.props
       <HeaderLink href="/projects">Work</HeaderLink>
       <HeaderLink href="/writing">Writing</HeaderLink>
       <HeaderLink href="/about">About</HeaderLink>
-      <HeaderLink href="/contact">
-        <CTAButton> Say Hi </CTAButton>
-      </HeaderLink>
+      <CTAButton>
+        <a href="mailto:work@akankshagajankar.com"> Say Hi </a>
+      </CTAButton>
     </div>
   </nav>
   <div class="border"></div>
@@ -61,7 +63,7 @@ const {headerColor} = Astro.props
   }
   nav a.active {
     text-decoration: none;
-		color: #D5673E;
+    color: #d5673e;
   }
   .internal-links {
     display: flex;

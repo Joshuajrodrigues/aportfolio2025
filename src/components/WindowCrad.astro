@@ -1,29 +1,61 @@
 ---
-const sublinks = ["Who am I", "Tell me more", "What can I do ?"];
-const content = [
-  "I’m a UIUX designer and a great admirer of all art. I have a passion for designing products that can inspire awe but also be truly useful to the people.",
-  `I have a degree in computer engineering but during my course of traversing clumsily through college, I found my interests lying more in design. During the pandemic, I took up Photoshop innocently as a way to de-stress and be creative, but that let to graphic design which in turn led me to taking up UIUX design more seriously. It also helped that our final year project required someone to design the interface and I was more than happy to volunteer to test my skills built on side projects.
+import CTAButton from "./CTAButton.astro";
 
-I really love movies and music that's got a real aesthetic quality to it.`,
-  `Worked for 3 years with a fast-paced start-up in a ever evolving landscape of needs and missions.
-Strong command of design language and interpreting various aesthetics into a concrete design using various tools i.e Figma, Adobe XD and Photoshop.
-Good experience working with minimal or maximal direction. Working with requirements that may not be concrete as yet and need some digging, I’m good with the digging.
-Super efficient at communication and comfortable with engaging with various departments. Can wade through the chaos of launches with a plan and a dream.
-Focussed on staying approachable and open to conversations and discussions about design and the landscape of visuals with anyone and everyone.`,
-];
+const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
 ---
 
-<!-- <script lang="js">
-  const button = document.querySelector("#file-trigger");
-  button?.addEventListener("click", () => {
-    console.log("inner text", button.innerText);
-    if ("-" === button.innerText) {
-      button.innerText = "+";
-    } else {
-      button.innerText = "-";
+<script lang="js">
+  document.addEventListener("DOMContentLoaded", function () {
+    // Content data
+    const content = [
+      {
+        title: "Who am I ?",
+        html: `<p>I'm a UIUX designer and a great admirer of all art. I have a passion for designing products that can inspire awe but also be truly useful to the people.</p>`,
+      },
+      {
+        title: "Tell me more",
+        html: `<p>I have a degree in computer engineering but during my course of traversing clumsily through college, I found my interests lying more in design. During the pandemic, I took up Photoshop innocently as a way to de-stress and be creative, but that led to graphic design which in turn led me to taking up UIUX design more seriously.</p>
+                    <p>It also helped that our final year project required someone to design the interface and I was more than happy to volunteer to test my skills built on side projects.</p>
+                    <p>I really love movies and music that's got a real aesthetic quality to it.</p>`,
+      },
+      {
+        title: "What can I do ?",
+        html: `<ul>
+                        <li>Worked for 3 years with a fast-paced start-up in a ever evolving landscape of needs and missions.</li>
+                        <li>Strong command of design language and interpreting various aesthetics into a concrete design using various tools i.e Figma, Adobe XD and Photoshop.</li>
+                        <li>Good experience working with minimal or maximal direction. Working with requirements that may not be concrete as yet and need some digging, I’m good with the digging.</li>
+                        <li>Super efficient at communication and comfortable with engaging with various departments. Can wade through the chaos of launches with a plan and a dream.</li>
+                        <li>Focused on staying approachable and open to conversations and discussions about design and the landscape of visuals with anyone and everyone.</li>
+                    </ul>`,
+      },
+    ];
+
+    // Get DOM elements
+    const subLinks = document.querySelectorAll(".sub-folder li");
+    const contentArea = document.getElementById("content-area");
+
+    // Function to update content
+    function updateContent(index) {
+      contentArea.innerHTML = `
+                    <h1><img src="/site-icons/headingList.svg" alt=""> ${content[index].title}</h1>
+                    ${content[index].html}
+                `;
+
+      // Update active state
+      subLinks.forEach((link) => link.classList.remove("active"));
+      subLinks[index].classList.add("active");
     }
+
+    // Add click events to sublinks
+    subLinks.forEach((link) => {
+      link.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        updateContent(index);
+      });
+    });
   });
-</script> -->
+</script>
+
 <div class="about-container">
   <div class="about-nav">
     <img src={"/card buttons.svg"} alt="000" />
@@ -42,41 +74,57 @@ Focussed on staying approachable and open to conversations and discussions about
           </li>
           <ul class="sub-folder">
             {
-              sublinks.map((link) => (
-                <li>
+              sublinks.map((link, index) => (
+                <li class={index === 0 ? "active" : ""} data-index={index}>
                   <>{link}</>
                 </li>
               ))
             }
             <span class="line-container">
-              {sublinks.map((link) => <span />)}
+              {sublinks.map(() => <span />)}
             </span>
           </ul>
         </ul>
       </div>
     </div>
     <div class="about-main">
-      <div class="about-main--info">
-        <h1>Who am I ?</h1>
-        I’m a UIUX designer and a great admirer of all art. I have a passion for
-        designing products that can inspire awe but also be truly useful to the people.
+      <div class="about-main--info" id="content-area">
+        <h1>
+          <img src="/site-icons/headingList.svg" alt="" /> Who am I ?
+        </h1>
+        <p>
+          I'm a UIUX designer and a great admirer of all art. I have a passion
+          for designing products that can inspire awe but also be truly useful
+          to the people.
+        </p>
       </div>
-      <div class="about-main--footer">Wanna chat with me ?</div>
+      <div class="about-main--footer">
+        <div class="about-main--footer-actions-container">
+          <p>Wanna chat with me ?</p>
+          <CTAButton>
+            <a href="mailto:work@akankshagajankar.com">
+              Send an email!!
+            </a>
+          </CTAButton>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
+   a{
+      all: unset;
+      cursor: pointer;
+    }
   .display--none {
     display: none;
   }
   .about-container {
-    
-      max-width: 900px;
-      margin: 0 auto;
-      margin-top: 20dvh;
-    display: grid;
-    grid-template-rows: 1fr 4fr;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 20dvh;
+
     .about-nav {
       .card-title {
         font-weight: bold;
@@ -98,7 +146,7 @@ Focussed on staying approachable and open to conversations and discussions about
       border-radius: 0px 0px 12px 12px;
       .about-sidebar {
         border-right: 2px solid black;
-        border-bottom:2px solid black ;
+        border-bottom: 2px solid black;
         border-radius: 0px 0px 12px 0px;
         background-color: white;
         z-index: 20;
@@ -132,7 +180,7 @@ Focussed on staying approachable and open to conversations and discussions about
           }
           ul.folder {
             list-style-image: url("/site-icons/folder.svg");
-            margin-top: 2px;
+            margin-top: -5px;
 
             p {
               color: #594a4e;
@@ -144,7 +192,8 @@ Focussed on staying approachable and open to conversations and discussions about
               list-style: url("/site-icons/hash.svg");
               padding: 0px;
               position: relative;
-              font-weight: 500;
+              font-weight: 600;
+              font-size: 16px;
               color: #858081;
               .line-container {
                 position: absolute;
@@ -162,30 +211,70 @@ Focussed on staying approachable and open to conversations and discussions about
                   background-color: #000;
                 }
               }
+              li {
+                cursor: pointer;
+              }
+              li.active {
+                color: #000;
+                font-weight: bold;
+              }
+              li.inactive {
+                font-weight: 500;
+                color: #858081;
+              }
             }
           }
         }
-      
       }
       .about-main {
         position: relative;
         padding: 10px 22px 10px 22px;
+
         .about-main--info {
           height: 100%;
+          max-height: 430px;
+          min-height: 430px;
+          overflow: auto;
+          padding-bottom: 30px;
+          h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #858081;
+            img {
+              transform: translateY(-3px);
+            }
+          }
+          p {
+            font-size: 20px;
+            color: #594a4e;
+          }
         }
         .about-main--footer {
           position: absolute;
           bottom: 0;
           width: 100%;
+          left: 21px;
+          font-weight: 600;
+          font-size: 16px;
+          padding: 0px 20px;
+          color: #858081;
+          .about-main--footer-actions-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            span{
+              margin-right: 30px;
+            }
+          }
         }
-    }
-    overflow:hidden;
-        .about-main--footer{
-            background-color: #EAE1D9;
-            margin-left: -28px;
-           
-            padding-left: 12px;
-        }
+      }
+      overflow: hidden;
+      .about-main--footer {
+        background-color: #eae1d9;
+        margin-left: -28px;
+
+        padding-left: 12px;
+      }
     }
   }
 </style>
