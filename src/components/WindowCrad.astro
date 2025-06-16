@@ -316,8 +316,8 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
               &:first-child {
                 border-left: none;
               }
-              @media (max-width: 525px){
-                  font-size: 14px;
+              @media (max-width: 525px) {
+                font-size: 14px;
               }
             }
             li.active {
@@ -334,7 +334,11 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       }
     }
   }
-
+  @media (max-width: 964px) {
+    .about-container {
+      margin-top: 5dvh;
+    }
+  }
   .back-button {
     color: #594a4e;
     font-weight: bold;
