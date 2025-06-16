@@ -68,6 +68,7 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
           <button id="file-trigger" class="folder-expand">-</button>
           <span class="line"></span>
         </div>
+
         <ul class="folder">
           <li>
             <p>about akanksha</p>
@@ -86,6 +87,10 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
           </ul>
         </ul>
       </div>
+      <a class="back-button" href="/">
+        <img src="/site-icons/back.svg" alt="back" />
+        <p>back to projects</p>
+      </a>
     </div>
     <div class="about-main">
       <div class="about-main--info" id="content-area">
@@ -102,9 +107,7 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
         <div class="about-main--footer-actions-container">
           <p>Wanna chat with me ?</p>
           <CTAButton>
-            <a href="mailto:work@akankshagajankar.com">
-              Send an email!!
-            </a>
+            <a href="mailto:work@akankshagajankar.com"> Send an email!! </a>
           </CTAButton>
         </div>
       </div>
@@ -113,10 +116,10 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
 </div>
 
 <style>
-   a{
-      all: unset;
-      cursor: pointer;
-    }
+  a {
+    all: unset;
+    cursor: pointer;
+  }
   .display--none {
     display: none;
   }
@@ -151,10 +154,12 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
         border-radius: 0px 0px 12px 0px;
         background-color: white;
         z-index: 20;
+
         .side-nav {
           display: grid;
           grid-template-columns: 1fr 10fr;
           padding: 60px 40px;
+          margin-top: 20px;
           .expand-container {
             display: flex;
             flex-direction: column;
@@ -263,7 +268,7 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
             display: flex;
             justify-content: space-between;
             align-items: center;
-            span{
+            span {
               margin-right: 30px;
             }
           }
@@ -276,6 +281,19 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
 
         padding-left: 12px;
       }
+    }
+  }
+
+  .back-button {
+    color: #594a4e;
+    font-weight: bold;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 60px 40px;
+    img {
+      width: 24px;
+      height: 24px;
     }
   }
 </style>
