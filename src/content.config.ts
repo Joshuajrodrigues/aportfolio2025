@@ -49,10 +49,10 @@ const art = defineCollection({
   // Load Markdown and MDX files in the `src/content/blog/` directory.
   loader: glob({ base: "./src/content/art", pattern: "**/*.{md,mdx}" }),
   // Type-check frontmatter using a schema
-  schema: z.object({
+  schema:({image})=> z.object({
     title: z.string(),
     type: z.string(),
-    src: z.string().optional(),
+    src:  image() ,
   }),
 });
 

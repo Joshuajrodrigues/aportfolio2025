@@ -1,8 +1,10 @@
 ---
 const { title, src, type, tags, id, colors, art, artTitle } = Astro.props;
+import { Image } from 'astro:assets';
 import "glightbox/dist/css/glightbox.css";
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
 const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
+console.log("src",src)
 ---
 
 <script>
@@ -22,8 +24,8 @@ const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
     </p>
     {
       art ? (
-        <a href={src} class="glightbox">
-          <img src={src} alt={title} />
+        <a href={src.src} class="glightbox">
+          <Image class={"opt-image"} src={src} alt={title} />
         </a>
       ) : (
         <img src={src} alt={title} />
@@ -53,10 +55,11 @@ const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
         font-weight: 600;
       }
     }
-    > img {
+    > img,.opt-image {
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
     }
+
   }
   a {
     text-decoration: none;

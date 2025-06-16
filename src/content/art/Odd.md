@@ -1,5 +1,5 @@
 ---
 title: "Thats odd.."
 type: "art"
-src: "/art/Odd.webp"
+src: "/src/content/allImages/art/Odd.webp"
 ---

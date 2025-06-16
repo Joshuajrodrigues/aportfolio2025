@@ -1,5 +1,5 @@
 ---
 title: "Landscape head"
 type: "art"
-src: "/art/Landscapehead- print ver.webp"
+src: "/src/content/allImages/art/Landscapehead- print ver.webp"
 ---

@@ -1,5 +1,5 @@
 ---
 title: "Things are changing"
 type: "art"
-src: "/art/Change.webp"
+src: "/src/content/allImages/art/Change.webp"
 ---
