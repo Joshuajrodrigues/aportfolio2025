@@ -62,6 +62,17 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
     <span class="card-title"> About Me </span>
   </div>
   <div class="about-content">
+    <nav class="hori-nav">
+      <ul class="sub-folder">
+        {
+          sublinks.map((link, index) => (
+            <li class={index === 0 ? "active" : ""} data-index={index}>
+              <>{link}</>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
     <div class="about-sidebar">
       <div class="side-nav">
         <div class="expand-container">
@@ -148,6 +159,9 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       grid-template-columns: 1fr 2fr;
       background-color: white;
       border-radius: 0px 0px 12px 12px;
+      .hori-nav {
+        display: none;
+      }
       .about-sidebar {
         border-right: 2px solid black;
         border-bottom: 2px solid black;
@@ -281,6 +295,40 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
 
         padding-left: 12px;
       }
+      @media (max-width: 964px) {
+        .hori-nav {
+          display: block;
+          ul {
+            display: flex;
+            list-style: none;
+            justify-content: space-evenly;
+            padding: 0;
+            margin: 0;
+            border-bottom: 1px solid black;
+            background-color: #ededed;
+            li {
+              width: 100%;
+              text-align: center;
+              border-left: 2px solid black;
+              font-weight: 600;
+              font-size: 16px;
+              color: #858081;
+              &:first-child {
+                border-left: none;
+              }
+            }
+            li.active {
+              color: #000;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+    @media (max-width: 964px) {
+      .about-content {
+        display: block;
+      }
     }
   }
 
@@ -294,6 +342,15 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
     img {
       width: 24px;
       height: 24px;
+    }
+  }
+
+  @media (max-width: 964px) {
+    .about-sidebar {
+      display: none;
+    }
+    .about-content {
+      display: block;
     }
   }
 </style>
