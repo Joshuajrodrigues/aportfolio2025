@@ -1,36 +1,20 @@
 ---
 const { title, src, type, tags, id, colors, art, artTitle } = Astro.props;
-import "glightbox/dist/css/glightbox.css";
+
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
 const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
 ---
 
-<script>
-  import GLightbox from "glightbox"; //ignore
+<div style={{ backgroundColor: colors?.[0] }} class="frame">
+  <p class="title">
+    <span>{title}</span>
+    <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span>
+    <img src={"/card buttons.svg"} alt="000" />
+  </p>
 
-  const lightbox = GLightbox({
-    selector: ".glightbox",
-  });
-</script>
-<a style={isArt} href={link}>
-  <div style={{ backgroundColor: colors?.[0] }} class="frame">
-    <p class="title">
-      <span>{title}</span>
-      <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span
-      >
-      <img src={"/card buttons.svg"} alt="000" />
-    </p>
-    {
-      art ? (
-        <a href={src} class="glightbox">
-          <img src={src} alt={title} />
-        </a>
-      ) : (
-        <img src={src} alt={title} />
-      )
-    }
-  </div>
-</a>
+  <img src={src} alt={title} />
+</div>
+
 <style>
   .frame {
     border: 1px solid black;

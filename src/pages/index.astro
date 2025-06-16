@@ -27,29 +27,7 @@ shuffle(content);
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
-    <!-- <script >
-      import Masonry from "masonry-layout";
-      import imagesLoaded from "imagesloaded";
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const grid = document.querySelector(".grid");
-        if (!grid) return;
-
-        // initialize Masonry
-        const msnry = new Masonry(grid, {
-          itemSelector: ".grid-item",
-          gutter: 40,
-          transitionDuration: "0s",
-          fitWidth: true,
-        });
-        let imgLoaded = imagesLoaded(grid);
-        imgLoaded.on("done", () => {
-          grid.classList.remove("is-loading");
-          grid.classList.add("is-ready");
-          msnry.layout!();
-        });
-      });
-    </script> -->
+   
     <Header />
     <main class="dotted">
       <Masonry
