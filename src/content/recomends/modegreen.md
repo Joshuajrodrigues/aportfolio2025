@@ -1,5 +1,5 @@
 ---
 title: "Mondegreen by Damons Year"
 type: "recomends"
-src: "/recomends.png"
+src: "/src/content/allImages/recomends/recomends.png"
 ---

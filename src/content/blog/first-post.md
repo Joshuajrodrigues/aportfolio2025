@@ -2,7 +2,7 @@
 title: 'Why ‘In The Mood For Love’ feels so devastating'
 description: 'Fermentum in leo sed arcu sem tellus commodo leo orci. Enim suspendisse tortor faucibus quam elit mauris scelerisque turpis. Morbi nibh massa pharetra ultrices. Aliquet neque venenatis ornare congue malesuada nibh laoreet quam.'
 pubDate: 'Jul 08 2022'
-heroImage: '/blog-placeholder-3.jpg'
+heroImage: '/src/content/allImages/blog/first-blog-heo.jpg'
 type: "blog"
 tag: ["Movies"]
 blog: ["Blog 001"]

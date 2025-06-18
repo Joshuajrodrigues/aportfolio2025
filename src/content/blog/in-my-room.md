@@ -2,7 +2,7 @@
 title: 'In My Room'
 description: 'How have you been? Have you been well? I’ve been thinking about you. I want your colors back in my life.'
 pubDate: 'Jul 08 2022'
-heroImage: '/blog-placeholder-3.jpg'
+heroImage: '/src/content/allImages/blog/first-blog-heo.jpg'
 type: "blog"
 tag: ["Short story"]
 blog: ["Blog 002"]

@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import "glightbox/dist/css/glightbox.css";
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
 const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
-console.log("src",src)
+
 ---
 
 <script>
@@ -20,7 +20,7 @@ console.log("src",src)
       <span>{title}</span>
       <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span
       >
-      <img src={"/card buttons.svg"} alt="000" />
+      <img src={"/site-icons/card-buttons.svg"} alt="000" />
     </p>
     {
       art ? (
