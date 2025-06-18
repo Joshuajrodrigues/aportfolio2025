@@ -1,10 +1,12 @@
 ---
+import { Image } from "astro:assets";
+
 const { title, src } = Astro.props;
 ---
 
 <div class="container">
   <div class="recomends-data">
-    <img src={src} alt={title} />
+    <Image src={src} alt={title} />
     <div class="recomendation-data-text">
       <span>Recommendation</span>
       <small>{title}</small>
