@@ -14,25 +14,29 @@ const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
     selector: ".glightbox",
   });
 </script>
-<a style={isArt} href={link}>
-  <div style={{ backgroundColor: colors?.[0] }} class="frame">
+{type !== "art" ? (
+  <a href={`/projects/${id}/`} style="cursor:pointer">
+    <div style={{ backgroundColor: colors?.[0] }} class="frame">
+      <p class="title">
+        <span>{title}</span>
+        <span class="type">{tags?.[0] || "Project"}</span>
+        <img src="/site-icons/card-buttons.svg" alt="" aria-hidden="true" />
+      </p>
+      <Image src={src} alt={title} />
+    </div>
+  </a>
+) : (
+  <div class="frame" style={{ backgroundColor: colors?.[0], cursor: "default" }}>
     <p class="title">
       <span>{title}</span>
-      <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span
-      >
-      <img src={"/site-icons/card-buttons.svg"} alt="000" />
+      <span class="type">Art</span>
+      <img src="/site-icons/card-buttons.svg" alt="" aria-hidden="true" />
     </p>
-    {
-      art ? (
-        <a href={src.src} class="glightbox">
-          <Image class={"opt-image"} src={src} alt={title} />
-        </a>
-      ) : (
-        <Image src={src} alt={title} />
-      )
-    }
+    <a href={src.src} class="glightbox">
+      <Image class="opt-image" src={src} alt={title} />
+    </a>
   </div>
-</a>
+)}
 <style>
   .frame {
     border: 1px solid black;
