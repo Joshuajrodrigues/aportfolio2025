@@ -16,6 +16,10 @@ tags: ["UI UX Design","Graphic Design","Project Planning"]
 
 import CenteredImage from '../../mdxcomponents/CenterImage.astro';
 import Carousel from '../../mdxcomponents/svelte/Carousel.svelte'
+import  car1 from '../allImages/project/twimbit/carosell/1.png'
+import car2 from '../allImages/project/twimbit/carosell/2.png'
+import caro from '../allImages/project/twimbit/extra/1.png'
+
 
 ## Background
 Twimbit is a tech-forward research and advisory firm that harnesses the powers of AI. It delivers a private and contextual platform to its client that helps them excel as leaders in their domain through accessing industry insights in various formats.
@@ -33,6 +37,6 @@ Some of the projects I worked on were:
 - Twimbit Telecom Awards 2025 website and
 - Client instances of our platform (custom and private)
 
-<Carousel images={["/src/content/allImages/project/twimbit/carosell/1.png","/src/content/allImages/project/twimbit/carosell/2.png","/src/content/allImages/project/twimbit/carosell/1.png",]} client:only="svelte" />
-<CenteredImage imageUrl="/src/content/allImages/project/twimbit/extra/1.png" />
+<Carousel images={[car1,car2,car1,]} client:only="svelte" />
+<CenteredImage imageUrl={caro} />
 

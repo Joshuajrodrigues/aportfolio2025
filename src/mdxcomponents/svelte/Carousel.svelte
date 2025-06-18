@@ -37,7 +37,7 @@
     <ul class="glide__slides">
       {#each images as image}
         <li class="glide__slide">
-          <img src={image} alt="" />
+          <img src={image.src} alt="" />
         </li>
       {/each}
 
