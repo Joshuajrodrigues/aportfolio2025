@@ -18,9 +18,9 @@ const recomends = await getCollection("recomends");
 const projects = await getCollection("project")
 
 let content = [...blog, ...art, ...recomends,...projects];
-let featured = content.filter((cont)=>cont?.data?.featured)
+//let featured = content.filter((cont)=>cont?.data?.featured)
 let result = shuffle(content);
-content = [...featured,...result]
+//content = [...featured,...result]
 ---
 
 <!doctype html>
@@ -42,7 +42,7 @@ content = [...featured,...result]
         }}
       >
         {
-          content.map((post) => {
+          result.map((post) => {
             switch (post.data.type) {
               case "art":
               case "project":
