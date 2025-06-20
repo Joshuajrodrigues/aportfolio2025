@@ -18,7 +18,9 @@ const recomends = await getCollection("recomends");
 const projects = await getCollection("project")
 
 let content = [...blog, ...art, ...recomends,...projects];
-shuffle(content);
+let featured = content.filter((cont)=>cont?.data?.featured)
+let result = shuffle(content);
+content = [...featured,...result]
 ---
 
 <!doctype html>

@@ -11,7 +11,7 @@ import { shuffle } from "../../utils";
 const blog = await getCollection("blog")
 
 let content = [...blog];
-shuffle(content);
+let result = shuffle(content);
 ---
 
 <!doctype html>
@@ -33,7 +33,7 @@ shuffle(content);
         }}
       >
         {
-          content.map((post) => {
+          result.map((post) => {
             switch (post!.data.type) {
               case "project":
                 return (

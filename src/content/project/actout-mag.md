@@ -2,7 +2,7 @@
 title: "ActOut magazine"
 description: "Tristique non adipiscing diam mauris nulla adipiscing euismod. Vitae maecenas pellentesque viverra ac commodo arcu ut vel elementum. Et erat integer hac urna. Metus elit sapien luctus gravida. Ultricies sem mattis at viverra convallis porttitor posuere dolor mattis. Lacus cursus phasellus tempor vitae sed. Pharetra vitae gravida tempus scelerisque leo nisl."
 pubDate: "Dec 09 2022"
-featured: true
+featured: false
 heroImage: "/src/content/allImages/project/magazine.png"
 src: "/src/content/allImages/project/magazine.png"
 type: "project"
