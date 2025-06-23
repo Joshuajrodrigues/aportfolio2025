@@ -2,7 +2,7 @@
 const { title, src, type, tags, id, colors, locId, artTitle } = Astro.props;
 import { Picture } from 'astro:assets';
 import { Image } from 'astro:assets';
-import "glightbox/dist/css/glightbox.css";
+
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
 const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
 
@@ -28,7 +28,7 @@ const imgOpt= locId>5?"lazy":"eager"
       <span class="type">Art</span>
       <img loading={imgOpt} src="/site-icons/card-buttons.svg" alt="" aria-hidden="true" />
     </p>
-    <a href={src.src} class="glightbox">
+    <a href={src.src}>
       <Picture class="opt-image" src={src} alt={title} loading={imgOpt} />
     </a>
   </div>
