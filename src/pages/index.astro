@@ -17,10 +17,12 @@ const art = await getCollection("art");
 const recomends = await getCollection("recomends");
 const projects = await getCollection("project")
 
-let content = [...blog, ...art, ...recomends,...projects];
-//let featured = content.filter((cont)=>cont?.data?.featured)
+let featured = projects.filter((cont)=>cont?.data?.featured)
+let featuredIds = new Set(featured.map(item => item.id));
+let nonFeaturedProjects = projects.filter(item => !featuredIds.has(item.id));
+let content = [...blog, ...art, ...recomends, ...nonFeaturedProjects];
 let result = shuffle(content);
-//content = [...featured,...result]
+result = [...featured,...result]
 ---
 
 <!doctype html>
