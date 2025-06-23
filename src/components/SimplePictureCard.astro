@@ -1,10 +1,13 @@
 ---
+import { Image } from "astro:assets";
 import { Picture } from "astro:assets";
 
 const { title, src, type, tags, id, colors, art, artTitle } = Astro.props;
 
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
 const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
+
+console.log("src",src)
 ---
 
 <div style={{ backgroundColor: colors?.[0] }} class="frame">
@@ -14,7 +17,7 @@ const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
     <img src={"/site-icons/card-buttons.svg"} alt="000" />
   </p>
 
-  <Picture width={400} height={225} src={src} alt={title} />
+  <Image width={400} height={225} src={src} alt={title} />
 </div>
 
 <style>
