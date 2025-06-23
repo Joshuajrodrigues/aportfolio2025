@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
 const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
 
-const imgOpt= locId>5?"lazy":"eager"
+const imgOpt= locId>3?"lazy":"eager"
 ---
 
 
