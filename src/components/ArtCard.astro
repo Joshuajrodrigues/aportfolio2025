@@ -1,13 +1,12 @@
 ---
 const { title, src, type, tags, id, colors, locId, artTitle } = Astro.props;
-import { Image, Picture } from 'astro:assets';
+import { Image } from 'astro:assets';
 import "glightbox/dist/css/glightbox.css";
-
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
 const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
-
 const imgOpt= locId>3?"lazy":"eager"
 ---
+
 <script>
   import GLightbox from "glightbox"; //ignore
 
@@ -15,7 +14,6 @@ const imgOpt= locId>3?"lazy":"eager"
     selector: ".glightbox",
   });
 </script>
-
 {type !== "art" ? (
   <a href={`/projects/${id}/`} style="cursor:pointer">
     <div style={{ backgroundColor: colors?.[0] }} class="frame">
@@ -24,7 +22,7 @@ const imgOpt= locId>3?"lazy":"eager"
         <span class="type">{tags?.[0] || "Project"}</span>
         <img loading={imgOpt} src="/site-icons/card-buttons.svg" alt="" aria-hidden="true" />
       </p>
-      <Picture src={src} alt={title} loading={imgOpt} />
+      <Image loading={imgOpt} src={src} alt={title} />
     </div>
   </a>
 ) : (
@@ -34,8 +32,8 @@ const imgOpt= locId>3?"lazy":"eager"
       <span class="type">Art</span>
       <img loading={imgOpt} src="/site-icons/card-buttons.svg" alt="" aria-hidden="true" />
     </p>
-    <a href={src.src}>
-      <Image class="opt-image" src={src} alt={title} loading={imgOpt} />
+    <a href={src.src} class="glightbox">
+      <Image loading={imgOpt} class="opt-image" src={src} alt={title} />
     </a>
   </div>
 )}
