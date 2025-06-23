@@ -26,6 +26,9 @@ importers:
       '@fontsource/pt-serif':
         specifier: ^5.2.5
         version: 5.2.5
+      '@glidejs/glide':
+        specifier: ^3.7.1
+        version: 3.7.1
       astro:
         specifier: ^5.9.3
         version: 5.9.3(@types/node@22.13.8)(rollup@4.34.9)(typescript@5.8.2)
@@ -282,6 +285,9 @@ packages:
 
   '@fontsource/pt-serif@5.2.5':
     resolution: {integrity: sha512-5wXOmZEBqS3WGycuB1YCO9Rimrn18KiEJ2gCJGXPw6d/lLeYT5wclMhL7BB2a8Oh3eTROxTsEaGa5PweE7L/5Q==}
+
+  '@glidejs/glide@3.7.1':
+    resolution: {integrity: sha512-8he0pZpLSqTesSFYiuWdhBmtdlYSPWxfPUCKtkkiX6ZmT8UdMdmoFPtJaOwLBXv4p2JiGxqbuPdiRGGo2e/htQ==}
 
   '@iconify/tools@4.1.1':
     resolution: {integrity: sha512-Hybu/HGhv6T8nLQhiG9rKx+ekF7NNpPOEQAy7JRSKht3s3dcFSsPccYzk24Znc9MTxrR6Gak3cg6CPP5dyvS2Q==}
@@ -2449,6 +2455,8 @@ snapshots:
   '@fontsource/poppins@5.2.1': {}
 
   '@fontsource/pt-serif@5.2.5': {}
+
+  '@glidejs/glide@3.7.1': {}
 
   '@iconify/tools@4.1.1':
     dependencies:
