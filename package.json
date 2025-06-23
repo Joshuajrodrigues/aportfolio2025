@@ -15,11 +15,9 @@
     "@astrojs/svelte": "^7.1.0",
     "@fontsource/poppins": "^5.1.0",
     "@fontsource/pt-serif": "^5.2.5",
-    "@glidejs/glide": "^3.7.1",
     "astro": "^5.9.3",
     "astro-icon": "^1.1.4",
     "astro-masonry": "^1.2.2",
-    "masonry-layout": "^4.2.2",
     "sharp": "^0.34.2",
     "svelte": "^5.20.5",
     "typescript": "^5.8.2"
