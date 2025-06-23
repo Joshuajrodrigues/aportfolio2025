@@ -44,28 +44,28 @@ result = [...featured,...result]
         }}
       >
         {
-          result.map((post) => {
+          result.map((post,id) => {
             switch (post.data.type) {
               case "art":
               case "project":
                 return (
                   <div class="grid-item">
                     {" "}
-                    <ArtCard art={post.data.type==="art"} id={post.id} {...post.data} />
+                    <ArtCard locId={id} art={post.data.type==="art"} id={post.id} {...post.data} />
                   </div>
                 );
 
               case "blog":
                 return (
                   <div class="grid-item ">
-                    <BlogCard {...post.data} />
+                    <BlogCard locId={id} {...post.data} />
                   </div>
                 );
               case "recomends":
                 return (
                   <div class="grid-item">
                     {" "}
-                    <RecomendsCard {...post.data} />
+                    <RecomendsCard locId={id} {...post.data} />
                   </div>
                 );
             }

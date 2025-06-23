@@ -1,6 +1,6 @@
 ---
-const { title,blog, description,tag,link,colors } = Astro.props;
-
+const { title,blog, description,tag,link,colors,locId } = Astro.props;
+const imgOpt= locId>5?"lazy":"eager"
 ---
 
 
@@ -8,7 +8,7 @@ const { title,blog, description,tag,link,colors } = Astro.props;
   <p style={{backgroundColor:colors[0]}} class="title">
     <span>{blog[0]}</span>
     <span class="type">Writting</span>
-    <img src={"/site-icons/card-buttons.svg"} alt="000" />
+    <img loading={imgOpt} src={"/site-icons/card-buttons.svg"} alt="000" />
   </p>
   <div class="folder">
     
