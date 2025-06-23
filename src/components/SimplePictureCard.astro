@@ -1,10 +1,8 @@
 ---
-import { Picture } from "astro:assets";
+
 
 const { title, src, type, tags, id, colors, art, artTitle } = Astro.props;
 
-const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
-const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
 
 console.log("src",src)
 ---

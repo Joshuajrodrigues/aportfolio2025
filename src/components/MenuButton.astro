@@ -11,9 +11,7 @@ import HeaderLink from "./HeaderLink.astro";
     menuContent.classList.toggle("open");
     body.classList.toggle("no-scroll");
   });
-  
 </script>
-
 
 <div id="responsive-menu">
   <span></span>
@@ -21,13 +19,13 @@ import HeaderLink from "./HeaderLink.astro";
   <span></span>
 </div>
 <div class="menu-content">
-    <div class="desktop-header internal-links">
-       <HeaderLink href="/">All</HeaderLink>
-       <HeaderLink href="/projects">Work</HeaderLink>
-        <HeaderLink href="/writing">Writing</HeaderLink>
-        <HeaderLink href="/about">About</HeaderLink>
-        <HeaderLink href="/contact">Say Hi</HeaderLink>
-    </div>
+  <div class="desktop-header internal-links">
+    <HeaderLink href="/">All</HeaderLink>
+    <HeaderLink href="/projects">Work</HeaderLink>
+    <HeaderLink href="/writing">Writing</HeaderLink>
+    <HeaderLink href="/about">About</HeaderLink>
+    <a href="mailto:work@akankshagajankar.com"> Say Hi </a>
+  </div>
 </div>
 
 <style>
@@ -77,12 +75,12 @@ import HeaderLink from "./HeaderLink.astro";
     right: 0;
     height: 100vh;
     width: 100vw;
-  
+
     background-color: #ffffffe8;
     display: flex;
     flex-direction: column;
   }
-  .desktop-header{
+  .desktop-header {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -91,10 +89,16 @@ import HeaderLink from "./HeaderLink.astro";
     font-weight: 500;
     font-size: 1.25em;
     margin-top: 25vh;
-    gap:45px;
+    gap: 45px;
     color: black;
   }
   .menu-content {
-   display: none;
+    display: none;
+  }
+
+  a,
+  a.active {
+    all: unset;
+    text-decoration: none;
   }
 </style>
