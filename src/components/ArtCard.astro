@@ -1,5 +1,6 @@
 ---
 const { title, src, type, tags, id, colors, art, artTitle } = Astro.props;
+import { Picture } from 'astro:assets';
 import { Image } from 'astro:assets';
 import "glightbox/dist/css/glightbox.css";
 const isArt = type !== "art" ? { cursor: "pointer" } : { cursor: "default" };
@@ -22,7 +23,7 @@ const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
         <span class="type">{tags?.[0] || "Project"}</span>
         <img src="/site-icons/card-buttons.svg" alt="" aria-hidden="true" />
       </p>
-      <Image src={src} alt={title} />
+      <Picture src={src} alt={title} />
     </div>
   </a>
 ) : (
@@ -33,7 +34,7 @@ const link = type !== "art" ? `/projects/${id}/` : "javascript:void(0)";
       <img src="/site-icons/card-buttons.svg" alt="" aria-hidden="true" />
     </p>
     <a href={src.src} class="glightbox">
-      <Image class="opt-image" src={src} alt={title} />
+      <Picture class="opt-image" src={src} alt={title} />
     </a>
   </div>
 )}
