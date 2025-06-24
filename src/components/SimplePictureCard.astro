@@ -1,16 +1,18 @@
 ---
 
 
-const { title, src, type, tags, id, colors, art, artTitle } = Astro.props;
+const { title, src, type, tags, id, colors, art, artTitle,hideType=false } = Astro.props;
 
 
-console.log("src",src)
 ---
 
 <div style={{ backgroundColor: colors?.[0] }} class="frame">
   <p class="title">
     <span>{title}</span>
-    <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span>
+    {
+      !hideType &&  <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span>
+    }
+   
     <img loading="lazy" src={"/site-icons/card-buttons.svg"} alt="000" />
   </p>
 
