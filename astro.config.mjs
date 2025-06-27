@@ -5,8 +5,10 @@ import sitemap from '@astrojs/sitemap';
 
 import svelte from '@astrojs/svelte';
 
+import favicons from 'astro-favicons';
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://www.akankshagajankar.com',
-    integrations: [mdx(), sitemap(), svelte()],
+    integrations: [mdx(), sitemap(), svelte(), favicons()],
 });

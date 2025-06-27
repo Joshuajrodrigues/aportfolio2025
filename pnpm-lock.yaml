@@ -32,6 +32,9 @@ importers:
       astro:
         specifier: ^5.9.3
         version: 5.9.3(@types/node@22.13.8)(rollup@4.34.9)(typescript@5.8.2)
+      astro-favicons:
+        specifier: ^3.1.5
+        version: 3.1.5(astro@5.9.3(@types/node@22.13.8)(rollup@4.34.9)(typescript@5.8.2))
       astro-icon:
         specifier: ^1.1.4
         version: 1.1.5
@@ -796,6 +799,11 @@ packages:
     resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
     hasBin: true
 
+  astro-favicons@3.1.5:
+    resolution: {integrity: sha512-XFEW0Yk0sSfFu7WAT5wJ61atbT16YpO3y5n/ooxtys1/Uuv0v2XmMFw8OUrxnykmstUKoa+XjqUw22ph9cFn7A==}
+    peerDependencies:
+      astro: '>= 4.0.0'
+
   astro-icon@1.1.5:
     resolution: {integrity: sha512-CJYS5nWOw9jz4RpGWmzNQY7D0y2ZZacH7atL2K9DeJXJVaz7/5WrxeyIxO8KASk1jCM96Q4LjRx/F3R+InjJrw==}
 
@@ -1103,6 +1111,9 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  escape-html@1.0.3:
+    resolution: {integrity: sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==}
+
   escape-string-regexp@5.0.0:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
@@ -1154,6 +1165,10 @@ packages:
   fast-xml-parser@5.2.5:
     resolution: {integrity: sha512-pfX9uG9Ki0yekDHx2SiuRIyFdyAr1kMIMitPvb0YBo8SUfKvia7w7FIyd/l6av85pFYRhZscS75MwMnbvY+hcQ==}
     hasBin: true
+
+  favilib@1.0.5:
+    resolution: {integrity: sha512-3Fk5LQRU96QUmHWmyZc3WIMyz1tmte6TPlCVjaairXeHGtPHM4pnLvg11CyXTq6od1v5aaopHoREHNSwN4BKDA==}
+    engines: {node: '>=14.0.0'}
 
   fd-slicer@1.1.0:
     resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
@@ -2176,6 +2191,14 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
+  xml2js@0.6.2:
+    resolution: {integrity: sha512-T4rieHaC1EXcES0Kxxj4JWgaUQHDk+qwHcYOCFHfiwKz7tOVPLq7Hjq9dM1WCMhylqMEfP7hMcOIChvotiZegA==}
+    engines: {node: '>=4.0.0'}
+
+  xmlbuilder@11.0.1:
+    resolution: {integrity: sha512-fDlsI/kFEx7gLvbecc0/ohLG50fugQp8ryHzMTuW9vSa1GJ0XYWKnhsUx7oie3G98+r56aTQIUB4kht42R3JvA==}
+    engines: {node: '>=4.0'}
+
   xxhash-wasm@1.1.0:
     resolution: {integrity: sha512-147y/6YNh+tlp6nd/2pWq38i9h6mz/EuQ6njIrmW8D1BS5nCqs0P6DG+m6zTGnNz5I+uhZ0SHxBs9BsPrwcKDA==}
 
@@ -2905,6 +2928,12 @@ snapshots:
 
   astring@1.9.0: {}
 
+  astro-favicons@3.1.5(astro@5.9.3(@types/node@22.13.8)(rollup@4.34.9)(typescript@5.8.2)):
+    dependencies:
+      astro: 5.9.3(@types/node@22.13.8)(rollup@4.34.9)(typescript@5.8.2)
+      favilib: 1.0.5
+      ultrahtml: 1.6.0
+
   astro-icon@1.1.5:
     dependencies:
       '@iconify/tools': 4.1.1
@@ -3206,8 +3235,7 @@ snapshots:
 
   destr@2.0.3: {}
 
-  detect-libc@2.0.3:
-    optional: true
+  detect-libc@2.0.3: {}
 
   detect-libc@2.0.4: {}
 
@@ -3327,6 +3355,8 @@ snapshots:
       '@esbuild/win32-ia32': 0.25.0
       '@esbuild/win32-x64': 0.25.0
 
+  escape-html@1.0.3: {}
+
   escape-string-regexp@5.0.0: {}
 
   esm-env@1.2.2: {}
@@ -3389,6 +3419,12 @@ snapshots:
   fast-xml-parser@5.2.5:
     dependencies:
       strnum: 2.1.1
+
+  favilib@1.0.5:
+    dependencies:
+      escape-html: 1.0.3
+      sharp: 0.33.5
+      xml2js: 0.6.2
 
   fd-slicer@1.1.0:
     dependencies:
@@ -4556,7 +4592,6 @@ snapshots:
       '@img/sharp-wasm32': 0.33.5
       '@img/sharp-win32-ia32': 0.33.5
       '@img/sharp-win32-x64': 0.33.5
-    optional: true
 
   sharp@0.34.2:
     dependencies:
@@ -4870,6 +4905,13 @@ snapshots:
       strip-ansi: 7.1.0
 
   wrappy@1.0.2: {}
+
+  xml2js@0.6.2:
+    dependencies:
+      sax: 1.4.1
+      xmlbuilder: 11.0.1
+
+  xmlbuilder@11.0.1: {}
 
   xxhash-wasm@1.1.0: {}
 
