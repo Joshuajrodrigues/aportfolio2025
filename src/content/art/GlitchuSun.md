@@ -1,5 +1,5 @@
 ---
 title: "Glitchy Sun"
 type: "art"
-src: '/src/content/allImages/art/Glitch.webp'
+src: '/src/content/allImages/art/glitchysun.gif'
 ---
