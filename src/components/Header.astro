@@ -12,8 +12,9 @@ const { headerColor } = Astro.props;
   }}
 >
   <nav>
+    <h1 class="visually-hidden">Akanksha Gajankar</h1>
     <h2>
-      <a class="mobile-header" href="/">A</a>
+      <a aria-label="Akanksha Gajankar" class="mobile-header" href="/">A</a>
       <a class="desktop-header" href="/">{SITE_TITLE}</a>
     </h2>
     <div class="mobile-header menu">
@@ -29,9 +30,22 @@ const { headerColor } = Astro.props;
       </CTAButton>
     </div>
   </nav>
+  <p class="visually-hidden">Hi, I’m Akanksha — a UI/UX designer in Goa. Welcome to my digital home, where I share design adventures, stories, and art.</p>
   <div class="border"></div>
 </header>
 <style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   header {
     margin: 0;
     padding: 0 1em;
