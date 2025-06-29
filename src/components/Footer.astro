@@ -3,10 +3,19 @@ const today = new Date();
 ---
 
 <footer>
-	&copy; {today.getFullYear()} Akanksha. All rights reserved.
-
+	<div>
+		&copy; {today.getFullYear()} Akanksha Gajankar. All rights reserved.
+	</div>
+	<div class="links">
+		<a aria-label="about me" href="/about">About</a>
+		<a href="mailto:work@akankshagajankar.com" aria-label="contact info">Contact</a>
+	</div>
 </footer>
 <style>
+	.links{
+		display: flex;
+		gap: 5px;
+	}
 	footer {
 		display: flex;
 		justify-content: space-between;
@@ -15,8 +24,10 @@ const today = new Date();
 		font-size: 12px;
 		text-align: left;
 		a{
+			all: unset;
 			width: 64px;
-		
+			cursor: pointer;
+
 		}
 	}
 	
