@@ -4,9 +4,13 @@ import { Image } from "astro:assets";
 const { title, src } = Astro.props;
 ---
 
-<div class="container">
+<div style={{
+  backgroundImage:`url(${src.src})`,
+  backgroundRepeat: 'no-repeat',
+  width:"400px"
+}} class="container">
   <div class="recomends-data">
-    <Image src={src} alt={title} />
+  
     <div class="recomendation-data-text">
       <span>Recommendation</span>
       <small>{title}</small>
@@ -25,9 +29,9 @@ const { title, src } = Astro.props;
     font-size: 0;
     .recomends-data {
       .recomendation-data-text {
+        padding: 12px;
         font-size: 12px;
         line-height: 24px;
-        position: absolute;
         display: flex;
         flex-direction: column;
         top: 12px;
