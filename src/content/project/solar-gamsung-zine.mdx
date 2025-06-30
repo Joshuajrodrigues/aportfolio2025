@@ -1,0 +1,53 @@
+---
+title: "Solar Gamsung Vol.7 Zine"
+description: "A zine dedicated to the msuical project of the same name by Solar"
+pubDate: "Sept 15 2025"
+featured: true
+heroImage: "/src/content/allImages/project/solargamsunghero.webp"
+heroHelpText: " "
+src: "/src/content/allImages/project/solargamsunghero.webp"
+type: "project"
+contentBlocks: []
+caraousel: []
+tags: ["UI UX Design", "Graphic Design", "Project Planning"]
+colors: ["#8AB5E7"]
+---
+
+import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
+import suddenImage from '../allImages/project/twimbit/solarpagecover.webp';
+import SimplePictureCard from '../../components/SimplePictureCard.astro'
+import Carousel from '../../mdxcomponents/svelte/Carousel.svelte'
+import  caro from '../allImages/project/solargamsung_carousel/solarpage0_1.webp'
+import car1 from '../allImages/project/solargamsung_carousel/solarpage2_3.webp'
+import car2 from '../allImages/project/solargamsung_carousel/solarpage4_5.webp'
+import car3 from '../allImages/project/solargamsung_carousel/solarpage6_7.webp'
+import car4 from '../allImages/project/solargamsung_carousel/solarpage8_9.webp'
+import car5 from '../allImages/project/solargamsung_carousel/solarpage10_11.webp'
+import car6 from '../allImages/project/solargamsung_carousel/solarpage12_13.webp'
+
+
+
+<HalfWidthPara>
+<p slot="para1" >
+The idea for this zine was born out of a genuine moment of being moved my music. I have been a long time fan of Solar and her K-pop group, Mamamoo. I began following all of their individual projects, among which was the album Solar dedicated to creating covers of deeply emotional Korean songs of a more by-gone era in music. This song stayed with me and the extremely powerful and emotional delivery by Solar made me want to remember this connection I feel to the song. Since these albums are hard to come by in India, I decided to create my own merchandise for the project to remember my connection to it.
+</p>
+
+
+{/*
+ you can use this instead of img, same way as image, hide type will hide the type, if you want to add headting pass it this way and comment
+ the other code by hightlighting it and using ctrl+k+c
+<SimplePictureCard title={"Tshirt"} tags={["Boo"]}  art={true} slot="image" src={suddenImage.src} alt="Image alt" />
+ */}
+ 
+
+</HalfWidthPara>
+
+# The zine design process
+Since this was more of a personal project I wanted to let it be the most fun I can have while designing. I made sure to listen to the song and the music video. Since the Korean music industry has such talented visual artists that dedicate such immense thought to the visuals behind these songs, I decided to take their lead. The music video and the behind-the-scenes posted by the artist herself was very helpful in me narrowing down the aesthetic. 
+
+The music video is composed of a lot of sweeping white snowy landscapes and our artist dressed in a white gown. There are pastel color themes for the abandoned swimming pool set and the house set as well which enhances the effect of being set in a time that we are nostalgic for. Seeing as the addition of  snow was important and so was the theme of isolation and heartbreak, I decided to keep the zine a black and white one. 
+
+Korean is also a language that I am deeply fascinated by and have put in some effort in beginning to learn as well, which added to my resolve of letting the magazine feature a lot of the original Korean lyrics as well as little written interpretations that I wanted to express. The text and the addition of the original language lyrics creates more of a nostalgic feel to it. The choice of paper would also play a huge role in this as a more glossy, shiny paper would not suit its intention. A more regular and grainy paper would be the ideal choice.
+
+<Carousel images={[car1,car2,car1,]} client:only="svelte" />
+<CenteredImage imageUrl={caro} />
