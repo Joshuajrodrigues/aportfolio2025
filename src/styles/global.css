@@ -158,7 +158,7 @@ main {
 }
 
 .dotted {
-	background-image: radial-gradient(#585858 5%, transparent 0);
+	background-image: radial-gradient(#8080803c 5%, transparent 0);
 	background-size: 35px 35px;
 	height: 100%;
 }
