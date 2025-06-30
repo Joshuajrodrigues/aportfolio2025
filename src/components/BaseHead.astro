@@ -13,8 +13,14 @@ interface Props {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image='src/content/allImages/temp-base.webp', keywords = 'UI UX Designer, Akanksha Gajankar, Goa, India, Writing, Art', } = Astro.props;
+const {
+  title,
+  description,
+  image = "/site-images/temp-base.webp",
+  keywords = "UI UX Designer, Akanksha Gajankar, Goa, India, Writing, Art, Hire, Twimbit, Designer, Author, Artist, Figma, UI, UX",
+} = Astro.props;
 ---
+<link rel="sitemap" href="/sitemap-index.xml" />
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
@@ -24,13 +30,8 @@ const { title, description, image='src/content/allImages/temp-base.webp', keywor
 <!-- maui is hwerereeeee -->
 <meta name="generator" content={Astro.generator} />
 
-<!-- Font preloads -->
-<!-- <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
-<link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin /> -->
-
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
-
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
@@ -49,5 +50,3 @@ const { title, description, image='src/content/allImages/temp-base.webp', keywor
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 {image && <meta property="twitter:image" content={new URL(image, Astro.url)} />}
-
-
