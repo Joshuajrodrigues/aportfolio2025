@@ -17,6 +17,20 @@ import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
 import suddenImage from '../allImages/project/twimbit/sparksimage1.png';
 import SimplePictureCard from '../../components/SimplePictureCard.astro'
 
+import Carousel from '../../mdxcomponents/svelte/Carousel.svelte'
+import car1 from '../allImages/project/actoutcarousel/1.webp'
+import car2 from '../allImages/project/actoutcarousel/3.webp'
+import car3 from '../allImages/project/actoutcarousel/4.webp'
+import car4 from '../allImages/project/actoutcarousel/5.webp'
+import car5 from '../allImages/project/actoutcarousel/6.webp'
+import car6 from '../allImages/project/actoutcarousel/7.webp'
+import car7 from '../allImages/project/actoutcarousel/8.webp'
+import car8 from '../allImages/project/actoutcarousel/9.webp'
+import car9 from '../allImages/project/actoutcarousel/10.webp'
+import car10 from '../allImages/project/actoutcarousel/11.webp'
+import car11 from '../allImages/project/actoutcarousel/12.webp'
+
+
 
 <HalfWidthPara>
 <p slot="para1" >
@@ -45,5 +59,7 @@ For the design of the magazine, I wanted to let the spirit of straying from main
 Using green is an attempt to grab the readers passing by a stall and help them associate it easily with certain streaming giants that already solidify their identity with their branding. The hope is that a lot of people can comfortable associate music in a similar color profile that they already operate everyday. But, within the magazine using text layout and the use of the images of the artists and imagery that highlights their albums further, ActOut stands out on its own two feet. 
 
 Understanding the artists through their music and the message they want to convey is the magazines strength and that is in fact the reason why our recommendations aren’t made lightly. The magazine believes in the artists and brings them to you every month. Every design decision, choice of quotes used and the imagery expressed are brought onto the page keeping in mind the artists intention but also the magazines purpose. 
+
+<Carousel images={[car1,car2,car3,car4,car5,car6,car7,car8,car9,car10,car11,car12]} client:only="svelte" />
 
 
