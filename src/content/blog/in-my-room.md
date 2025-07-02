@@ -5,7 +5,7 @@ pubDate: 'Jul 08 2022'
 heroImage: '/src/content/allImages/blog/first-blog-heo.jpg'
 type: "blog"
 tag: ["Short story"]
-blog: ["Blog 002"]
+blog: ["Short Story 001"]
 link: "/blog/in-my-room"
 colors: ["#D5673E", "#EAE1D9"]
 ---
