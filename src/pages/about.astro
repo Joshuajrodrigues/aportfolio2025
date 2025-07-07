@@ -1,28 +1,27 @@
 ---
-
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import WindowCrad from "../components/WindowCrad.astro";
 import SimplePictureCard from "../components/SimplePictureCard.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-
+import cat1 from "../content/allImages/about/catto_1.gif";
+import cat2 from "../content/allImages/about/catto_2.gif";
 const aboutDeco = [
   {
     id: "cat1",
-    src: "/src/content/allImages/about/catto_1.gif",
+    src: cat1.src,
     title: "Curious Cat",
     type: "Interests",
     tags: ["Interests"],
   },
   {
     id: "cat2",
-    src: "/src/content/allImages/about/catto_2.gif",
+    src: cat2.src,
     title: "Cat eating",
     type: "Interests",
     tags: ["Interests"],
   },
-  
 ];
 ---
 
@@ -38,7 +37,7 @@ const aboutDeco = [
       <div class="about-deco-container">
         {aboutDeco.map((deco) => <SimplePictureCard art={true} {...deco} />)}
       </div>
-       <Footer />
+      <Footer />
     </main>
   </body>
 </html>
@@ -48,14 +47,13 @@ const aboutDeco = [
     height: 100dvh;
   }
   .about-deco-container {
-    display:flex;
+    display: flex;
     justify-content: space-between;
     margin-top: -120px;
-
   }
-  
-  @media (max-width:964px){
-   .about-deco-container{
+
+  @media (max-width: 964px) {
+    .about-deco-container {
       display: none;
     }
   }
