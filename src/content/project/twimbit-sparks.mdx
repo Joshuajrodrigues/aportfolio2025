@@ -19,14 +19,21 @@ colors: ["#E1e1e1"]
 import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
 import suddenImage from '../allImages/project/twimbit/sparksimage1.png';
 import SimplePictureCard from '../../components/SimplePictureCard.astro'
+import Carousel from '../../mdxcomponents/svelte/Carousel.svelte'
+import car1 from '../allImages/project/sparkscarousel/sparkshoodie1.webp'
+import car2 from '../allImages/project/sparkscarousel/sparkshoodie2.webp'
+import car3 from '../allImages/project/sparkscarousel/sparksparcel.webp'
+import car4 from '../allImages/project/sparkscarousel/sparkstote1.webp'
+import car5 from '../allImages/project/sparkscarousel/sparkstotebag2.webp'
+import car6 from '../allImages/project/sparkscarousel/sparkstshirt.webp'
 
 
 <HalfWidthPara>
 <p slot="para1" >
-Twimbit is a tech-forward research and advisory firm that harnesses the powers of AI. It delivers a private and contextual platform to its client that helps them excel as leaders in their domain through accessing industry insights in various formats. 
+Twimbit is a tech-forward research and advisory firm that harnesses the power of AI. It delivers a private, contextual platform to its clients, helping them excel as leaders in their domain by providing access to industry insights in various formats.
 </p>
 <p slot="para1" > 
-At Twimbit, I was the sole UI/UX designer for the entirety of my journey. My role involved collaborating closely with the founders and understanding their vision for the fast-growing landscape of their company. They had a product they were passionate about - one that was evolving quickly with the rise of AI. 
+At Twimbit, I was the sole UI/UX designer throughout my tenure. My role involved working closely with the founders to understand their vision for the company’s rapidly evolving landscape. They had a product they were deeply passionate about—one that was transforming quickly with the rise of AI.
 </p>
 
 {/*
@@ -38,17 +45,21 @@ At Twimbit, I was the sole UI/UX designer for the entirety of my journey. My rol
 
 </HalfWidthPara>
 
-# Merchandise that unites and inspires
-The Sparks project began as a humble merchandise design task for the internal team for the upcoming team offsite. I saw an opportunity to upgrade the overall experience of a company merchandise being received by the employees into something that actually facilitates a dialogue about growth and inspiration. I took a big swing and asked the stakeholders to allow me to give them a pitch about something that could be a long term, memorable merchandise asset that, if successful internally, could also grow to be a bridge to engage clients with. All this sounded very out there and hard to wrap your heads around at the verbal discussion stages, but I was passionate and excited to put in the extra effort required to distill the idea down to a digestible pitch deck for the entire team. It was nerve wracking that the team ended up being all of the stakeholders/ co-founders. I worked on the pitch deck to encapsulate the idea I had into something executable.'
+# Merchandise That Unites and Inspires
+The Sparks project began as a simple merchandise design request for an upcoming internal team offsite. But I saw an opportunity to turn it into something more meaningful—an experience that could spark dialogue around growth, identity, and inspiration across the company.
 
-Sparks, was a initiative that would show the growth of talent and innovative spirit in the employees at Twimbit. There would be 4 stages, each stage symbolizing the growing aspects of employees who have just joined to seasoned team members that are now beginning to echo their ideas and spirit through Twimbit out into the world. This would be symbolized into illustrated pieces of a hibiscus flower, a spark and convey a more younger aesthetic in terms of what items they’d feature on (e.g graphic t shirts, hoodies, sweatpants etc.)
+I pitched the idea of transforming the merchandise into a long-term, memorable brand asset—one that, if successful internally, could also evolve into a way to engage with clients. At the verbal discussion stage, the concept felt abstract and difficult to grasp, but I was passionate about its potential. I asked the stakeholders for the chance to present a full pitch. Though nerve-wracking—especially since the audience included all of the co-founders—I was excited to put in the extra effort to translate my vision into a clear, actionable pitch deck for the team.
 
-# Covering ground and bringing the idea together
+Sparks was conceived as a visual representation of the growth and innovative spirit of Twimbit’s employees. It was structured into four stages, each symbolizing a different phase in an employee’s journey—from new joiners to seasoned team members whose ideas and influence ripple outward through the company and beyond. This evolution was represented through illustrated elements of a hibiscus flower, a spark, and other design motifs. The aesthetic leaned toward a bold, youthful energy, and the designs were applied to items like graphic t-shirts, hoodies, sweatpants, and more—balancing symbolism with wearability and appeal.
 
-I was joined by a talented designer who had joined us recently and would take over the illustrations and together we came up with iterations upon iterations till we knew we had something special. With input at every stage from the stakeholders we knew it was headed in a direction that was faithful to the original idea in my head but also to the business ambitions and limitations. We finally put together a version we were happy with and wanted it to go into the sampling process. (I even did some of the calling out to vendors in India and China myself :P). And at the end we had some options locked and loaded for t-shirts and hoodies to go along with a tote bag. The experience of the packaging would also be added to by a small 6 page zine that would encapsulate the entire Sparks story into it and attach the story to the employees time at Twimbit.
+# Covering Ground and Bringing the Idea Together
+
+I was joined by a talented designer who had joined us recently and would take over the illustrations and together we came up with iterations upon iterations till we knew we had something special. With input at every stage from the stakeholders we knew it was headed in a direction that was faithful to the original idea in my head but also to the business ambitions and limitations. We finally put together a version we were happy with and wanted it to go into the sampling process. I even had the chance to do some of the calling out to vendors in India and China myself. And at the end we had some options locked and loaded for t-shirts and hoodies to go along with a tote bag. The experience of the packaging would also be added to by a small 6 page zine that would encapsulate the entire Sparks story into it and attach the story to the employees time at Twimbit.
 
 
-# Enjoying the journey, not just the result
+# In Conclusion
 
-Though by the time it was time for me to leave, the stakeholders had to decide to forgo the designs and the Sparks motif had been altered to faciliate a much more reduced scope, i was still ultimately extremely proud of what we had acheived. Seeing as this was my first merchandising project in a company setting with various factors in terms of resources, I wanted to leave feeling as though I had done my part in doing justice to the project and the idea right up to the end. 
+The journey of Sparks was truly a great experience as a designer. From getting the opportunity to pitch the concept to working on the deliverables, every step of the way was exciting and built my knowledge base. Merchandising design is always an exciting prospect but to get a chance to truly build an experience with it was even more thrilling.
+
+<Carousel images={[car1,car2,car3,car4,car5,car6]} client:only="svelte" />
 
