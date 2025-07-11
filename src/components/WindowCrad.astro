@@ -34,10 +34,9 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
     const subLinks = document.querySelectorAll(".hori-nav .sub-folder li");
     const subLinksver = document.querySelectorAll(".ver.sub-folder li");
     const contentArea = document.getElementById("content-area");
-    
+
     // Function to update content
     function updateContent(index) {
-      
       contentArea.innerHTML = `
                     <h1><img src="/site-icons/headingList.svg" alt=""> ${content[index].title}</h1>
                     ${content[index].html}
@@ -58,7 +57,6 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       });
     });
     subLinksver.forEach((link) => {
-        
       link.addEventListener("click", function () {
         const index = parseInt(this.getAttribute("data-index"));
         updateContent(index);
@@ -184,9 +182,9 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
           display: grid;
           grid-template-columns: 1fr 10fr;
           padding: 60px 40px;
-          margin-top: 20px;
-          .folder{
-            .folder-name{
+
+          .folder {
+            .folder-name {
               font-size: 18px;
             }
           }
@@ -265,7 +263,7 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       .about-main {
         position: relative;
         padding: 10px 22px 10px 22px;
-
+        margin-top: 44px;
         .about-main--info {
           height: 100%;
           max-height: 430px;
