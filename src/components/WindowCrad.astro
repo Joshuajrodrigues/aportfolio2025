@@ -31,11 +31,13 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
     ];
 
     // Get DOM elements
-    const subLinks = document.querySelectorAll(".sub-folder li");
+    const subLinks = document.querySelectorAll(".hori-nav .sub-folder li");
+    const subLinksver = document.querySelectorAll(".ver.sub-folder li");
     const contentArea = document.getElementById("content-area");
-
+    
     // Function to update content
     function updateContent(index) {
+      
       contentArea.innerHTML = `
                     <h1><img src="/site-icons/headingList.svg" alt=""> ${content[index].title}</h1>
                     ${content[index].html}
@@ -44,10 +46,19 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       // Update active state
       subLinks.forEach((link) => link.classList.remove("active"));
       subLinks[index].classList.add("active");
+      subLinksver.forEach((link) => link.classList.remove("active"));
+      subLinksver[index].classList.add("active");
     }
 
     // Add click events to sublinks
     subLinks.forEach((link) => {
+      link.addEventListener("click", function () {
+        const index = parseInt(this.getAttribute("data-index"));
+        updateContent(index);
+      });
+    });
+    subLinksver.forEach((link) => {
+        
       link.addEventListener("click", function () {
         const index = parseInt(this.getAttribute("data-index"));
         updateContent(index);
@@ -82,9 +93,9 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
 
         <ul class="folder">
           <li>
-            <p>about akanksha</p>
+            <p class="folder-name">about akanksha</p>
           </li>
-          <ul class="sub-folder">
+          <ul class="ver sub-folder">
             {
               sublinks.map((link, index) => (
                 <li class={index === 0 ? "active" : ""} data-index={index}>
@@ -174,6 +185,11 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
           grid-template-columns: 1fr 10fr;
           padding: 60px 40px;
           margin-top: 20px;
+          .folder{
+            .folder-name{
+              font-size: 18px;
+            }
+          }
           .expand-container {
             display: flex;
             flex-direction: column;
