@@ -1,17 +1,15 @@
 ---
-const { title,blog, description,tag,link,colors,locId } = Astro.props;
-const imgOpt= locId>3?"lazy":"eager"
+const { title, blog, description, tag, link, colors, locId } = Astro.props;
+const imgOpt = locId > 3 ? "lazy" : "eager";
 ---
 
-
-<div style={{backgroundColor:colors[1]}} class="frame">
-  <p style={{backgroundColor:colors[0]}} class="title">
+<div style={{ backgroundColor: colors[1] }} class="frame">
+  <p style={{ backgroundColor: colors[0] }} class="title">
     <span>{blog[0]}</span>
     <span class="type">Writing</span>
     <img loading={imgOpt} src={"/site-icons/card-buttons.svg"} alt="000" />
   </p>
   <div class="folder">
-    
     <div class="content">
       <span class="tag">
         <em>
@@ -26,7 +24,6 @@ const imgOpt= locId>3?"lazy":"eager"
       </p>
       <a href={link}>READ</a>
     </div>
-
   </div>
 </div>
 
@@ -54,50 +51,53 @@ const imgOpt= locId>3?"lazy":"eager"
         font-weight: 600;
       }
     }
-
     > img {
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
     }
-    .folder{
-        margin: 24px;
-        background-image: url(/site-images/frame.webp);
-        background-size: cover;
-        padding: 12px;
-        position: relative;
+    @media (max-width: 780px) {
+      .title {
+        font-size: 10px;
+      }
     }
-    .content{
+    .folder {
+      margin: 24px;
+      background-image: url(/site-images/frame.webp);
+      background-size: cover;
+      padding: 12px;
+      position: relative;
+    }
+    .content {
       display: flex;
       flex-direction: column;
       margin: 46px 10px;
-      
-      .tag{
+
+      .tag {
         position: absolute;
         top: 5px;
         left: 15px;
         font-size: 15px;
         color: #1e1e1e7a;
       }
-      .content-title{
+      .content-title {
         font-size: 20px;
-        font-weight:"bold";
+        font-weight: "bold";
       }
-      .content-desp{
+      .content-desp {
         font-size: 14px;
         color: #1e1e1e7a;
       }
-      a{
+      a {
         color: black;
         width: 100%;
         border: 1px solid black;
         border-radius: 4px;
         text-align: center;
-        font-weight:bold;
+        font-weight: bold;
         font-size: 14px;
         cursor: pointer;
         text-decoration: none;
       }
     }
   }
- 
 </style>
