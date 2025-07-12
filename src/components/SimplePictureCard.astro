@@ -1,23 +1,49 @@
 ---
+const {
+  title,
+  src,
+  type,
+  tags,
+  id,
+  colors,
+  showLightbox,
+  artTitle,
+  hideType = false,
+} = Astro.props;
 
-
-const { title, src, type, tags, id, colors, showLightbox, artTitle,hideType=false } = Astro.props;
-
-
+import "glightbox/dist/css/glightbox.css";
 ---
+
+<script>
+  import GLightbox from "glightbox"; //ignore
+
+  const lightbox = GLightbox({
+    selector: ".glightbox",
+  });
+</script>
 
 <div style={{ backgroundColor: colors?.[0] }} class="frame">
   <p class="title">
     <span>{title}</span>
     {
-      !hideType &&  <span class="type">{type === "art" ? "Art" : tags?.[0] || "Project"}</span>
+      !hideType && (
+        <span class="type">
+          {type === "art" ? "Art" : tags?.[0] || "Project"}
+        </span>
+      )
     }
-   
+
     <img loading="lazy" src={"/site-icons/card-buttons.svg"} alt="000" />
   </p>
-
-  <img  src={src} alt={title} />
-  
+  {
+    showLightbox ? (
+      <a href={src} class="glightbox">
+        <img src={src} alt={title} />
+      </a>
+    ) : (
+      <img src={src} alt={title} />
+    )
+  }
 </div>
 
 <style>
