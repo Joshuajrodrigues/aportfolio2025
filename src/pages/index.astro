@@ -15,28 +15,26 @@ const blog = (await getCollection("blog")).sort(
 );
 const art = await getCollection("art");
 const recomends = await getCollection("recomends");
-const projects = await getCollection("project")
+const projects = await getCollection("project");
 
-let featured = projects.filter((cont)=>cont?.data?.featured)
-let featuredIds = new Set(featured.map(item => item.id));
-let nonFeaturedProjects = projects.filter(item => !featuredIds.has(item.id));
+let featured = projects.filter((cont) => cont?.data?.featured);
+let featuredIds = new Set(featured.map((item) => item.id));
+let nonFeaturedProjects = projects.filter((item) => !featuredIds.has(item.id));
 let content = [...blog, ...art, ...recomends, ...nonFeaturedProjects];
 let result = shuffle(content);
-result = [...featured,...result]
+result = [...featured, ...result];
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-   
   </head>
   <body>
-   
     <Header />
     <main class="dotted">
       <Masonry
-       sortByHeight={true}
+        sortByHeight={true}
         breakpointCols={{
           default: 3,
           1400: 3,
@@ -45,14 +43,19 @@ result = [...featured,...result]
         }}
       >
         {
-          result.map((post,id) => {
+          result.map((post, id) => {
             switch (post.data.type) {
               case "art":
               case "project":
                 return (
                   <div class="grid-item">
                     {" "}
-                    <ArtCard locId={id} art={post.data.type==="art"} id={post.id} {...post.data} />
+                    <ArtCard
+                      locId={id}
+                      art={post.data.type === "art"}
+                      id={post.id}
+                      {...post.data}
+                    />
                   </div>
                 );
 
@@ -91,6 +94,10 @@ result = [...featured,...result]
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: transform 0.4s ease;
+    }
+    .grid-item:hover {
+      transform: scale(1.03);
     }
     a {
       text-decoration: none;
