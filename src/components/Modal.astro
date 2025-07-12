@@ -1,0 +1,103 @@
+---
+const { id } = Astro.props;
+---
+
+<script>
+  import confetti from "canvas-confetti";
+  const buttons = document.querySelectorAll("[data-confetti-button]");
+  const toast = document.getElementById("toast")!;
+  buttons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      confetti();
+      await copyText("work@akankshagajankar,com");
+      showToast();
+    });
+  });
+
+  async function copyText(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (e) {
+      console.error("Copy failed", e);
+    }
+  }
+
+  function showToast() {
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 1500);
+  }
+</script>
+<!-- Toast -->
+<button data-confetti-button onclick={`window.${id}.showModal()`}>
+  <slot name="open" />
+</button>
+
+<dialog closedby="any" class="modal" id={id}>
+  <div id="toast" class="toast">Email copied! 🎉</div>
+  <div id="dialogContent">
+    <slot name="main" />
+    <form method="dialog">
+      <slot name="close" />
+    </form>
+  </div>
+</dialog>
+<style>
+  dialog {
+    border: none;
+    padding: 0;
+    border-radius: 8px;
+    position: fixed;
+    &::backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 900;
+    }
+  }
+  button {
+    all: unset;
+    cursor: pointer;
+  }
+  .modal {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  .modal h3 {
+    margin-top: 0;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #259e5d;
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1000;
+    font-size: 13px;
+    width: 164px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toast.show {
+    opacity: 1;
+  }
+</style>

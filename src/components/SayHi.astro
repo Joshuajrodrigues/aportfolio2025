@@ -1,0 +1,170 @@
+---
+import Modal from "./Modal.astro";
+const socialLinks = {
+  instagram: "https://instagram.com/yourprofile",
+  linkedin: "https://linkedin.com/in/yourprofile",
+  behance: "https://behance.net/yourprofile",
+};
+const email = "work@akankshgajankar.com";
+---
+
+<Modal id="contactModal">
+  <span slot="open" id="cta">
+    <slot />
+  </span>
+  <div slot="main">
+    <h3>Contact Me</h3>
+    <hr />
+    <div class="email-row">
+      <span id="modal-email">
+        <a
+          class="email-content-container"
+          aria-label="contact info"
+          href={`mailto:${email}`}
+        >
+          {email}
+        </a>
+      </span>
+    </div>
+    <div class="social-buttons">
+      <a
+        class="instagram"
+        href={socialLinks.instagram}
+        target="_blank"
+        aria-label="Instagram"
+      >
+        <!-- Instagram logo -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path
+            d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10zm-5 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4.5-3a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
+          ></path>
+        </svg>
+      </a>
+      <a
+        href="/akanksha-gajankar-2025-resume.pdf"
+        aria-label="download resume"
+        download="akanksha-gajankar-2025-resume.pdf"
+        role="button"
+        aria-label="Resume"
+      >
+        <!-- LinkedIn logo -->
+        <img src={"/site-icons/resume.svg"} alt={"resume"} />
+      </a>
+    </div>
+  </div>
+  <button class="close-modal" slot="close">Close</button>
+</Modal>
+
+<style>
+  #cta {
+    display: inline-block;
+    background-color: #6faec9;
+    border: 1px solid black;
+    border-radius: 5px;
+    color: black;
+    padding: 6px 12px;
+    box-shadow: 4px 4px black;
+    font-size: 16px;
+    cursor: pointer;
+    transition:
+      background-color 0.5s,
+      color 0.5s;
+  }
+  #cta:hover {
+    background-color: black;
+    color: white;
+  }
+
+  .email-content-container {
+    text-decoration: underline;
+  }
+  /* Modal backdrop */
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 900;
+  }
+  .modal-backdrop.hidden {
+    display: none;
+  }
+
+  /* Modal box */
+
+  .email-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 0;
+  }
+
+  #modal-email {
+    margin-right: 8px;
+    font-weight: bold;
+    a {
+      all: unset;
+      cursor: pointer;
+      text-decoration: underline black;
+    }
+  }
+  .email-row button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .social-buttons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+  }
+  .social-buttons a.instagram {
+    background: #e1306c;
+    color: white;
+  }
+  .social-buttons a.linkedin {
+    background: #0a66c2;
+    color: white;
+  }
+  .social-buttons a.behance {
+    background: #1769ff;
+    color: white;
+  }
+  .social-buttons svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .close-modal {
+    all: unset;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .close-modal:hover {
+    opacity: 0.8;
+  }
+</style>
