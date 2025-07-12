@@ -17,7 +17,7 @@ import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
 import suddenImage from '../allImages/project/solarpagecover.webp';
 import SimplePictureCard from '../../components/SimplePictureCard.astro'
 import CenteredImage from '../../mdxcomponents/CenterImage.astro'
-import Carousel from '../../mdxcomponents/svelte/Carousel.svelte'
+import Carousel from '../../mdxcomponents/react/Carousel.jsx'
 import car1 from '../allImages/project/solargamsung_carousel/solarpage0_1.webp'
 import car2 from '../allImages/project/solargamsung_carousel/solarpage2_3.webp'
 import car3 from '../allImages/project/solargamsung_carousel/solarpage4_5.webp'
@@ -53,4 +53,4 @@ Korean is also a language I’m deeply fascinated by and have recently begun lea
 
 
 
-<Carousel images={[car8,car1,car2,car3,car4,car5,car6,car7]} client:only="svelte" />
+<Carousel images={[car8,car1,car2,car3,car4,car5,car6,car7]} theme={"#8AB5E7"} client:only="react" />

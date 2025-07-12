@@ -17,7 +17,7 @@ import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
 import suddenImage from '../allImages/project/twimbit/sparksimage1.png';
 import SimplePictureCard from '../../components/SimplePictureCard.astro'
 
-import Carousel from '../../mdxcomponents/svelte/Carousel.svelte'
+import Carousel from '../../mdxcomponents/react/Carousel.jsx'
 import car1 from '../allImages/project/actoutcarousel/1.webp'
 import car2 from '../allImages/project/actoutcarousel/3.webp'
 import car3 from '../allImages/project/actoutcarousel/4.webp'
@@ -64,6 +64,6 @@ Using green is an attempt to grab the attention of readers passing by a stall an
 
 Understanding the artists through their music and the messages they want to convey is the magazine’s strength, and that is, in fact, the reason why our recommendations aren’t made lightly. The magazine believes in the artists and brings them to you every month. Every design decision, quote, and image used is brought onto the page with the artist’s intention in mind, as well as the magazine’s purpose.
 
-<Carousel images={[car1,car2,car3,car4,car5,car6,car7,car8,car9,car10]} client:only="svelte" />
+<Carousel images={[car1,car2,car3,car4,car5,car6,car7,car8,car9,car10]} theme={"#629575"} client:only="react" />
 
 

@@ -1,0 +1,215 @@
+/* ImageCarousel.css */
+.image-carousel-container {
+  margin-top: 8rem;
+  max-width: 1200px;
+  margin: 8rem auto 0;
+  padding: 0 20px;
+}
+
+.glide__slide {
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.glide__slide:hover {
+  transform: translateY(-5px);
+}
+
+.slide-content {
+  position: relative;
+
+  overflow: hidden;
+ 
+  height: 300px;
+  cursor: pointer;
+}
+
+.slide-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.slide-content:hover img {
+  transform: scale(1.05);
+}
+
+.slide-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slide-content:hover .slide-overlay {
+  opacity: 1;
+}
+
+.slide-overlay svg {
+  width: 48px;
+  height: 48px;
+  fill: white;
+  opacity: 0.9;
+}
+
+/* Lightbox styles */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lightbox-image {
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.lightbox-close svg {
+  width: 30px;
+  height: 30px;
+  fill: white;
+}
+
+.lightbox-close:hover svg {
+  fill: #ff6b6b;
+}
+
+.lightbox-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 30px;
+}
+
+.nav-button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.nav-button svg {
+  width: 30px;
+  height: 30px;
+  fill: white;
+}
+
+.image-counter {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Glide arrows */
+.glide__arrows {
+  position: relative;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.glide__arrow {
+  background: #4a6cf7;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(74, 108, 247, 0.3);
+}
+
+.glide__arrow:hover {
+  background: #3a5be0;
+  transform: translateY(-3px);
+}
+
+.glide__arrow svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .glide__slide {
+    padding: 8px;
+  }
+  
+  .slide-content {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-carousel-container {
+    margin-top: 5rem;
+  }
+  
+  .glide__arrows {
+    gap: 15px;
+  }
+  
+  .glide__arrow {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .glide__arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+}

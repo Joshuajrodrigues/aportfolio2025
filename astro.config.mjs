@@ -7,8 +7,10 @@ import svelte from '@astrojs/svelte';
 
 import favicons from 'astro-favicons';
 
+import react from '@astrojs/react';
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://www.akankshagajankar.com',
-    integrations: [mdx(), sitemap(), svelte(), favicons()],
+    integrations: [mdx(), sitemap(), svelte(), favicons(), react()],
 });

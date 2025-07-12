@@ -19,7 +19,7 @@ colors: ["#E1e1e1"]
 import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
 import suddenImage from '../allImages/project/twimbit/sparksimage1.png';
 import SimplePictureCard from '../../components/SimplePictureCard.astro'
-import Carousel from '../../mdxcomponents/svelte/Carousel.svelte'
+import Carousel from '../../mdxcomponents/react/Carousel.jsx'
 import car1 from '../allImages/project/sparkscarousel/sparkshoodie1.webp'
 import car2 from '../allImages/project/sparkscarousel/sparkshoodie2.webp'
 import car3 from '../allImages/project/sparkscarousel/sparksparcel.webp'
@@ -61,5 +61,5 @@ I was joined by a talented designer who had joined us recently and would take ov
 
 The journey of Sparks was truly a great experience as a designer. From getting the opportunity to pitch the concept to working on the deliverables, every step of the way was exciting and built my knowledge base. Merchandising design is always an exciting prospect but to get a chance to truly build an experience with it was even more thrilling.
 
-<Carousel images={[car1,car2,car3,car4,car5,car6]} client:only="svelte" />
+<Carousel images={[car1,car2,car3,car4,car5,car6]} theme={'black'} client:only="react" />
 
