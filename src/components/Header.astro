@@ -3,6 +3,7 @@ import HeaderLink from "./HeaderLink.astro";
 import MenuButton from "./MenuButton.astro";
 import { SITE_TITLE } from "../consts";
 import CTAButton from "./CTAButton.astro";
+import Resume from "./Resume.astro";
 const { headerColor } = Astro.props;
 ---
 
@@ -25,6 +26,7 @@ const { headerColor } = Astro.props;
       <HeaderLink href="/projects">Work</HeaderLink>
       <HeaderLink href="/writing">Writing</HeaderLink>
       <HeaderLink aria-label="about me" href="/about">About</HeaderLink>
+      <Resume/>
       <CTAButton>
         <a aria-label="contact info" href="mailto:work@akankshagajankar.com"> Say Hi </a>
       </CTAButton>
@@ -68,6 +70,7 @@ const { headerColor } = Astro.props;
     display: flex !important;
     align-items: center;
     justify-content: space-between;
+    margin: 0 32px;
   }
   nav a {
     padding: 1em 0.5em;
@@ -92,6 +95,9 @@ const { headerColor } = Astro.props;
   }
   .mobile-header {
     display: none;
+  }
+  a.desktop-header{
+    padding: 1em 0 !important;
   }
   .desktop-header {
     display: block;
