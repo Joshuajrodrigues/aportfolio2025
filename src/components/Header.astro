@@ -26,13 +26,11 @@ const { headerColor } = Astro.props;
       <HeaderLink href="/projects">Work</HeaderLink>
       <HeaderLink href="/writing">Writing</HeaderLink>
       <HeaderLink aria-label="about me" href="/about">About</HeaderLink>
-      <Resume/>
-      <CTAButton>
-        <a aria-label="contact info" href="mailto:work@akankshagajankar.com"> Say Hi </a>
-      </CTAButton>
+      <Resume />
+      <CTAButton> Say Hi </CTAButton>
     </div>
   </nav>
- 
+
   <div class="border"></div>
 </header>
 <style>
@@ -96,7 +94,7 @@ const { headerColor } = Astro.props;
   .mobile-header {
     display: none;
   }
-  a.desktop-header{
+  a.desktop-header {
     padding: 1em 0 !important;
   }
   .desktop-header {
