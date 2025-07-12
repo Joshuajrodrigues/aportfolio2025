@@ -7,11 +7,9 @@ import Footer from "../../components/Footer.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-
-const projects = await getCollection("project")
+const projects = await getCollection("project");
 
 let content = [...projects];
-
 ---
 
 <!doctype html>
@@ -20,11 +18,10 @@ let content = [...projects];
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
   <body>
-   
     <Header />
     <main class="dotted">
       <Masonry
-       sortByHeight={true}
+        sortByHeight={true}
         breakpointCols={{
           default: 3,
           1400: 3,
@@ -64,10 +61,14 @@ let content = [...projects];
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: transform 0.4s ease;
+    }
+    .grid-item:hover {
+      transform: scale(1.03);
     }
     a {
       text-decoration: none;
-	  color: inherit;
+      color: inherit;
     }
     ul {
       padding: 0;
