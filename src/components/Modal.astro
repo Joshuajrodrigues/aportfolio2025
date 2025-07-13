@@ -2,11 +2,11 @@
 const { id } = Astro.props;
 ---
 
-<script >
+<script>
   //@ts-ignore
   import confetti from "canvas-confetti";
   const buttons = document.querySelectorAll("[data-confetti-button]");
-  const toast = document.getElementById(`toast`)!;
+
   buttons.forEach((button) => {
     button.addEventListener("click", async () => {
       confetti();
@@ -24,8 +24,14 @@ const { id } = Astro.props;
   }
 
   function showToast() {
+    let toast = document.createElement("div");
+    const dialogEl = document.getElementById("toast-holder")!;
+    toast.id = "toast";
+    toast.classList.add("toast");
     toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 1500);
+    toast.innerText = "Email copied! 🎉";
+    dialogEl.appendChild(toast);
+    setTimeout(() => dialogEl.removeChild(toast), 61500);
   }
 </script>
 <!-- Toast -->
@@ -33,8 +39,8 @@ const { id } = Astro.props;
   <slot name="open" />
 </button>
 
+
 <dialog closedby="any" class="modal" id={id}>
-  <div id="toast" class="toast">Email copied! 🎉</div>
   <div id="dialogContent">
     <slot name="main" />
     <form method="dialog">
@@ -42,6 +48,7 @@ const { id } = Astro.props;
     </form>
   </div>
 </dialog>
+<div id="toast-holder"></div>
 <style>
   dialog {
     border: none;
@@ -76,29 +83,5 @@ const { id } = Astro.props;
   }
   .modal h3 {
     margin-top: 0;
-  }
-
-  /* Toast */
-  .toast {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #259e5d;
-    color: #fff;
-    padding: 8px;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    z-index: 1000;
-    font-size: 13px;
-    width: 164px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .toast.show {
-    opacity: 1;
   }
 </style>

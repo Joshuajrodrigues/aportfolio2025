@@ -162,3 +162,27 @@ main {
 	background-size: 35px 35px;
 	height: 100%;
 }
+
+ /* Toast */
+  .toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #259e5d;
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 1000;
+    font-size: 13px;
+    width: 164px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .toast.show {
+    opacity: 1;
+  }
