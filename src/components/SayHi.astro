@@ -1,4 +1,6 @@
 ---
+const { id } = Astro.props;
+
 import Modal from "./Modal.astro";
 const socialLinks = {
   instagram: "https://instagram.com/yourprofile",
@@ -8,7 +10,7 @@ const socialLinks = {
 const email = "work@akankshgajankar.com";
 ---
 
-<Modal id="contactModal">
+<Modal id={id}>
   <span slot="open" id="cta">
     <slot />
   </span>

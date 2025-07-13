@@ -33,7 +33,7 @@ const { id } = Astro.props;
   <slot name="open" />
 </button>
 
-<dialog closedby="any" class="modal" id={id}>
+<dialog  class="modal" id={id}>
   <div id="toast" class="toast">Email copied! 🎉</div>
   <div id="dialogContent">
     <slot name="main" />
