@@ -19,14 +19,7 @@ const { headerColor } = Astro.props;
       <a aria-label="Akanksha Gajankar" class="mobile-header" href="/">A</a>
       <a class="desktop-header" href="/">{SITE_TITLE}</a>
     </h2>
-    <div class="mobile-header menu">
-      <Resume />
-      <SayHi id="mobilemodal"> 
-        Say Hi
-      
-      </SayHi>
-      <MenuButton />
-    </div>
+
     <div class="desktop-header internal-links">
       <HeaderLink href="/">All</HeaderLink>
       <HeaderLink href="/projects">Work</HeaderLink>
@@ -35,9 +28,13 @@ const { headerColor } = Astro.props;
       <Resume />
       <SayHi id="desktopmodal"> Say Hi </SayHi>
     </div>
-   
+    <div class="mobile-header menu">
+      <Resume />
+      <SayHi id="mobilemodal"> Say Hi </SayHi>
+      <MenuButton />
+    </div>
   </nav>
- <div id="toast-holder"></div>
+  <div id="toast-holder"></div>
   <div class="border"></div>
 </header>
 <style>
