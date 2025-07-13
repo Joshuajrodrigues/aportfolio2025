@@ -2,5 +2,5 @@
 title: "Thats odd.."
 type: "art"
 src: "/src/content/allImages/art/Odd.webp"
-colors: ["#a9a9a9ff"]
+colors: ["#e5e5e5"]
 ---
