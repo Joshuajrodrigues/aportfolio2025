@@ -96,13 +96,24 @@ const { headerColor } = Astro.props;
     display: flex;
   }
   .mobile-header {
-    display: none;
+    /* visually hidden */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
   a.desktop-header {
     padding: 1em 0 !important;
   }
   .desktop-header {
-    display: block;
+    display: flex;
+    gap: 18px;
+    align-items: center;
   }
   @media (max-width: 720px) {
     .desktop-header {
@@ -112,6 +123,16 @@ const { headerColor } = Astro.props;
       display: flex;
       gap: 18px;
       align-items: center;
+
+      position: static;
+      width: initial;
+      height: initial;
+      padding: initial;
+      margin: initial;
+      overflow: initial;
+      clip: initial;
+      white-space: initial;
+      border: initial;
     }
   }
 </style>
