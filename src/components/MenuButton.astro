@@ -19,12 +19,12 @@ import HeaderLink from "./HeaderLink.astro";
   <span></span>
 </div>
 <div class="menu-content">
+  
   <div class="desktop-header internal-links">
     <HeaderLink href="/">All</HeaderLink>
     <HeaderLink href="/projects">Work</HeaderLink>
     <HeaderLink href="/writing">Writing</HeaderLink>
     <HeaderLink aria-label="about me" href="/about">About</HeaderLink>
-    <a aria-label="contact info" href="mailto:work@akankshagajankar.com"> Say Hi </a>
   </div>
 </div>
 
@@ -34,6 +34,7 @@ import HeaderLink from "./HeaderLink.astro";
     width: 24px;
     height: 24px;
     cursor: pointer;
+    z-index: 1000;
   }
 
   #responsive-menu span {
@@ -75,7 +76,7 @@ import HeaderLink from "./HeaderLink.astro";
     right: 0;
     height: 100vh;
     width: 100vw;
-
+    top: 0;
     background-color: #ffffffe8;
     display: flex;
     flex-direction: column;

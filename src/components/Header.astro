@@ -20,6 +20,8 @@ const { headerColor } = Astro.props;
       <a class="desktop-header" href="/">{SITE_TITLE}</a>
     </h2>
     <div class="mobile-header menu">
+      <Resume />
+      <SayHi> Say Hi </SayHi>
       <MenuButton />
     </div>
     <div class="desktop-header internal-links">
@@ -69,10 +71,11 @@ const { headerColor } = Astro.props;
     display: flex !important;
     align-items: center;
     justify-content: space-between;
-    margin: 0 32px;
+    margin: 0 15px;
   }
   nav a {
     padding: 1em 0.5em;
+    transform: translateY(8px);
     color: var(--black);
     border-bottom: 4px solid transparent;
     text-decoration: none;
@@ -106,7 +109,9 @@ const { headerColor } = Astro.props;
       display: none;
     }
     .mobile-header {
-      display: block;
+      display: flex;
+      gap: 18px;
+      align-items: center;
     }
   }
 </style>
