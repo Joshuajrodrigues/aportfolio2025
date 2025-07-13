@@ -48,9 +48,9 @@ const {
         </div>
         <div class="hero-image-help-text">{heroHelpText}</div>
         <div class="centered-project-content">
+          <div class="rti">
           {
             role && (
-              <div class="rti">
                 <div>
                   <h4>Role</h4>
                   <p>{role}</p>
@@ -63,9 +63,9 @@ const {
                   <h4>Impact</h4>
                   <p>{impact}</p>
                 </div>
-              </div>
             )
           }
+          </div>
 
           {
             contentBlocks && contentBlocks?.length > 0 && (
@@ -88,7 +88,7 @@ const {
   .rti {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    margin: 100px 0px;
+    margin: 40px 0px;
     gap:32px;
     color: #594a4e;
     h4 {
