@@ -2,15 +2,15 @@
 const { id } = Astro.props;
 ---
 
-<script>
-    //@ts-ignore
+<script >
+  //@ts-ignore
   import confetti from "canvas-confetti";
   const buttons = document.querySelectorAll("[data-confetti-button]");
-  const toast = document.getElementById("toast")!;
+  const toast = document.getElementById(`toast`)!;
   buttons.forEach((button) => {
     button.addEventListener("click", async () => {
       confetti();
-      await copyText("work@akankshagajankar,com");
+      await copyText("work@akankshagajankar.com");
       showToast();
     });
   });
@@ -33,7 +33,7 @@ const { id } = Astro.props;
   <slot name="open" />
 </button>
 
-<dialog  class="modal" id={id}>
+<dialog closedby="any" class="modal" id={id}>
   <div id="toast" class="toast">Email copied! 🎉</div>
   <div id="dialogContent">
     <slot name="main" />
