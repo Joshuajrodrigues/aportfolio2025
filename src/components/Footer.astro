@@ -4,7 +4,8 @@ const today = new Date();
 
 <footer>
   <div>
-    &copy; {today.getFullYear()} Akanksha Gajankar 😺. All rights reserved.
+    &copy; {today.getFullYear()} Akanksha Gajankar 😺. <br />
+    <span> All rights reserved.</span>
   </div>
   <div class="links">
     <a href="mailto:work@akankshagajankar.com" aria-label="contact info">
@@ -17,10 +18,9 @@ const today = new Date();
 </footer>
 <style>
   .links {
-
-   a{
-    margin-right: 8px;
-   }
+    a {
+      margin-right: 8px;
+    }
   }
   footer {
     display: flex;
@@ -31,12 +31,17 @@ const today = new Date();
     text-align: left;
     a {
       all: unset;
-      width: 64px;
+
       cursor: pointer;
     }
   }
   @media (max-width: 780px) {
     footer {
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+    }
+    .links {
       display: flex;
       flex-direction: column;
     }
