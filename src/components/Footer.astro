@@ -3,42 +3,35 @@ const today = new Date();
 ---
 
 <footer>
-  <div class="links">
-    <a href="mailto:work@akankshagajankar.com" aria-label="contact info">
-      Contact me:
-      <u> work@akankshagajankar.com </u>
-    </a>
-    <nav>
-      <a aria-label="my work and projects" href="/projects">Work</a>
-      <a aria-label="my writing" href="/writing">Writing</a>
-      <a aria-label="about me" href="/about">About</a>
-    </nav>
-  </div>
   <div>
     &copy; {today.getFullYear()} Akanksha Gajankar 😺. All rights reserved.
+  </div>
+  <div class="links">
+    <a href="mailto:work@akankshagajankar.com" aria-label="contact info">
+      work@akankshagajankar.com
+    </a>
+    <a aria-label="about me" href="/about">About</a>
+    <a aria-label="my work and projects" href="/projects">Work</a>
+    <a aria-label="my writing" href="/writing">Writing</a>
   </div>
 </footer>
 <style>
   .links {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    nav{
-      display: flex;
-      gap: 12px;
-    }
+
+   a{
+    margin-right: 8px;
+   }
   }
   footer {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     padding: 2em 1em 6em 1em;
-    color: black;
-
+    color: #858081;
+    font-size: 16px;
     text-align: left;
     a {
       all: unset;
-
+      width: 64px;
       cursor: pointer;
     }
   }
