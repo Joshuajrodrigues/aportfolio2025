@@ -12,7 +12,6 @@ const email = "work@akankshagajankar.com";
 
 <Modal id={id}>
   <span slot="open" id="cta">
-    
     <slot />
   </span>
   <div slot="main">
@@ -93,13 +92,19 @@ const email = "work@akankshagajankar.com";
     box-shadow: 4px 4px black;
     font-size: 16px;
     cursor: pointer;
-    transition:
-      background-color 0.5s,
-      color 0.5s;
+    transition: all 0.25s ease-in-out;
   }
   #cta:hover {
     background-color: black;
     color: white;
+    box-shadow: none;
+    transform: translate(4px, 4px);
+  }
+  #cta:focus-visible {
+    background-color: black;
+    color: white;
+    box-shadow: none;
+    transform: translate(4px, 4px);
   }
 
   .email-content-container {
