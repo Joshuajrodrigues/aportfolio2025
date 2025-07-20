@@ -2,7 +2,12 @@
 import CTAButton from "./CTAButton.astro";
 import SayHi from "./SayHi.astro";
 
-const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
+const sublinks = [
+  "Who am I ?",
+  "Tell me more",
+  "What can I do ?",
+  "What people say ?",
+];
 ---
 
 <script lang="js">
@@ -24,14 +29,36 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       },
       {
         title: "What can I do ?",
-        html: `<ul>
+        html: `<ul class="about-list">
                         <li>Worked for 3 years at a fast-faced start-up that helped me engage with an evolving landscape and work with founders and stakeholders directly to deliver on design needs.</li>
                         <li>Strong command on design language and interpreting various aesthetics into a concrete design utilizing tools like Figma, Adobe XD, Photoshop etc.</li>
                         <li>Experienced at working with minimal or maximal direction. Working with projects at the conceptual stage that may require some discovery and digging. I'm good with the digging.</li>
                         <li>Super efficient and clear with communication and comfortable engaging across departments.</li>
                         <li>Believe in staying open to conversations and discussions about design and anything related to visual arts as well with anyone who'd like to chat.</li>
-                    </ul>`,
+               </ul>`,
       },
+   {
+  title: "What people say ?",
+  html: `<ul class="about-list">
+    <li>
+      <p>I had the great opportunity to work alongside Akanksha as our graphic/UIUX designer, and <mark>she's one of the most thoughtful and user-centric designers I've encountered.</mark></p>
+      <p>What really stood out was her commitment to understanding the "why" behind user behavior. For instance, when the team was revamping the AI-driven creator platform for researchers, she wasn't content with surface-level assumptions. <mark>She dove deep into user interviews</mark>, meticulously analyzing why users were hesitant to begin their research process directly within the platform, preferring to draft their notes elsewhere and then copy them over. <mark>She didn't just design interfaces; she designed solutions.</mark></p>
+      <p>That level of dedication, combined with her creative talent, made her an incredible asset to the team.</p>
+      <p><em><b>~Min Yi, CX Research Analyst at Twimbit</b></em></p>
+    </li>
+    <li>
+      <p>I had the pleasure of working closely with Akanksha on the Sales Recharge Kit project for Malaysia's largest telco, and she has been nothing short of exceptional. As a core team member, <mark>she played an instrumental role in the success of the platform</mark>, from the pilot phase all the way to securing a three-year contract extension.</p>
+      <p><mark>Akanksha brought a unique blend of creativity, precision, and user empathy to the table.</mark> Her work on UI design, content templates, and overall platform aesthetics helped shape a vibrant, intuitive experience that truly captivated users. The visual and functional upgrades she introduced not only elevated the platform's appeal but also enhanced its usability for enterprise sales teams looking to leverage research-backed B2B content and tools.</p>
+      <p><mark>What truly stands out about Akanksha is her strong sense of ownership, team-first mindset, and proactive attitude.</mark> She has a sharp eye for detail, is always willing to speak up when something needs to be addressed, and consistently works towards creating smoother workflows, both for the team and the end product. She's a dependable and thoughtful colleague, and I'm confident she'll continue to deliver great value in any team she's part of.</p>
+      <p><em><b>~Diva, Consulting Manager at Twimbit</b></em></p>
+    </li>
+    <li>
+      <p><mark>I've had the pleasure of working with Akanksha, a talented UI/UX designer who brings creativity, user-centric thinking, and attention to detail to every project.</mark> Her ability to translate complex ideas into intuitive and visually appealing designs is impressive. She collaborates effectively, takes feedback constructively, and <mark>consistently delivers high-quality work.</mark> I highly recommend Akanksha for any design role—any team would be lucky to have her!</p>
+      <p><em><b>~Sumit, Senior Front-end Lead at Twimbit</b></em></p>
+    </li>
+  </ul>`,
+}
+
     ];
 
     // Get DOM elements
@@ -130,7 +157,7 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       <div class="about-main--footer">
         <div class="about-main--footer-actions-container">
           <p>Wanna chat with me ?</p>
-          <SayHi id="aboutmodal" > Send an email!! </SayHi>
+          <SayHi id="aboutmodal"> Send an email!! </SayHi>
         </div>
       </div>
     </div>
@@ -208,7 +235,7 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
           .line {
             display: inline-block;
             content: "";
-            height: 60%;
+            height: 66%;
             width: 2px;
             margin: 0;
             padding: 0;
@@ -233,7 +260,7 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
               color: #858081;
               .line-container {
                 position: absolute;
-                height: 75%;
+                height: 80%;
                 width: 18px;
                 left: -52px;
                 top: 9px;
@@ -269,14 +296,14 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
       }
       .about-main {
         position: relative;
-        padding: 10px 22px 10px 22px;
         margin-top: 30px;
         .about-main--info {
+          padding: 10px 22px 30px 22px;
           height: 100%;
           max-height: 430px;
           min-height: 430px;
           overflow: auto;
-          padding-bottom: 30px;
+          margin-bottom: 30px;
           h1 {
             font-size: 32px;
             font-weight: 600;
@@ -288,6 +315,12 @@ const sublinks = ["Who am I ?", "Tell me more", "What can I do ?"];
           p {
             font-size: 20px;
             color: #594a4e;
+          }
+        }
+        @media (max-width: 964px) {
+          .about-main--info {
+            margin-bottom: 0;
+            padding: 10px 22px 80px 22px;
           }
         }
         .about-main--footer {
