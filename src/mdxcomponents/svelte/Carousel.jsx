@@ -71,7 +71,7 @@ const ImageCarousel = ({ images = [], theme }) => {
                     className="slide-content"
                   
                     muted
-                    autoplay
+                    autoPlay
                   
                   >
                     <source
