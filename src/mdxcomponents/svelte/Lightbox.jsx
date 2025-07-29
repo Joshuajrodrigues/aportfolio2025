@@ -64,7 +64,7 @@ export const Lightbox = ({ images, currentIndex, onClose, onNext, onPrev }) => {
               className="lightbox-image"
             />
           ) : (
-            <video controls muted autoplay>
+            <video   className="lightbox-image" controls muted autoplay>
               <source src={images[currentIndex]} type="video/mp4" />
             </video>
           )}
