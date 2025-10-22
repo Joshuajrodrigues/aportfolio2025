@@ -56,11 +56,18 @@ export const Lightbox = ({ images, currentIndex, onClose, onNext, onPrev }) => {
               </g>
             </svg>
           </button>
-          <img
-            src={images[currentIndex].src}
-            alt={`Lightbox view ${currentIndex + 1}`}
-            className="lightbox-image"
-          />
+
+          {images[currentIndex]?.src ? (
+            <img
+              src={images[currentIndex].src}
+              alt={`Lightbox view ${currentIndex + 1}`}
+              className="lightbox-image"
+            />
+          ) : (
+            <video   className="lightbox-image" controls muted autoplay>
+              <source src={images[currentIndex]} type="video/mp4" />
+            </video>
+          )}
 
           <button className="nav-button next gnext gbtn" onClick={onNext}>
             <svg
