@@ -1,0 +1,46 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { LibraryCard } from "booary";
+const friends = ["https://joshuarodrigues.dev/library/card.json"];
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    </head>
+    <body>
+        <Header headerColor="#E88D92" />
+        <main>
+            <div class="card-container">
+                <LibraryCard
+                    client:load
+                    cardUrl="/library/card.json"
+                    friends={friends}
+                />
+            </div>
+        </main>
+    </body>
+</html>
+<style>
+    body {
+        background-color: #e88d92;
+        height: 100dvh;
+        main {
+            background-image: radial-gradient(#0000003c 5%, transparent 0);
+            background-size: 35px 35px;
+            height: 100%;
+        }
+    }
+    .card-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .card {
+            width: 100%;
+        }
+    }
+</style>
