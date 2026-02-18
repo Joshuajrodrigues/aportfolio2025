@@ -4,12 +4,14 @@
     "name": "Boo Library",
     "signature": "🐈"
   },
-  "books": [
-    {
-      "key": "/works/OL38648331W",
-      "name": "Quiet Place",
-      "author": "Seicho Matsumoto",
-      "finishedDate": "---"
-    }
-  ]
+  "years": {
+    "2026": [
+      {
+        "key": "/works/OL38648331W",
+        "name": "Quiet Place",
+        "author": "Seicho Matsumoto",
+        "finishedDate": "---"
+      }
+    ]
+  }
 }

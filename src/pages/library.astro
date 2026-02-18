@@ -2,7 +2,6 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import { LibraryCard } from "booary";
 const friends = ["https://joshuarodrigues.dev/library/card.json"];
 ---
 
@@ -14,13 +13,14 @@ const friends = ["https://joshuarodrigues.dev/library/card.json"];
     <body>
         <Header headerColor="#E88D92" />
         <main>
-            <div class="card-container">
-                <LibraryCard
-                    client:load
-                    cardUrl="/library/card.json"
-                    friends={friends}
-                />
-            </div>
+            <script>
+                import "booary";
+            </script>
+            <x-library-card
+                cardlink="/library/card.json"
+                friends={JSON.stringify(friends)}
+            >
+            </x-library-card>
         </main>
     </body>
 </html>
