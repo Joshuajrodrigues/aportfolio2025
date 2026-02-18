@@ -48,8 +48,8 @@ importers:
         specifier: ^1.2.2
         version: 1.2.2
       booary:
-        specifier: ^8.0.1
-        version: 8.0.1(@types/node@22.13.8)
+        specifier: ^8.1.0
+        version: 8.1.0(@types/node@22.13.8)
       canvas-confetti:
         specifier: ^1.9.3
         version: 1.9.3
@@ -1157,8 +1157,8 @@ packages:
   blob-to-buffer@1.2.9:
     resolution: {integrity: sha512-BF033y5fN6OCofD3vgHmNtwZWRcq9NLyyxyILx9hfMy1sXYy4ojFl765hJ2lP0YaN2fuxPaLO2Vzzoxy0FLFFA==}
 
-  booary@8.0.1:
-    resolution: {integrity: sha512-SLZMDvUnTCvA3dS59YKffS+NMJq2COhm1/8NCMYd4C7GUcuB6zOFWSJzw/vW275wtbXuwiXAuPHSHshxSJgiEA==}
+  booary@8.1.0:
+    resolution: {integrity: sha512-hEU4re63OrrVrhgebvrXiQvJ4ryMdLK8BGtoATROICJPCQfiBsDImGoBlYRKPj2RVbdz2uN4Z4SA6x2+B712KA==}
     hasBin: true
 
   boolbase@1.0.0:
@@ -3944,7 +3944,7 @@ snapshots:
 
   blob-to-buffer@1.2.9: {}
 
-  booary@8.0.1(@types/node@22.13.8):
+  booary@8.1.0(@types/node@22.13.8):
     dependencies:
       '@types/fs-extra': 11.0.4
       axios: 1.13.5
