@@ -3,47 +3,49 @@ const today = new Date();
 ---
 
 <footer>
-  <div>
-    &copy; {today.getFullYear()} Akanksha Gajankar 😺. <br />
-    <span> All rights reserved.</span>
-  </div>
-  <div class="links">
-    <a href="mailto:work@akankshagajankar.com" aria-label="contact info">
-      work@akankshagajankar.com
-    </a>
-    <a aria-label="about me" href="/about">About</a>
+    <div>
+        <a href="mailto:work@akankshagajankar.com" aria-label="contact info">
+            work@akankshagajankar.com
+        </a>
+        <br />
+        <span> All rights reserved.</span>
+        <br />
+        &copy; {today.getFullYear()} Akanksha Gajankar 😺. <br />
+    </div>
+    <div class="links">
+        <!-- <a aria-label="about me" href="/about">About</a>
     <a aria-label="my work and projects" href="/projects">Work</a>
-    <a aria-label="my writing" href="/writing">Writing</a>
-  </div>
+    <a aria-label="my writing" href="/writing">Writing</a> -->
+    </div>
 </footer>
 <style>
-  .links {
-    a {
-      margin-right: 8px;
-    }
-  }
-  footer {
-    display: flex;
-    justify-content: space-between;
-    padding: 2em 1em 6em 1em;
-    color: #858081;
-    font-size: 16px;
-    text-align: left;
-    a {
-      all: unset;
-
-      cursor: pointer;
-    }
-  }
-  @media (max-width: 780px) {
-    footer {
-      display: flex;
-      flex-direction: column;
-      font-size: 14px;
-    }
     .links {
-      display: flex;
-      flex-direction: column;
+        a {
+            margin-right: 8px;
+        }
     }
-  }
+    footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 2em 1em 6em 1em;
+        color: #858081;
+        font-size: 16px;
+        text-align: left;
+        a {
+            all: unset;
+
+            cursor: pointer;
+        }
+    }
+    @media (max-width: 780px) {
+        footer {
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+        }
+        .links {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 </style>

@@ -1,0 +1,67 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import WindowCrad from "../components/WindowCrad.astro";
+import SimplePictureCard from "../components/SimplePictureCard.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import cat1 from "../content/allImages/about/catto_1.gif";
+import cat2 from "../content/allImages/about/catto_2.gif";
+const aboutDeco = [
+  {
+    id: "cat1",
+    src: cat1.src,
+    title: "Curious Cat",
+    type: "Interests",
+    tags: ["Interests"],
+  },
+  {
+    id: "cat2",
+    src: cat2.src,
+    title: "Cat eating",
+    type: "Interests",
+    tags: ["Interests"],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header headerColor="#E88D92" />
+    <main class="">
+      <WindowCrad />
+      <div class="about-deco-container">
+        {aboutDeco.map((deco) => <SimplePictureCard art={true} {...deco} />)}
+      </div>
+      <Footer />
+    </main>
+  </body>
+</html>
+<style>
+  body {
+    background-color: #E88D92;
+    height: 100dvh;
+    main{
+      background-image: radial-gradient(#0000003c 5%, transparent 0);
+      background-size: 35px 35px;
+      height: 100%;
+
+    }
+  }
+  .about-deco-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -120px;
+  }
+
+  @media (max-width: 964px) {
+    .about-deco-container {
+      display: none;
+    }
+  }
+
+</style>

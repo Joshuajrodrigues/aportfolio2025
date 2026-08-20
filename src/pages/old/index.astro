@@ -1,0 +1,155 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+import ArtCard from "../components/ArtCard.astro";
+import BlogCard from "../components/BlogCard.astro";
+import RecomendsCard from "../components/RecomendsCard.astro";
+import { shuffle } from "../utils";
+import { Masonry } from "astro-masonry";
+
+const blog = (await getCollection("blog")).sort(
+  (a: any, b: any) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const art = await getCollection("art");
+const recomends = await getCollection("recomends");
+const projects = await getCollection("project");
+
+let featured = projects.filter((cont) => cont?.data?.featured);
+let featuredIds = new Set(featured.map((item) => item.id));
+let nonFeaturedProjects = projects.filter((item) => !featuredIds.has(item.id));
+let content = [...blog, ...art, ...recomends, ...nonFeaturedProjects];
+let result = shuffle(content);
+result = [...featured, ...result];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="dotted">
+      <Masonry
+        sortByHeight={true}
+        breakpointCols={{
+          default: 3,
+          1400: 3,
+          1100: 2,
+          700: 1,
+        }}
+      >
+        {
+          result.map((post, id) => {
+            switch (post.data.type) {
+              case "art":
+              case "project":
+                return (
+                  <div class="grid-item">
+                    {" "}
+                    <ArtCard
+                      locId={id}
+                      art={post.data.type === "art"}
+                      id={post.id}
+                      {...post.data}
+                    />
+                  </div>
+                );
+
+              case "blog":
+                return (
+                  <div class="grid-item ">
+                    <BlogCard locId={id} {...post.data} />
+                  </div>
+                );
+              case "recomends":
+                return (
+                  <div class="grid-item">
+                    {" "}
+                    <RecomendsCard locId={id} {...post.data} />
+                  </div>
+                );
+            }
+          })
+        }
+      </Masonry>
+    </main>
+    <Footer />
+  </body><style>
+    li {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .grid {
+      margin: 0 auto;
+    }
+    .grid-item {
+      margin: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.4s ease;
+    }
+    .grid-item:hover,.grid-item:focus  {
+      transform: scale(1.03);
+    }
+
+    a {
+      text-decoration: none;
+    }
+    ul {
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 52px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 400;
+      margin-top: 15px;
+      line-height: 36px;
+    }
+    .description {
+      font-weight: 400;
+      line-height: 21px;
+      font-size: 0.8em;
+      margin-top: 15px;
+      color: #1e1e1e;
+    }
+    .container {
+    }
+    .img-container {
+      background-color: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      border-radius: 24px;
+    }
+    img {
+      width: 320px;
+    }
+    .grid.is-loading {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .grid.is-ready {
+      visibility: visible;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    @media (max-width: 800px) {
+      ul {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</html>

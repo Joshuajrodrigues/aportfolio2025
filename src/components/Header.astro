@@ -8,132 +8,183 @@ import SayHi from "./SayHi.astro";
 const { headerColor } = Astro.props;
 ---
 
-<header
-  style={{
-    backgroundColor: headerColor,
-  }}
->
-  <nav>
-    <h1 class="visually-hidden">Akanksha Gajankar</h1>
-    <h2>
-      <a aria-label="Akanksha Gajankar" class="mobile-header" href="/">A</a>
-      <a class="desktop-header" href="/">{SITE_TITLE}</a>
-    </h2>
+<header>
+    <nav>
+        <h1>
+            <a
+                aria-label="Weather"
+                class="mobile-header"
+                href="/"
+                id="weather-mobile"
+            >
+                Hello there...
+            </a>
+            <a class="desktop-header" href="/" id="weather-desktop">
+                Hello there...
+            </a>
+        </h1>
 
-    <div class="desktop-header internal-links">
-      <HeaderLink href="/">All</HeaderLink>
-      <HeaderLink href="/projects">Work</HeaderLink>
-      <HeaderLink href="/writing">Writing</HeaderLink>
-      <HeaderLink aria-label="about me" href="/about">About</HeaderLink>
-      <Resume />
-      <SayHi id="desktopmodal"> Say Hi </SayHi>
-    </div>
-    <div class="mobile-header menu">
-      <Resume />
-      <SayHi id="mobilemodal"> Say Hi </SayHi>
-      <MenuButton />
-    </div>
-  </nav>
-  <div id="toast-holder"></div>
-  <div class="border"></div>
+        <div class="desktop-header internal-links">
+            <Resume />
+        </div>
+        <div class="mobile-header menu">
+            <Resume />
+            <SayHi id="mobilemodal"> Say Hi </SayHi>
+            <MenuButton />
+        </div>
+    </nav>
+    <div id="toast-holder"></div>
+    <div class="border"></div>
 </header>
+<script>
+    async function fetchWeather() {
+        try {
+            // Coordinates for Vasco da Gama, Goa
+            const res = await fetch(
+                "https://api.open-meteo.com/v1/forecast?latitude=15.3981&longitude=73.8111&current=weather_code,temperature_2m",
+            );
+            const data = await res.json();
+
+            const code = data.current.weather_code;
+            const temp = Math.round(data.current.temperature_2m);
+
+            let icon = "☀️";
+            let condition = "Sunny";
+
+            if (code > 0 && code <= 3) {
+                icon = "☁️";
+                condition = "Cloudy";
+            } else if (code >= 45 && code <= 48) {
+                icon = "🌫️";
+                condition = "Fog";
+            } else if (
+                (code >= 51 && code <= 67) ||
+                (code >= 80 && code <= 82)
+            ) {
+                icon = "🌧️";
+                condition = "Rain";
+            } else if (
+                (code >= 71 && code <= 77) ||
+                (code >= 85 && code <= 86)
+            ) {
+                icon = "❄️";
+                condition = "Snow";
+            } else if (code >= 95) {
+                icon = "⛈️";
+                condition = "Storm";
+            }
+
+            document.getElementById("weather-desktop").innerText =
+                `${icon} ${condition} in Goa`;
+            document.getElementById("weather-mobile").innerText = `${icon}`;
+        } catch (error) {
+            console.error("Failed to fetch weather", error);
+            document.getElementById("weather-desktop").innerText =
+                "Weather unavailable";
+            document.getElementById("weather-mobile").innerText = "";
+        }
+    }
+
+    fetchWeather();
+</script>
 <style>
-  .visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
 
-  header {
-    margin: 0;
-    padding: 0 1em;
-    background: white;
-  }
-  .border {
-    padding: 0px 20px;
-    border-bottom: 1px solid black;
-  }
-  h2 {
-    margin: 0;
-    font-size: clamp(1em, 1.25em, 1.5em);
-  }
+    header {
+        margin: 0;
+        padding: 0 1em;
+        background: white;
+    }
+    .border {
+        padding: 0px 20px;
+        border-bottom: 1px solid black;
+    }
+    h1 {
+        margin: 0;
+        font-size: clamp(1em, 1.25em, 1.5em);
+    }
 
-  h2 a,
-  h2 a.active {
-    text-decoration: none;
-  }
-  nav {
-    display: flex !important;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 15px;
-  }
-  nav a {
-    padding: 1em 0.5em;
-    transform: translateY(8px);
-    color: var(--black);
-    border-bottom: 4px solid transparent;
-    text-decoration: none;
-  }
-  nav a.active {
-    text-decoration: none;
-    color: #d5673e;
-  }
-  .internal-links {
-    display: flex;
-    gap: 64px;
-    font-weight: 400;
-    line-height: 30px;
-    font-size: clamp(0.5em, 1em, 1.25em);
-  }
-  .social-links,
-  .social-links a {
-    display: flex;
-  }
-  .mobile-header {
-    /* visually hidden */
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-  a.desktop-header {
-    padding: 1em 0 !important;
-  }
-  .desktop-header {
-    display: flex;
-    gap: 18px;
-    align-items: center;
-  }
-  @media (max-width: 720px) {
-    .desktop-header {
-      display: none;
+    h1 a,
+    h1 a.active {
+        text-decoration: none;
+    }
+    nav {
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 15px;
+    }
+    nav a {
+        padding: 1em 0.5em;
+        transform: translateY(8px);
+        color: var(--black);
+        border-bottom: 4px solid transparent;
+        text-decoration: none;
+    }
+    nav a.active {
+        text-decoration: none;
+        color: #d5673e;
+    }
+    .internal-links {
+        display: flex;
+        gap: 64px;
+        font-weight: 400;
+        line-height: 30px;
+        font-size: clamp(0.5em, 1em, 1.25em);
+    }
+    .social-links,
+    .social-links a {
+        display: flex;
     }
     .mobile-header {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-
-      position: static;
-      width: initial;
-      height: initial;
-      padding: initial;
-      margin: initial;
-      overflow: initial;
-      clip: initial;
-      white-space: initial;
-      border: initial;
+        /* visually hidden */
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
     }
-  }
+    a.desktop-header {
+        padding: 1em 0 !important;
+    }
+    .desktop-header {
+        display: flex;
+
+        gap: 18px;
+        align-items: center;
+    }
+    @media (max-width: 720px) {
+        .desktop-header {
+            display: none;
+        }
+        .mobile-header {
+            display: flex;
+            gap: 18px;
+            align-items: center;
+
+            position: static;
+            width: initial;
+            height: initial;
+            padding: initial;
+            margin: initial;
+            overflow: initial;
+            clip: initial;
+            white-space: initial;
+            border: initial;
+        }
+    }
 </style>
