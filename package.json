@@ -30,5 +30,6 @@
     "sharp": "^0.34.2",
     "svelte": "^5.20.5",
     "typescript": "^5.8.2"
-  }
+  },
+    "packageManager": "pnpm@11.3.0"
 }
