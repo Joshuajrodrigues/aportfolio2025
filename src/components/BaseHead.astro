@@ -1,27 +1,28 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-
+import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 
 interface Props {
-  title: string;
-  description: string;
-  image?: string;
-  keywords?: string;
+    title: string;
+    description: string;
+    image?: string;
+    keywords?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
-  title,
-  description,
-  image = "/site-images/temp-base.webp",
-  keywords = "UI UX Designer, Akanksha Gajankar, Goa, India, Writing, Art, Hire, Twimbit, Designer, Author, Artist, Figma, UI, UX",
+    title,
+    description,
+    image = "/site-images/temp-base.webp",
+    keywords = "UI UX Designer, Akanksha Gajankar, Goa, India, Writing, Art, Hire, Twimbit, Designer, Author, Artist, Figma, UI, UX",
 } = Astro.props;
 ---
+
 <link rel="sitemap" href="/sitemap-index.xml" />
-<link rel="stylesheet" href="https://use.typekit.net/xlb2znc.css">
+<link rel="stylesheet" href="https://use.typekit.net/xlb2znc.css" />
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
@@ -51,3 +52,31 @@ const {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 {image && <meta property="twitter:image" content={new URL(image, Astro.url)} />}
+<ClientRouter />
+
+<style is:global>
+    main {
+        view-transition-name: slide-content;
+    }
+
+    ::view-transition-old(slide-content) {
+        animation: 0.4s cubic-bezier(0.1, 0.9, 0.2, 1) both fade-out;
+    }
+
+    ::view-transition-new(slide-content) {
+        animation: 1s cubic-bezier(0.175, 0.885, 0.32, 1.05) both slide-up;
+    }
+
+    @keyframes fade-out {
+        to {
+            opacity: 0;
+            transform: scale(0.98);
+        }
+    }
+
+    @keyframes slide-up {
+        from {
+            transform: translateY(100vh);
+        }
+    }
+</style>

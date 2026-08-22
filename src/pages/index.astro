@@ -3,6 +3,18 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getCollection } from "astro:content";
+import InteractiveBoard from "../components/react/InteractiveBoard.tsx";
+
+const projects = await getCollection("project");
+const blogs = await getCollection("blog");
+const art = await getCollection("art");
+
+const boardData = [...projects].map((project) => ({
+    id: project.id,
+    title: project.data.title,
+    body: project.body,
+}));
 ---
 
 <!doctype html>
@@ -14,14 +26,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
         <Header />
 
         <main id="board">
-            <div class="center-text">
-                <h2>
-                    Hello, <br />
-                    I'm {SITE_TITLE}
-                </h2>
-                <p>UIUX / Product Designer | 5 years</p>
-            </div>
-
+            <section class="intro">
+                <div class="center-text">
+                    <h2>
+                        Hello, <br />
+                        I'm {SITE_TITLE}
+                    </h2>
+                    <p>UIUX / Product Designer | 5 years</p>
+                </div>
+            </section>
+            <InteractiveBoard client:load projects={boardData} />
             <Footer />
         </main>
     </body>
@@ -89,11 +103,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
     main {
         position: relative;
         width: 100%;
+
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        .intro {
+            max-width: 1200px;
+        }
     }
 
     .center-text {

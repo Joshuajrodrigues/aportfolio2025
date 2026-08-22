@@ -8,7 +8,7 @@ import SayHi from "./SayHi.astro";
 const { headerColor } = Astro.props;
 ---
 
-<header>
+<header transition:persist>
     <nav>
         <h1>
             <a
@@ -34,7 +34,6 @@ const { headerColor } = Astro.props;
         </div>
     </nav>
     <div id="toast-holder"></div>
-    <div class="border"></div>
 </header>
 <script>
     async function fetchWeather() {
@@ -103,7 +102,7 @@ const { headerColor } = Astro.props;
     header {
         margin: 0;
         padding: 0 1em;
-        background: white;
+        background: transparent;
     }
     .border {
         padding: 0px 20px;

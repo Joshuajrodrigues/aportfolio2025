@@ -16,20 +16,22 @@
     "@astrojs/svelte": "^9.0.1",
     "@fontsource/pt-serif": "^5.2.5",
     "@glidejs/glide": "^3.7.1",
-    "@types/react": "^19.1.8",
-    "@types/react-dom": "^19.1.6",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "astro": "^7.2.4",
     "astro-favicons": "^3.1.5",
     "astro-icon": "^1.1.4",
     "astro-masonry": "^1.2.2",
     "booary": "^8.1.1",
     "canvas-confetti": "^1.9.3",
+    "framer-motion": "^13.1.1",
     "glightbox": "^3.3.1",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "sharp": "^0.34.2",
     "svelte": "^5.20.5",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "vaul": "^1.1.2"
   },
-    "packageManager": "pnpm@11.3.0"
+  "packageManager": "pnpm@11.3.0"
 }
