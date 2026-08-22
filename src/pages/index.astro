@@ -14,6 +14,7 @@ const boardData = [...projects].map((project) => ({
     id: project.id,
     title: project.data.title,
     body: project.body,
+    src: project.data.src?.src,
 }));
 ---
 
@@ -136,5 +137,9 @@ const boardData = [...projects].map((project) => ({
         font-size: 1.25rem;
         margin-top: 10px;
         color: #333;
+    }
+    h2,
+    .pixel-text {
+        font-family: "Pixelify Sans", sans-serif;
     }
 </style>
