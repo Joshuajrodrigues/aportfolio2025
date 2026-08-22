@@ -7,52 +7,72 @@ export default function InteractiveBoard({ projects }) {
     const isDragging = useRef(false);
 
     useEffect(() => {
-            const cardWidth = 180;
-            const estimatedMaxHeight = 260;
-            const padding = 20;
+        // 1. Check if we already have positions saved in this browser session
+        const savedPositions = sessionStorage.getItem("boardLayout");
 
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
+        if (savedPositions) {
+            setPositions(JSON.parse(savedPositions));
+            return; // Stop here so we don't recalculate
+        }
 
-            // Set how far away from the center text the cards should sit
-            // We make it smaller on mobile so they don't get pushed off screen
-            const baseRadius = window.innerWidth < 768 ? 160 : 380;
+        // 2. Otherwise, calculate the radial positions
+        const cardWidth = 180;
+        const estimatedMaxHeight = 260;
+        const padding = 20;
 
-            const totalProjects = projects.length;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        const baseRadius = window.innerWidth < 768 ? 160 : 380;
 
-            const newPositions = projects.map((_, index) => {
-                // 1. Calculate an even angle for each card (in radians)
-                const angleSlice = (Math.PI * 2) / totalProjects;
+        const totalProjects = projects.length;
 
-                // Add a little randomness to the angle so it looks scattered
-                const randomAngleOffset = (Math.random() * 0.5) - 0.25;
-                const angle = (index * angleSlice) + randomAngleOffset;
+        const newPositions = projects.map((_, index) => {
+            const angleSlice = (Math.PI * 2) / totalProjects;
+            const randomAngleOffset = (Math.random() * 0.5) - 0.25;
+            const angle = (index * angleSlice) + randomAngleOffset;
 
-                // 2. Add randomness to the distance from the center
-                const radius = baseRadius + (Math.random() * 80);
+            const radius = baseRadius + (Math.random() * 80);
 
-                // 3. Convert the angle and radius into X and Y coordinates on the screen
-                let x = centerX + (Math.cos(angle) * radius) - (cardWidth / 2);
-                let y = centerY + (Math.sin(angle) * radius) - (estimatedMaxHeight / 2);
+            let x = centerX + (Math.cos(angle) * radius) - (cardWidth / 2);
+            let y = centerY + (Math.sin(angle) * radius) - (estimatedMaxHeight / 2);
 
-                // 4. Clamp the values to strictly ensure they never cross the edges of the viewport
-                const maxX = window.innerWidth - cardWidth - padding;
-                const maxY = window.innerHeight - estimatedMaxHeight - padding;
+            const maxX = window.innerWidth - cardWidth - padding;
+            const maxY = window.innerHeight - estimatedMaxHeight - padding;
 
-                x = Math.max(padding, Math.min(x, maxX));
-                y = Math.max(padding, Math.min(y, maxY));
+            x = Math.max(padding, Math.min(x, maxX));
+            y = Math.max(padding, Math.min(y, maxY));
 
-                const randomRotate = Math.floor(Math.random() * 40) - 20;
+            const randomRotate = Math.floor(Math.random() * 40) - 20;
 
-                return { x, y, rotate: randomRotate };
-            });
+            return { x, y, rotate: randomRotate };
+        });
 
-            setPositions(newPositions);
-        }, [projects]);
+        // Save the new calculation to session storage
+        sessionStorage.setItem("boardLayout", JSON.stringify(newPositions));
+        setPositions(newPositions);
+    }, [projects]);
 
-  const openProject = (project) => {
+    const openProject = (project) => {
         if (isDragging.current) return;
         navigate(`/projects/${project.id}`);
+    };
+
+    // 3. Save the new position when the user drops a card
+    const handleDragEnd = (index, info) => {
+        setTimeout(() => {
+            isDragging.current = false;
+        }, 150);
+
+        setPositions((prev) => {
+            const updated = [...prev];
+            updated[index] = {
+                ...updated[index],
+                x: updated[index].x + info.offset.x,
+                y: updated[index].y + info.offset.y,
+            };
+            sessionStorage.setItem("boardLayout", JSON.stringify(updated));
+            return updated;
+        });
     };
 
     if (positions.length === 0) return null;
@@ -67,11 +87,7 @@ export default function InteractiveBoard({ projects }) {
                     onDragStart={() => {
                         isDragging.current = true;
                     }}
-                    onDragEnd={() => {
-                        setTimeout(() => {
-                            isDragging.current = false;
-                        }, 150);
-                    }}
+                    onDragEnd={(event, info) => handleDragEnd(index, info)}
                     whileHover={{ scale: 1.05, zIndex: 50 }}
                     whileTap={{ scale: 0.95, cursor: "grabbing" }}
                     onClick={() => openProject(project)}
@@ -94,7 +110,7 @@ export default function InteractiveBoard({ projects }) {
                             alt={project.title}
                             draggable="false"
                             style={{
-                                width: "320px",
+                                width: "180px",
                                 height: "auto",
                                 background: "#fff",
                                 border: "2px solid #111",
@@ -106,8 +122,8 @@ export default function InteractiveBoard({ projects }) {
                         />
                     ) : (
                         <div style={{
-                            width: "360px",
-                            height: "320px",
+                            width: "160px",
+                            height: "220px",
                             background: "#fff",
                             border: "2px solid #111",
                             boxShadow: "4px 4px 0px #111",
