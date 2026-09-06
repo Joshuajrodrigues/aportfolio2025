@@ -1,51 +1,75 @@
 ---
-const today = new Date();
+const year = new Date().getFullYear();
 ---
 
-<footer>
-    <div>
-        <a href="mailto:work@akankshagajankar.com" aria-label="contact info">
+<footer class="site-footer">
+    <div class="footer-left">
+        <a href="mailto:work@akankshagajankar.com" class="email-link">
             work@akankshagajankar.com
         </a>
-        <br />
-        <span> All rights reserved.</span>
-        <br />
-        &copy; {today.getFullYear()} Akanksha Gajankar 😺. <br />
     </div>
-    <div class="links">
-        <!-- <a aria-label="about me" href="/about">About</a>
-    <a aria-label="my work and projects" href="/projects">Work</a>
-    <a aria-label="my writing" href="/writing">Writing</a> -->
+
+    <div class="footer-right">
+        <span>© {year} Akanksha Gajankar</span>
+        <span class="dot">•</span>
+        <span>All rights reserved</span>
     </div>
 </footer>
+
 <style>
-    .links {
-        a {
-            margin-right: 8px;
-        }
-    }
-    footer {
+    .site-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
         display: flex;
         justify-content: space-between;
-        padding: 2em 1em 6em 1em;
-        color: #858081;
-        font-size: 16px;
-        text-align: left;
-        a {
-            all: unset;
-
-            cursor: pointer;
-        }
+        align-items: center;
+        padding: 12px 24px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        z-index: 90; /* Keeps it above canvas (20) and grid (15), below dock (100) */
+        pointer-events: auto;
     }
-    @media (max-width: 780px) {
-        footer {
-            display: flex;
+
+    .email-link {
+        color: #171717;
+        text-decoration: none;
+        border-bottom: 1px dashed #a3a3a3;
+        transition:
+            border-color 0.15s ease,
+            color 0.15s ease;
+    }
+
+    .email-link:hover {
+        color: #000;
+        border-bottom-color: #000;
+    }
+
+    .footer-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .dot {
+        color: #d4d4d4;
+    }
+
+    @media (max-width: 640px) {
+        .site-footer {
             flex-direction: column;
-            font-size: 14px;
+            gap: 6px;
+            padding: 10px 16px 70px 16px; /* extra bottom padding for dock */
+            text-align: center;
         }
-        .links {
-            display: flex;
-            flex-direction: column;
+
+        .footer-right {
+            font-size: 0.7rem;
+            gap: 6px;
         }
     }
 </style>

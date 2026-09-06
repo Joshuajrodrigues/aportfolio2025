@@ -11,8 +11,45 @@
 		0 16px 32px rgba(var(--gray), 33%);
 }
 
+/* Pixeloid Sans Regular */
+@font-face {
+  font-family: 'Pixeloid Sans';
+  src: url('/fonts/PixeloidSans.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pixeloid Sans Bold */
+@font-face {
+  font-family: 'Pixeloid Sans';
+  src: url('/fonts/PixeloidSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pixeloid Mono Regular */
+@font-face {
+  font-family: 'Pixeloid Mono';
+  src: url('/fonts/pixeloid.mono.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Pixeloid Sans', sans-serif;
+}
+
+/* Monospace / Code Elements */
+code, pre, kbd {
+  font-family: 'Pixeloid Mono', monospace;
+}
+
 body {
-	font-family: 'Poppins', sans-serif;
+	font-family: 'Pixeloid Sans', sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
