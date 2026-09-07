@@ -16,6 +16,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
     const [positions, setPositions] = useState<any[]>([]);
     const [isReady, setIsReady] = useState(false);
     const [cursorMode, setCursorMode] = useState<"idle" | "hover" | "dragging">("idle");
+    const [isMobile, setIsMobile] = useState(false);
     const isDragging = useRef(false);
 
     // Follower spring
@@ -28,6 +29,16 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
         if (window.innerWidth < 768) {
             setMode("grid");
         }
+    }, []);
+
+    // Track mobile viewport for grid/header sizing (independent of the
+    // canvas/grid mode switch above — this just controls how "grid" mode
+    // is laid out, so it stays in sync if the window is resized).
+    useEffect(() => {
+        const updateIsMobile = () => setIsMobile(window.innerWidth < 768);
+        updateIsMobile();
+        window.addEventListener("resize", updateIsMobile);
+        return () => window.removeEventListener("resize", updateIsMobile);
     }, []);
 
     useEffect(() => {
@@ -173,6 +184,13 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                               x: "-50%",
                               y: "-50%",
                           }
+                        : isMobile
+                        ? {
+                              top: "24px",
+                              left: "20px",
+                              x: "0%",
+                              y: "0%",
+                          }
                         : {
                               top: "40px",
                               left: "50px",
@@ -187,13 +205,20 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                     pointerEvents: "none",
                     zIndex: 30,
                     userSelect: "none",
+                    maxWidth: mode === "grid" && isMobile ? "calc(100% - 40px)" : undefined,
                 }}
             >
                 <h2
                     style={{
                         fontFamily: '"Pixelify Sans", sans-serif',
-                        fontSize: mode === "canvas" ? "3.5rem" : "2.4rem",
+                        fontSize:
+                            mode === "canvas"
+                                ? "3.5rem"
+                                : isMobile
+                                ? "1.8rem"
+                                : "2.4rem",
                         margin: 0,
+                        lineHeight: mode === "grid" && isMobile ? 1.15 : undefined,
                         transition: "font-size 0.3s ease",
                         textShadow:
                             "2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff",
@@ -217,7 +242,13 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                     <br />
                     I'm {siteTitle}
                 </h2>
-                <p style={{ fontSize: "1.05rem", margin: "8px 0 0 0", color: "#333" }}>
+                <p
+                    style={{
+                        fontSize: mode === "grid" && isMobile ? "0.85rem" : "1.05rem",
+                        margin: mode === "grid" && isMobile ? "6px 0 0 0" : "8px 0 0 0",
+                        color: "#333",
+                    }}
+                >
                     UIUX / Product Designer | 5 years
                 </p>
             </motion.div>
@@ -338,22 +369,29 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                             position: "absolute",
                             inset: 0,
                             overflowY: "auto",
-                            /* 230px top padding clears the Hello text completely */
-                            padding: "230px 48px 120px 48px",
+                            /* Top padding clears the Hello text; smaller on
+                               mobile since the header itself is smaller there. */
+                            padding: isMobile
+                                ? "150px 20px 110px 20px"
+                                : "230px 48px 120px 48px",
                             boxSizing: "border-box",
                             zIndex: 15,
                             /* Fade cards as they scroll near the top header */
-                            maskImage:
-                                "linear-gradient(to bottom, transparent 0px, transparent 120px, black 220px, black 100%)",
-                            WebkitMaskImage:
-                                "linear-gradient(to bottom, transparent 0px, transparent 120px, black 220px, black 100%)",
+                            maskImage: isMobile
+                                ? "linear-gradient(to bottom, transparent 0px, transparent 70px, black 150px, black 100%)"
+                                : "linear-gradient(to bottom, transparent 0px, transparent 120px, black 220px, black 100%)",
+                            WebkitMaskImage: isMobile
+                                ? "linear-gradient(to bottom, transparent 0px, transparent 70px, black 150px, black 100%)"
+                                : "linear-gradient(to bottom, transparent 0px, transparent 120px, black 220px, black 100%)",
                         }}
                     >
                         <motion.div
                             style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
-                                gap: "24px",
+                                gridTemplateColumns: isMobile
+                                    ? "repeat(2, 1fr)"
+                                    : "repeat(auto-fill, minmax(320px, 1fr))",
+                                gap: isMobile ? "16px" : "24px",
                                 maxWidth: "1280px",
                                 margin: "0 auto",
                             }}
@@ -370,24 +408,109 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                                         damping: 20,
                                         delay: idx * 0.04,
                                     }}
-                                    whileHover={{ y: -4 }}
+                                    whileHover={!isMobile ? { y: -4 } : undefined}
+                                    whileTap={isMobile ? { scale: 0.96 } : undefined}
                                     onClick={() => openProject(project)}
-                                    style={{
-                                        background: project.accentColor || "#d97757",
-                                        border: "2px solid #111",
-                                        borderRadius: "16px",
-                                        boxShadow: "4px 4px 0px #111",
-                                        aspectRatio: "1.1 / 1",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        padding: "20px",
-                                        cursor: "pointer",
-                                        position: "relative",
-                                        overflow: "hidden",
-                                    }}
+                                    style={
+                                        isMobile
+                                            ? {
+                                                  background: "#fff",
+                                                  border: "2px solid #111",
+                                                  borderRadius: "14px",
+                                                  boxShadow: "4px 4px 0px #111",
+                                                  overflow: "hidden",
+                                                  cursor: "pointer",
+                                                  display: "flex",
+                                                  flexDirection: "column",
+                                              }
+                                            : {
+                                                  background: project.accentColor || "#d97757",
+                                                  border: "2px solid #111",
+                                                  borderRadius: "16px",
+                                                  boxShadow: "4px 4px 0px #111",
+                                                  aspectRatio: "1.1 / 1",
+                                                  display: "flex",
+                                                  alignItems: "center",
+                                                  justifyContent: "center",
+                                                  padding: "20px",
+                                                  cursor: "pointer",
+                                                  position: "relative",
+                                                  overflow: "hidden",
+                                              }
+                                    }
                                 >
-                                    {project.src ? (
+                                    {isMobile ? (
+                                        <>
+                                            <div
+                                                style={{
+                                                    position: "relative",
+                                                    aspectRatio: "5 / 4",
+                                                    background: project.accentColor || "#d97757",
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    overflow: "hidden",
+                                                }}
+                                            >
+
+                                                {project.src ? (
+                                                    <img
+                                                        src={project.src}
+                                                        alt={project.title}
+                                                        style={{
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            objectFit: "cover",
+                                                            pointerEvents: "none",
+                                                        }}
+                                                    />
+                                                ) : (
+                                                    <span
+                                                        style={{
+                                                            fontSize: "1.8rem",
+                                                            color: "#fff",
+                                                        }}
+                                                    >
+                                                        ✦
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    justifyContent: "space-between",
+                                                    gap: "8px",
+                                                    padding: "10px 12px",
+                                                    borderTop: "2px solid #111",
+                                                    background: "#fff",
+                                                }}
+                                            >
+                                                <span
+                                                    style={{
+                                                        fontSize: "0.8rem",
+                                                        fontWeight: 700,
+                                                        color: "#111",
+                                                        overflow: "hidden",
+                                                        textOverflow: "ellipsis",
+                                                        whiteSpace: "nowrap",
+                                                    }}
+                                                >
+                                                    {project.title}
+                                                </span>
+                                                <span
+                                                    style={{
+                                                        fontSize: "0.85rem",
+                                                        color: "#3b7cff",
+                                                        flexShrink: 0,
+                                                    }}
+                                                    aria-hidden="true"
+                                                >
+                                                    ↗
+                                                </span>
+                                            </div>
+                                        </>
+                                    ) : project.src ? (
                                         <img
                                             src={project.src}
                                             alt={project.title}

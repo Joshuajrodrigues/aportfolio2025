@@ -13,7 +13,7 @@ const boardData = projects.map((project) => ({
     title: project.data.title,
     body: project.body,
     src: project.data.src?.src,
-    accentColor: project.data.accentColor || "#1e1e1e",
+    accentColor: project.data.colors?.[0] || "#1e1e1e",
 }));
 ---
 

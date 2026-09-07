@@ -8,14 +8,12 @@ const year = new Date().getFullYear();
             work@akankshagajankar.com
         </a>
     </div>
-
     <div class="footer-right">
         <span>© {year} Akanksha Gajankar</span>
         <span class="dot">•</span>
         <span>All rights reserved</span>
     </div>
 </footer>
-
 <style>
     .site-footer {
         position: fixed;
@@ -34,7 +32,6 @@ const year = new Date().getFullYear();
         z-index: 90; /* Keeps it above canvas (20) and grid (15), below dock (100) */
         pointer-events: auto;
     }
-
     .email-link {
         color: #171717;
         text-decoration: none;
@@ -43,33 +40,48 @@ const year = new Date().getFullYear();
             border-color 0.15s ease,
             color 0.15s ease;
     }
-
     .email-link:hover {
         color: #000;
         border-bottom-color: #000;
     }
-
     .footer-right {
         display: flex;
         align-items: center;
         gap: 8px;
     }
-
     .dot {
         color: #d4d4d4;
     }
-
     @media (max-width: 640px) {
         .site-footer {
             flex-direction: column;
-            gap: 6px;
-            padding: 10px 16px 70px 16px; /* extra bottom padding for dock */
+            gap: 10px;
+            padding: 12px 20px 70px 20px; /* extra bottom padding for dock */
             text-align: center;
         }
-
+        .footer-left {
+            width: 100%;
+        }
+        .email-link {
+            display: inline-block;
+            font-size: 0.85rem;
+            max-width: 100%;
+            word-break: break-word;
+        }
         .footer-right {
-            font-size: 0.7rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            row-gap: 4px;
+            font-size: 0.72rem;
             gap: 6px;
+        }
+    }
+    @media (max-width: 360px) {
+        .footer-right span:not(.dot) {
+            flex: 0 0 100%;
+        }
+        .dot {
+            display: none;
         }
     }
 </style>
