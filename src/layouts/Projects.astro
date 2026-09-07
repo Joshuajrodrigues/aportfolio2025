@@ -1,267 +1,445 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import type { MarkdownHeading } from "astro";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
 
-type Props = CollectionEntry<"project">["data"];
+type Props = CollectionEntry<"project">["data"] & {
+    headings?: MarkdownHeading[];
+};
 
 const {
-  title,
-  description,
-  contentBlocks,
-  heroImage,
-  colors,
-  heroHelpText,
-  role,
-  team,
-  impact,
+    title,
+    description,
+    contentBlocks,
+    heroImage,
+    colors,
+    heroHelpText,
+    role,
+    team,
+    tags,
+    impact,
+    headings = [],
 } = Astro.props;
+
+// Only H1s from the mdx content are used for the sticky nav.
+// (Astro auto-generates a slug for every heading, which we use as the anchor id.)
+const sections = headings.filter((h) => h.depth === 1);
 ---
 
 <html lang="en">
-  <head>
-    <BaseHead title={title} description={description} image={heroImage.src} />
-  </head>
+    <head>
+        <BaseHead
+            title={title}
+            description={description}
+            image={heroImage.src}
+        />
+    </head>
 
-  <body>
-    <Header />
-    <main>
-      <article>
-        <section class="project-title--container">
-          <h1>{title}</h1>
-          <h3>{description}</h3>
-        </section>
+    <body>
+        <Header />
+        <main>
+            <article>
+                <section class="project-title--container">
+                    <h1 class="bold">{title}</h1>
+                    <h3>{description}</h3>
+                    <div class="tag-container mt-15 bold">
+                        {
+                            tags?.map((tag, i) => (
+                                <>
+                                    <span>{tag}</span>
+                                    {i < tags.length - 1 && (
+                                        <span class="dot ml-15 mr-15">•</span>
+                                    )}
+                                </>
+                            ))
+                        }
+                    </div>
+                </section>
 
-        <div style={{ backgroundColor: colors?.[0] }} class="hero-image frame">
-          <p class="title">
-            <span>{title}</span>
-            <!-- <span class="type">{"Project"}</span> -->
-            <img loading="lazy" src={"/site-icons/card-buttons.svg"} alt="000" />
-          </p>
-          {
-            heroImage && (
-              <Image  src={heroImage} alt="hero" />
-            )
-          }
-        </div>
-        <div class="hero-image-help-text">{heroHelpText}</div>
-        <div class="centered-project-content">
-          <div class="rti">
-          {
-            role && (
-                <div>
-                  <h4>Role</h4>
-                  <p>{role}</p>
+                <div class="hero-bleed">
+                    {heroImage && <Image src={heroImage} alt="hero" />}
                 </div>
-                <div>
-                  <h4>Team</h4>
-                  <p>{team}</p>
-                </div>
-                <div>
-                  <h4>Impact</h4>
-                  <p>{impact}</p>
-                </div>
-            )
-          }
-          </div>
 
-          {
-            contentBlocks && contentBlocks?.length > 0 && (
-              <div class="content-container">
-                <div class="content m-w-700">{contentBlocks?.[0]}</div>
-                <div class="content m-w-700 text-right align-self-end">
-                  {contentBlocks?.[0]}
+                {
+                    sections.length > 0 && (
+                        <nav class="section-nav" aria-label="Project sections">
+                            <ul>
+                                {sections.map((heading, index) => (
+                                    <li>
+                                        <a
+                                            href={`#${heading.slug}`}
+                                            class="section-nav-link"
+                                            data-slug={heading.slug}
+                                        >
+                                            <span class="section-nav-index">
+                                                {String(index + 1).padStart(
+                                                    2,
+                                                    "0",
+                                                )}
+                                                .
+                                            </span>
+                                            {heading.text}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </nav>
+                    )
+                }
+
+                <div class="centered-project-content">
+                    <!-- <div class="rti">
+                        {
+                            role && (
+                                <>
+                                    <div>
+                                        <h4>Role</h4>
+                                        <p>{role}</p>
+                                    </div>
+                                    <div>
+                                        <h4>Team</h4>
+                                        <p>{team}</p>
+                                    </div>
+                                    <div>
+                                        <h4>Impact</h4>
+                                        <p>{impact}</p>
+                                    </div>
+                                </>
+                            )
+                        }
+                    </div> -->
+
+                    {
+                        contentBlocks && contentBlocks?.length > 0 && (
+                            <div class="content-container">
+                                <div class="content m-w-700">
+                                    {contentBlocks?.[0]}
+                                </div>
+                                <div class="content m-w-700 text-right align-self-end">
+                                    {contentBlocks?.[0]}
+                                </div>
+                            </div>
+                        )
+                    }
+                    <slot />
                 </div>
-              </div>
-            )
-          }
-          <slot />
-        </div>
-      </article>
-    </main>
-    <Footer />
-  </body>
+            </article>
+        </main>
+        <Footer />
+    </body>
 </html>
+
+<script>
+    function initSectionNav() {
+        const links =
+            document.querySelectorAll<HTMLAnchorElement>(".section-nav-link");
+        const nav = document.querySelector<HTMLElement>(".section-nav");
+        if (!links.length) return;
+
+        const targets = Array.from(links)
+            .map((link) => {
+                const slug = link.dataset.slug;
+                const el = slug ? document.getElementById(slug) : null;
+                return el ? { link, el } : null;
+            })
+            .filter(
+                (x): x is { link: HTMLAnchorElement; el: HTMLElement } =>
+                    x !== null,
+            );
+
+        // console.log(
+        //     "[section-nav] links:",
+        //     links.length,
+        //     "matched targets:",
+        //     targets.length,
+        // );
+
+        links.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                e.preventDefault();
+                const slug = link.dataset.slug;
+                const el = slug ? document.getElementById(slug) : null;
+                if (!el) return;
+                const offset = (nav?.offsetHeight ?? 0) + 16;
+                const top =
+                    el.getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top, behavior: "smooth" });
+            });
+        });
+
+        if (targets.length === 0) return;
+
+        const navHeight = nav?.offsetHeight ?? 60;
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const match = targets.find((t) => t.el === entry.target);
+                    if (!match || !entry.isIntersecting) return;
+                    links.forEach((l) => l.classList.remove("active"));
+                    match.link.classList.add("active");
+                });
+            },
+            { rootMargin: `-${navHeight + 8}px 0px -60% 0px`, threshold: 0 },
+        );
+        targets.forEach((t) => observer.observe(t.el));
+    }
+
+    initSectionNav();
+    document.addEventListener("astro:page-load", initSectionNav);
+</script>
+
 <style>
-  .rti {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin: 40px 0px;
-    gap:32px;
-    color: #594a4e;
-    h4 {
-      font-weight: 700;
-      color: #594a4e;
-      font-size: 32px;
+    .section-nav {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
     }
-    p {
-      font-size: 24px;
-    }
-  }
-  .centered-project-content {
-    margin: auto 70px;
-    p {
-      color: #594a4e;
-    }
-    h1 {
-      color: #33272a;
-      font-weight: 600;
-      font-size: 36px;
-      margin-top: 58px;
-    }
-  }
-  .frame {
-    border: 1px solid black;
-    box-shadow: black -12px 12px;
-    height: fit-content;
-    border-radius: 12px;
-    background-color: #fff;
-    font-size: 0;
-    line-height: 0;
-    .title {
-      line-height: 12px;
-      max-height: 40px;
-      border-bottom: 1px solid black;
-      margin: 0px;
-      font-size: 14px;
-      display: flex;
-      justify-content: space-between;
-      padding: 10px 20px;
-      .type {
-        font-weight: 600;
-      }
-    }
-    > img {
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-    }
-  }
-  .project-title--container {
-    text-align: center;
-    margin: 60px 0px;
-    h1 {
-      font-size: 52px;
-      font-weight: normal;
-    }
-    h3 {
-      font-size: 28px;
-      color: #594a4e;
-      font-weight: normal;
-    }
-  }
-  .hero-image-help-text {
-    margin: auto 180px;
-    font-style: italic;
-    font-size: 20px;
-    margin-top: 40px;
-    color: #594a4e;
-    opacity: 0.75;
-    text-align: center;
-  }
-  main {
-    width: calc(100% - 2em);
-    max-width: 100%;
-    margin: 0;
-  }
-  .carousel {
-    margin-top: 64px;
-  }
-  h1 {
-    margin: 0 0 1.5rem 0;
-  }
-  .content-container {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-  }
-  .text-right {
-    text-align: right;
-  }
-  .align-self-end {
-    margin-left: auto;
-    margin-top: 60px;
-  }
-  .m-w-700 {
-    max-width: 700px;
-  }
-  .tags-container {
-    display: flex;
-    margin: 50px 0;
-    .tags-list {
-      margin-left: auto;
-      text-align: right;
-      .tags-list-item {
-        list-style: none;
-        font-weight: lighter;
-        font-size: 32px;
-        transition: color 0.8s;
-        cursor: default;
-      }
-      .tags-list-item:hover {
-        color: #ffc8fd;
-      }
-    }
-  }
-  .hero-image {
-    margin: auto 180px;
-  }
-  .hero-image img {
-    display: block;
-    border-radius: 5px;
-  }
-  .prose {
-    width: 720px;
-    max-width: calc(100% - 2em);
-    margin: auto;
-    padding: 1em;
-    color: #594a4e;
-  }
-
-  .title {
-    margin-bottom: 1em;
-    padding: 1em 0;
-    text-align: center;
-    line-height: 1;
-  }
-  .title h1 {
-    margin: 0 0 0.5em 0;
-  }
-  .date {
-    margin-bottom: 0.5em;
-    color: rgb(var(--gray));
-  }
-  .last-updated-on {
-    font-style: italic;
-  }
-  @media (max-width: 720px) {
-    .tags-container {
-      margin: 25px 0;
-      .tags-list {
-        .tags-list-item {
-          font-size: 16px;
+    @supports not (backdrop-filter: blur(1px)) {
+        .section-nav {
+            background: rgba(255, 255, 255, 0.95); /* solid fallback */
         }
-      }
     }
-  }
-  @media (max-width: 780px) {
-    .hero-image {
-      margin: auto 15px;
-
+    .section-nav ul {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 14px 0;
+        gap: 12%;
+        overflow-x: auto;
     }
-    .hero-image-help-text {
-      padding-top: 24px;
-      margin: auto 15px;
-      font-size: .4rem;
+    .section-nav-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        color: #33272a;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        white-space: nowrap;
+        opacity: 0.55;
+        transition:
+            opacity 0.2s,
+            background-color 0.2s;
+    }
+    .section-nav-link:hover,
+    .section-nav-link.active {
+        opacity: 1;
+    }
+    .section-nav-link.active {
+        /*background: rgba(59, 124, 255, 0.12);*/
+        color: #3b7cff;
     }
     .rti {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin: 40px 0px;
+        gap: 32px;
+        color: #594a4e;
+        h4 {
+            font-weight: 700;
+            color: #594a4e;
+            font-size: 32px;
+        }
+        p {
+            font-size: 24px;
+        }
     }
-    .centered-project-content{
-      margin: auto 15px;
+    .centered-project-content {
+        margin: auto 70px;
+        p {
+            color: #594a4e;
+        }
+        h1 {
+            color: #33272a;
+            font-weight: 600;
+            font-size: 36px;
+            margin-top: 58px;
+        }
     }
-  }
+    .frame {
+        border: 1px solid black;
+        box-shadow: black -12px 12px;
+        height: fit-content;
+        border-radius: 12px;
+        background-color: #fff;
+        font-size: 0;
+        line-height: 0;
+        .title {
+            line-height: 12px;
+            max-height: 40px;
+            border-bottom: 1px solid black;
+            margin: 0px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            .type {
+                font-weight: 600;
+            }
+        }
+        > img {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+    }
+    .project-title--container {
+        text-align: center;
+        margin: 60px 0px;
+        h1 {
+            font-size: 52px;
+            font-weight: normal;
+        }
+        h3 {
+            font-size: 28px;
+            color: #594a4e;
+            font-weight: normal;
+        }
+    }
+    .hero-image-help-text {
+        margin: auto 180px;
+        font-style: italic;
+        font-size: 20px;
+        margin-top: 40px;
+        color: #594a4e;
+        opacity: 0.75;
+        text-align: center;
+    }
+    main {
+        width: calc(100% - 2em);
+        max-width: 100%;
+        margin: 0;
+    }
+    .carousel {
+        margin-top: 64px;
+    }
+    h1 {
+        margin: 0 0 1.5rem 0;
+    }
+    .content-container {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+    }
+    .text-right {
+        text-align: right;
+    }
+    .align-self-end {
+        margin-left: auto;
+        margin-top: 60px;
+    }
+    .m-w-700 {
+        max-width: 700px;
+    }
+    .tags-container {
+        display: flex;
+        margin: 50px 0;
+        .tags-list {
+            margin-left: auto;
+            text-align: right;
+            .tags-list-item {
+                list-style: none;
+                font-weight: lighter;
+                font-size: 32px;
+                transition: color 0.8s;
+                cursor: default;
+            }
+            .tags-list-item:hover {
+                color: #ffc8fd;
+            }
+        }
+    }
+
+    .hero-image {
+        margin: auto 180px;
+    }
+    .hero-image img {
+        display: block;
+        border-radius: 5px;
+    }
+    .prose {
+        width: 720px;
+        max-width: calc(100% - 2em);
+        margin: auto;
+        padding: 1em;
+        color: #594a4e;
+    }
+
+    .title {
+        margin-bottom: 1em;
+        padding: 1em 0;
+        text-align: center;
+        line-height: 1;
+    }
+    .title h1 {
+        margin: 0 0 0.5em 0;
+    }
+    .date {
+        margin-bottom: 0.5em;
+        color: rgb(var(--gray));
+    }
+    .last-updated-on {
+        font-style: italic;
+    }
+
+    .hero-bleed {
+        width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+    }
+
+    .hero-bleed img {
+        display: block;
+        width: 100%;
+    }
+    @media (max-width: 720px) {
+        .tags-container {
+            margin: 25px 0;
+            .tags-list {
+                .tags-list-item {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+    @media (max-width: 780px) {
+        .section-nav {
+            margin: 0 15px;
+        }
+        .section-nav ul {
+            gap: 16px;
+            padding: 10px 0;
+        }
+        .section-nav-link {
+            font-size: 12px;
+        }
+        .hero-image {
+            margin: auto 15px;
+        }
+        .hero-image-help-text {
+            padding-top: 24px;
+            margin: auto 15px;
+            font-size: 0.4rem;
+        }
+        .rti {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 50px;
+        }
+        .centered-project-content {
+            margin: auto 15px;
+        }
+    }
 </style>

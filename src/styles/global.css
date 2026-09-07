@@ -222,3 +222,17 @@ main {
   .toast.show {
     opacity: 1;
   }
+.bold{
+    font-weight: bold !important;
+}
+.ml-15 {
+     margin-left: 15px !important;
+}
+
+.mt-15{
+     margin-top: 15px !important;
+}
+
+.mr-15{
+    margin-right: 15px !important;
+}

@@ -1,8 +1,8 @@
 /* ImageCarousel.css */
 .image-carousel-container {
-  margin-top: 8rem;
+  margin-top: 4rem;
   max-width: 1200px;
-  margin: 8rem auto 0;
+ margin: 2rem auto 4rem;
   padding: 0 20px;
 }
 
@@ -19,7 +19,7 @@
   position: relative;
 
   overflow: hidden;
- 
+
   height: 300px;
   cursor: pointer;
 }
@@ -114,7 +114,7 @@ top: 7px;
 width: 35px;
   height: 35px;
   fill: white;
-  
+
 }
 
 .lightbox-nav {
@@ -145,7 +145,7 @@ width: 40px;
 }
 
 .nav-button:hover {
-  
+
   transform: scale(1.1);
 }
 
@@ -202,7 +202,7 @@ width: 40px;
   .glide__slide {
     padding: 8px;
   }
-  
+
   .slide-content {
     height: 250px;
   }
@@ -212,16 +212,16 @@ width: 40px;
   .image-carousel-container {
     margin-top: 5rem;
   }
-  
+
   .glide__arrows {
     gap: 15px;
   }
-  
+
   .glide__arrow {
     width: 40px;
     height: 40px;
   }
-  
+
   .glide__arrow svg {
     width: 20px;
     height: 20px;
