@@ -232,8 +232,8 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                             aria-hidden="true"
                             style={{
                                 position: "absolute",
-                                top: "-60px",
-                                left: "80%",
+                                top: isMobile ?"-36px":"-50px",
+                                left: isMobile?"75%":"80%",
 
                                 pointerEvents: "none",
                             }}
@@ -533,85 +533,88 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                 )}
             </AnimatePresence>
 
-            {/* Bottom Dock Control */}
-            <nav
-                style={{
-                    position: "fixed",
-                    bottom: "80px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    display: "flex",
-                    alignItems: "center",
-                    background: "#ffffff",
-                    border: "2px solid #111",
-                    borderRadius: "8px",
-                    boxShadow: "3px 3px 0px #111",
-                    zIndex: 100,
-                    padding: "4px 6px",
-                    gap: "2px",
-                }}
-            >
-                <button
-                    type="button"
-                    aria-label="Previous view"
+            {/* Bottom Dock Control — canvas/grid toggle is irrelevant on mobile
+                since it's always grid there, so the dock is hidden entirely. */}
+            {!isMobile && (
+                <nav
                     style={{
-                        background: "none",
-                        border: "none",
-                        padding: "6px 10px",
-                        cursor: "pointer",
-                        fontSize: "0.85rem",
+                        position: "fixed",
+                        bottom: "80px",
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        display: "flex",
+                        alignItems: "center",
+                        background: "#ffffff",
+                        border: "2px solid #111",
+                        borderRadius: "8px",
+                        boxShadow: "3px 3px 0px #111",
+                        zIndex: 100,
+                        padding: "4px 6px",
+                        gap: "2px",
                     }}
                 >
-                    ᐊ
-                </button>
+                    <button
+                        type="button"
+                        aria-label="Previous view"
+                        style={{
+                            background: "none",
+                            border: "none",
+                            padding: "6px 10px",
+                            cursor: "pointer",
+                            fontSize: "0.85rem",
+                        }}
+                    >
+                        ᐊ
+                    </button>
 
-                <button
-                    type="button"
-                    aria-label="Scatter canvas view"
-                    onClick={() => setMode("canvas")}
-                    style={{
-                        background: mode === "canvas" ? "#f0f0f0" : "transparent",
-                        border: "none",
-                        padding: "6px 10px",
-                        cursor: "pointer",
-                        borderRadius: "4px",
-                        fontSize: "0.85rem",
-                    }}
-                >
-                    ⚅
-                </button>
+                    <button
+                        type="button"
+                        aria-label="Scatter canvas view"
+                        onClick={() => setMode("canvas")}
+                        style={{
+                            background: mode === "canvas" ? "#f0f0f0" : "transparent",
+                            border: "none",
+                            padding: "6px 10px",
+                            cursor: "pointer",
+                            borderRadius: "4px",
+                            fontSize: "0.85rem",
+                        }}
+                    >
+                        ⚅
+                    </button>
 
-                <button
-                    type="button"
-                    aria-label="Card grid view"
-                    onClick={() => setMode("grid")}
-                    style={{
-                        background: mode === "grid" ? "#f0f0f0" : "transparent",
-                        border: "none",
-                        padding: "6px 10px",
-                        cursor: "pointer",
-                        borderRadius: "4px",
-                        fontSize: "0.85rem",
-                        fontWeight: "bold",
-                    }}
-                >
-                    ⊞
-                </button>
+                    <button
+                        type="button"
+                        aria-label="Card grid view"
+                        onClick={() => setMode("grid")}
+                        style={{
+                            background: mode === "grid" ? "#f0f0f0" : "transparent",
+                            border: "none",
+                            padding: "6px 10px",
+                            cursor: "pointer",
+                            borderRadius: "4px",
+                            fontSize: "0.85rem",
+                            fontWeight: "bold",
+                        }}
+                    >
+                        ⊞
+                    </button>
 
-                <button
-                    type="button"
-                    aria-label="Next view"
-                    style={{
-                        background: "none",
-                        border: "none",
-                        padding: "6px 10px",
-                        cursor: "pointer",
-                        fontSize: "0.85rem",
-                    }}
-                >
-                    ᐅ
-                </button>
-            </nav>
+                    <button
+                        type="button"
+                        aria-label="Next view"
+                        style={{
+                            background: "none",
+                            border: "none",
+                            padding: "6px 10px",
+                            cursor: "pointer",
+                            fontSize: "0.85rem",
+                        }}
+                    >
+                        ᐅ
+                    </button>
+                </nav>
+            )}
         </div>
     );
 }
