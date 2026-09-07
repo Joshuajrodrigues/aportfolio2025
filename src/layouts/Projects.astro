@@ -5,7 +5,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { Image } from "astro:assets";
-
+export const prerender = true;
 type Props = CollectionEntry<"project">["data"] & {
     headings?: MarkdownHeading[];
 };

@@ -15,5 +15,7 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://www.akankshagajankar.com',
   integrations: [mdx(), sitemap(), svelte(), favicons(), react()],
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: 'compile',
+  }),
 });
