@@ -81,7 +81,9 @@ const sections = headings.filter((h) => h.depth === 1);
                                                 )}
                                                 .
                                             </span>
-                                            {heading.text}
+                                            <span class="section-nav-label">
+                                                {heading.text}
+                                            </span>
                                         </a>
                                     </li>
                                 ))}
@@ -137,6 +139,7 @@ const sections = headings.filter((h) => h.depth === 1);
         const links =
             document.querySelectorAll<HTMLAnchorElement>(".section-nav-link");
         const nav = document.querySelector<HTMLElement>(".section-nav");
+        const navList = nav?.querySelector<HTMLElement>("ul");
         if (!links.length) return;
 
         const targets = Array.from(links)
@@ -150,12 +153,26 @@ const sections = headings.filter((h) => h.depth === 1);
                     x !== null,
             );
 
-        // console.log(
-        //     "[section-nav] links:",
-        //     links.length,
-        //     "matched targets:",
-        //     targets.length,
-        // );
+        const isCompact = () => window.matchMedia("(max-width: 640px)").matches;
+
+        function setActive(link: HTMLAnchorElement) {
+            links.forEach((l) => l.classList.remove("active"));
+            link.classList.add("active");
+
+            // On the collapsed mobile layout, keep the expanded pill
+            // centered in the scrollable strip instead of letting it
+            // drift toward the edge as sections change.
+            if (navList && isCompact()) {
+                const containerRect = navList.getBoundingClientRect();
+                const linkRect = link.getBoundingClientRect();
+                const offset =
+                    linkRect.left +
+                    linkRect.width / 2 -
+                    containerRect.left -
+                    containerRect.width / 2;
+                navList.scrollBy({ left: offset, behavior: "smooth" });
+            }
+        }
 
         links.forEach((link) => {
             link.addEventListener("click", (e) => {
@@ -163,6 +180,7 @@ const sections = headings.filter((h) => h.depth === 1);
                 const slug = link.dataset.slug;
                 const el = slug ? document.getElementById(slug) : null;
                 if (!el) return;
+                setActive(link);
                 const offset = (nav?.offsetHeight ?? 0) + 16;
                 const top =
                     el.getBoundingClientRect().top + window.scrollY - offset;
@@ -172,14 +190,17 @@ const sections = headings.filter((h) => h.depth === 1);
 
         if (targets.length === 0) return;
 
+        // Expand the first pill by default so mobile doesn't load as a
+        // bare row of numbers before any scrolling happens.
+        setActive(targets[0].link);
+
         const navHeight = nav?.offsetHeight ?? 60;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     const match = targets.find((t) => t.el === entry.target);
                     if (!match || !entry.isIntersecting) return;
-                    links.forEach((l) => l.classList.remove("active"));
-                    match.link.classList.add("active");
+                    setActive(match.link);
                 });
             },
             { rootMargin: `-${navHeight + 8}px 0px -60% 0px`, threshold: 0 },
@@ -192,6 +213,7 @@ const sections = headings.filter((h) => h.depth === 1);
 </script>
 
 <style>
+    /* ---------- Sticky section nav ---------- */
     .section-nav {
         position: sticky;
         top: 0;
@@ -210,23 +232,30 @@ const sections = headings.filter((h) => h.depth === 1);
     }
     .section-nav ul {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
         list-style: none;
         margin: 0;
-        padding: 14px 0;
-        gap: 12%;
+        /* Same horizontal padding as .centered-project-content's margin,
+           so "Overview" and the last item line up with the body text edges. */
+        padding: clamp(10px, 2vw, 14px) clamp(15px, 8vw, 70px);
+        gap: clamp(14px, 4vw, 32px);
         overflow-x: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .section-nav ul::-webkit-scrollbar {
+        display: none;
     }
     .section-nav-link {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 6px 12px;
+        padding: clamp(4px, 1vw, 6px) clamp(8px, 2vw, 12px);
         border-radius: 999px;
         color: #33272a;
         text-decoration: none;
-        font-size: 14px;
+        font-size: clamp(11px, 1.8vw, 14px);
         font-weight: 600;
         white-space: nowrap;
         opacity: 0.55;
@@ -242,31 +271,72 @@ const sections = headings.filter((h) => h.depth === 1);
         /*background: rgba(59, 124, 255, 0.12);*/
         color: #3b7cff;
     }
+    .section-nav-label {
+        display: inline-block;
+    }
+
+    /* ---------- Mobile: collapsing "now reading" pills ---------- */
+    @media (max-width: 640px) {
+        .section-nav ul {
+            justify-content: space-evenly;
+            gap: 10px;
+            padding: 10px clamp(15px, 6vw, 24px);
+        }
+        .section-nav-link {
+            max-width: 34px;
+            opacity: 0.8;
+            background: rgba(51, 39, 42, 0.06);
+            overflow: hidden;
+            transition:
+                max-width 0.4s cubic-bezier(0.65, 0, 0.35, 1),
+                background-color 0.3s ease,
+                opacity 0.3s ease;
+        }
+        .section-nav-link.active {
+            max-width: 220px;
+            opacity: 1;
+            background: rgba(59, 124, 255, 0.14);
+        }
+        .section-nav-label {
+            opacity: 0;
+            max-width: 0;
+            overflow: hidden;
+            transition: opacity 0.25s ease 0.05s;
+        }
+        .section-nav-link.active .section-nav-label {
+            opacity: 1;
+            max-width: 200px;
+        }
+    }
+
+    /* ---------- Role / Team / Impact grid ---------- */
     .rti {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        margin: 40px 0px;
-        gap: 32px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        margin: clamp(24px, 6vw, 40px) 0;
+        gap: clamp(20px, 4vw, 32px);
         color: #594a4e;
         h4 {
             font-weight: 700;
             color: #594a4e;
-            font-size: 32px;
+            font-size: clamp(1.25rem, 3vw, 32px);
         }
         p {
-            font-size: 24px;
+            font-size: clamp(1rem, 2vw, 24px);
         }
     }
+
+    /* ---------- Content areas ---------- */
     .centered-project-content {
-        margin: auto 70px;
+        margin: auto clamp(15px, 8vw, 70px);
         p {
             color: #594a4e;
         }
         h1 {
             color: #33272a;
             font-weight: 600;
-            font-size: 36px;
-            margin-top: 58px;
+            font-size: clamp(1.5rem, 5vw, 36px);
+            margin-top: clamp(32px, 8vw, 58px);
         }
     }
     .frame {
@@ -295,24 +365,39 @@ const sections = headings.filter((h) => h.depth === 1);
             border-bottom-right-radius: 12px;
         }
     }
+
+    /* ---------- Title + tags ---------- */
     .project-title--container {
         text-align: center;
-        margin: 60px 0px;
+        margin: clamp(32px, 8vw, 60px) clamp(15px, 6vw, 0px)
+            clamp(24px, 6vw, 60px);
         h1 {
-            font-size: 52px;
+            font-size: clamp(2rem, 6vw, 52px);
             font-weight: normal;
+            line-height: 1.1;
         }
         h3 {
-            font-size: 28px;
+            font-size: clamp(1rem, 3vw, 28px);
             color: #594a4e;
             font-weight: normal;
+            padding: 0 clamp(0px, 4vw, 40px);
         }
     }
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        row-gap: 8px;
+        font-size: clamp(0.8rem, 2vw, 1rem);
+        padding: 0 clamp(12px, 4vw, 0px);
+    }
+
     .hero-image-help-text {
-        margin: auto 180px;
+        margin: auto clamp(15px, 12vw, 180px);
         font-style: italic;
-        font-size: 20px;
-        margin-top: 40px;
+        font-size: clamp(0.75rem, 2vw, 20px);
+        margin-top: clamp(16px, 4vw, 40px);
         color: #594a4e;
         opacity: 0.75;
         text-align: center;
@@ -341,7 +426,7 @@ const sections = headings.filter((h) => h.depth === 1);
         margin-top: 60px;
     }
     .m-w-700 {
-        max-width: 700px;
+        max-width: min(700px, 100%);
     }
     .tags-container {
         display: flex;
@@ -363,11 +448,13 @@ const sections = headings.filter((h) => h.depth === 1);
     }
 
     .hero-image {
-        margin: auto 180px;
+        margin: auto clamp(15px, 12vw, 180px);
     }
     .hero-image img {
         display: block;
         border-radius: 5px;
+        max-width: 100%;
+        height: auto;
     }
     .prose {
         width: 720px;
@@ -394,16 +481,19 @@ const sections = headings.filter((h) => h.depth === 1);
         font-style: italic;
     }
 
+    /* ---------- Full-bleed hero ---------- */
     .hero-bleed {
         width: 100vw;
         margin-left: calc(50% - 50vw);
         margin-right: calc(50% - 50vw);
     }
-
     .hero-bleed img {
         display: block;
         width: 100%;
+        height: auto;
     }
+
+    /* ---------- Breakpoints (fine-tuning below what clamp() already covers) ---------- */
     @media (max-width: 720px) {
         .tags-container {
             margin: 25px 0;
@@ -415,31 +505,26 @@ const sections = headings.filter((h) => h.depth === 1);
         }
     }
     @media (max-width: 780px) {
-        .section-nav {
-            margin: 0 15px;
+        .content-container {
+            gap: 24px;
         }
-        .section-nav ul {
-            gap: 16px;
-            padding: 10px 0;
+        .text-right {
+            text-align: left;
         }
-        .section-nav-link {
-            font-size: 12px;
-        }
-        .hero-image {
-            margin: auto 15px;
-        }
-        .hero-image-help-text {
-            padding-top: 24px;
-            margin: auto 15px;
-            font-size: 0.4rem;
-        }
-        .rti {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 50px;
+        .align-self-end {
+            margin-left: 0;
+            margin-top: 24px;
         }
         .centered-project-content {
             margin: auto 15px;
+        }
+    }
+    @media (max-width: 480px) {
+        .section-nav-link {
+            padding: 4px 8px;
+        }
+        .project-title--container {
+            margin: 24px 15px 32px;
         }
     }
 </style>
