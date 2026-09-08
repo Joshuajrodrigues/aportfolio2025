@@ -16,6 +16,6 @@ export default defineConfig({
   site: 'https://www.akankshagajankar.com',
   integrations: [mdx(), sitemap(), svelte(), favicons(), react()],
   adapter: cloudflare({
-    imageService: 'compile',
+    imageService: 'passthrough',
   }),
 });
