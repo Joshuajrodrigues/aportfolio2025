@@ -5,7 +5,7 @@ import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 import InteractiveBoard from "../components/react/InteractiveBoard.tsx";
-
+export const prerender = true;
 const projects = await getCollection("project");
 
 const boardData = projects.map((project) => ({
