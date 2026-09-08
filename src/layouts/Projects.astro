@@ -24,6 +24,10 @@ const {
     headings = [],
 } = Astro.props;
 
+const heroSrc =
+    typeof heroImage === "object" && heroImage !== null
+        ? heroImage.src
+        : heroImage || "";
 // Only H1s from the mdx content are used for the sticky nav.
 // (Astro auto-generates a slug for every heading, which we use as the anchor id.)
 const sections = headings.filter((h) => h.depth === 1);
@@ -31,11 +35,7 @@ const sections = headings.filter((h) => h.depth === 1);
 
 <html lang="en">
     <head>
-        <BaseHead
-            title={title}
-            description={description}
-            image={heroImage.src}
-        />
+        <BaseHead title={title} description={description} image={heroSrc} />
     </head>
 
     <body>
@@ -60,7 +60,16 @@ const sections = headings.filter((h) => h.depth === 1);
                 </section>
 
                 <div class="hero-bleed">
-                    {heroImage && <Image src={heroImage} alt="hero" />}
+                    {
+                        heroSrc && (
+                            <img
+                                src={heroSrc}
+                                alt="hero"
+                                loading="eager"
+                                decoding="async"
+                            />
+                        )
+                    }
                 </div>
 
                 {
