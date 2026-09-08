@@ -8,13 +8,23 @@ import InteractiveBoard from "../components/react/InteractiveBoard.tsx";
 export const prerender = true;
 const projects = await getCollection("project");
 
-const boardData = projects.map((project) => ({
-    id: project.id,
-    title: project.data.title,
-    body: project.body,
-    src: project.data.src?.src,
-    accentColor: project.data.colors?.[0] || "#1e1e1e",
-}));
+const boardData = projects.map((project) => {
+    const resolvedSrc =
+        typeof project.data.heroImage === "object" &&
+        project.data.heroImage !== null
+            ? project.data.heroImage.src
+            : typeof project.data.src === "object" && project.data.src !== null
+              ? project.data.src.src
+              : project.data.heroImage || project.data.src || "";
+
+    return {
+        id: project.id,
+        title: project.data.title,
+        body: project.body,
+        src: resolvedSrc,
+        accentColor: project.data.colors?.[0] || "#1e1e1e",
+    };
+});
 ---
 
 <!doctype html>
