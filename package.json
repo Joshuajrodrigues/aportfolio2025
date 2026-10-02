@@ -31,12 +31,12 @@
     "glightbox": "^3.3.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "sharp": "^0.34.2",
+    "sharp": "0.33.5",
     "svelte": "^5.20.5",
     "typescript": "^5.8.2",
     "vaul": "^1.1.2"
   },
-  "packageManager": "pnpm@11.3.0",
+  "packageManager": "pnpm@12.8.1",
   "devDependencies": {
     "wrangler": "^4.129.0"
   }

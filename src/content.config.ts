@@ -10,6 +10,8 @@ const blog = defineCollection({
       title: z.string(),
       type: z.string(),
       description: z.string(),
+      tagline: z.string().optional(),
+      navLabels: z.record(z.string()).optional(),
       // Transform string to Date object
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
@@ -30,6 +32,8 @@ const project = defineCollection({
       title: z.string(),
       type: z.string(),
       description: z.string(),
+      tagline: z.string().optional(),
+      navLabels: z.record(z.string()).optional(),
       featured: z.boolean().default(false),
       src: image(),
       tags: z.array(z.string()).optional(),

@@ -12,9 +12,12 @@ type Props = CollectionEntry<"project">["data"] & {
 
 const {
     title,
+    type,
     description,
+    tagline,
     contentBlocks,
     heroImage,
+    navLabels = {},
     colors,
     heroHelpText,
     role,
@@ -30,7 +33,11 @@ const heroSrc =
         : heroImage || "";
 // Only H1s from the mdx content are used for the sticky nav.
 // (Astro auto-generates a slug for every heading, which we use as the anchor id.)
-const sections = headings.filter((h) => h.depth === 1);
+const sections = headings
+    .filter((h) => h.depth === 1)
+    .map((h) => ({ ...h, label: navLabels[h.slug] ?? h.text }));
+
+console.log("navLabels", navLabels);
 ---
 
 <html lang="en">
@@ -39,102 +46,79 @@ const sections = headings.filter((h) => h.depth === 1);
     </head>
 
     <body>
-        <Header />
+        <header class="work-header">
+            <span class="work-header-crumb">
+                {type} / {title}
+            </span>
+            <a href="/work" class="back-link" data-back>
+                Back
+                <span class="icon-placeholder" aria-hidden="true"></span>
+            </a>
+        </header>
         <main>
             <article>
                 <section class="project-title--container">
-                    <h1 class="bold">{title}</h1>
-                    <h3>{description}</h3>
+                    <h3>{title}</h3>
+                    <h1>{tagline}</h1>
+                    <h2>{description}</h2>
                     <div class="tag-container mt-15 bold">
-                        {
-                            tags?.map((tag, i) => (
-                                <>
-                                    <span>{tag}</span>
-                                    {i < tags.length - 1 && (
-                                        <span class="dot ml-15 mr-15">•</span>
-                                    )}
-                                </>
-                            ))
-                        }
+                        {tags?.map((tag: string, i: number) => (
+                            <>
+                                <span>{tag}</span>
+                                {i < tags.length - 1 && (
+                                    <span class="dot ml-15 mr-15">•</span>
+                                )}
+                            </>
+                        ))}
                     </div>
                 </section>
 
                 <div class="hero-bleed">
-                    {
-                        heroSrc && (
-                            <img
-                                src={heroSrc}
-                                alt="hero"
-                                loading="eager"
-                                decoding="async"
-                            />
-                        )
-                    }
+                    {heroSrc && (
+                        <img
+                            src={heroSrc}
+                            alt="hero"
+                            loading="eager"
+                            decoding="async"
+                        />
+                    )}
                 </div>
 
-                {
-                    sections.length > 0 && (
-                        <nav class="section-nav" aria-label="Project sections">
-                            <ul>
-                                {sections.map((heading, index) => (
-                                    <li>
-                                        <a
-                                            href={`#${heading.slug}`}
-                                            class="section-nav-link"
-                                            data-slug={heading.slug}
-                                        >
-                                            <span class="section-nav-index">
-                                                {String(index + 1).padStart(
-                                                    2,
-                                                    "0",
-                                                )}
-                                                .
-                                            </span>
-                                            <span class="section-nav-label">
-                                                {heading.text}
-                                            </span>
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </nav>
-                    )
-                }
+                {sections.length > 0 && (
+                    <nav class="section-nav" aria-label="Project sections">
+                        <ul>
+                            {sections.map((heading, index) => (
+                                <li>
+                                    <a
+                                        href={`#${heading.slug}`}
+                                        class="section-nav-link"
+                                        data-slug={heading.slug}
+                                    >
+                                        <span class="section-nav-index">
+                                            {String(index + 1).padStart(2, "0")}
+                                            .
+                                        </span>
+                                        <span class="section-nav-label">
+                                            {heading.label}
+                                        </span>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                )}
 
                 <div class="centered-project-content">
-                    <!-- <div class="rti">
-                        {
-                            role && (
-                                <>
-                                    <div>
-                                        <h4>Role</h4>
-                                        <p>{role}</p>
-                                    </div>
-                                    <div>
-                                        <h4>Team</h4>
-                                        <p>{team}</p>
-                                    </div>
-                                    <div>
-                                        <h4>Impact</h4>
-                                        <p>{impact}</p>
-                                    </div>
-                                </>
-                            )
-                        }
-                    </div> -->
-
-                    {
-                        contentBlocks && contentBlocks?.length > 0 && (
-                            <div class="content-container">
-                                <div class="content m-w-700">
-                                    {contentBlocks?.[0]}
-                                </div>
-                                <div class="content m-w-700 text-right align-self-end">
-                                    {contentBlocks?.[0]}
-                                </div>
+                    {contentBlocks && contentBlocks?.length > 0 && (
+                        <div class="content-container">
+                            <div class="content m-w-700">
+                                {contentBlocks?.[0]}
                             </div>
-                        )
-                    }
+                            <div class="content m-w-700 text-right align-self-end">
+                                {contentBlocks?.[0]}
+                            </div>
+                        </div>
+                    )}
                     <slot />
                 </div>
             </article>
@@ -144,6 +128,23 @@ const sections = headings.filter((h) => h.depth === 1);
 </html>
 
 <script>
+    function initBack() {
+        document
+            .querySelectorAll<HTMLAnchorElement>("[data-back]")
+            .forEach((a) => {
+                a.addEventListener("click", (e) => {
+                    if (
+                        history.length > 1 &&
+                        document.referrer.startsWith(location.origin)
+                    ) {
+                        e.preventDefault();
+                        history.back();
+                    }
+                });
+            });
+    }
+    initBack();
+    document.addEventListener("astro:page-load", initBack);
     function initSectionNav() {
         const links =
             document.querySelectorAll<HTMLAnchorElement>(".section-nav-link");
@@ -224,6 +225,53 @@ const sections = headings.filter((h) => h.depth === 1);
 <style>
     main {
         padding: 1em;
+    }
+    /* ---------- Work header ---------- */
+    .work-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px clamp(15px, 4vw, 28px);
+
+        border-bottom: 2px dashed gray;
+
+        font-size: clamp(24px, 2vw, 1.1rem);
+    }
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: inherit;
+        text-decoration: none;
+    }
+    .icon-placeholder {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+    }
+
+    /* ---------- Title block ---------- */
+
+    .project-eyebrow {
+        margin: 0 0 clamp(20px, 4vw, 36px);
+        font-family: var(--font-pixel, monospace);
+        font-size: clamp(1rem, 2.5vw, 1.4rem);
+    }
+    .project-headline {
+        font-family: var(--font-pixel-bold, var(--font-pixel, monospace));
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: normal;
+        line-height: 1.05;
+        margin: 0 0 clamp(16px, 3vw, 28px);
+    }
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        row-gap: 8px;
+        font-size: clamp(0.8rem, 2vw, 1rem);
+        padding: 0;
     }
     /* ---------- Sticky section nav ---------- */
     .section-nav {
@@ -341,15 +389,18 @@ const sections = headings.filter((h) => h.depth === 1);
     /* ---------- Content areas ---------- */
     .centered-project-content {
         margin: auto clamp(15px, 8vw, 70px);
-        p {
-            color: #594a4e;
-        }
-        h1 {
-            color: #33272a;
-            font-weight: 600;
-            font-size: clamp(1.5rem, 5vw, 36px);
-            margin-top: clamp(32px, 8vw, 58px);
-        }
+    }
+    .centered-project-content :global(p) {
+        color: #1e1e1e;
+        font-family: "Source Code Pro", monospace;
+        font-size: clamp(24px, 2vw, 1rem);
+        line-height: 30px;
+    }
+    .centered-project-content :global(h1) {
+        color: #33272a;
+        font-weight: 600;
+        font-size: clamp(1.5rem, 5vw, 36px);
+        margin-top: clamp(32px, 8vw, 58px);
     }
     .frame {
         border: 1px solid black;
@@ -380,29 +431,38 @@ const sections = headings.filter((h) => h.depth === 1);
 
     /* ---------- Title + tags ---------- */
     .project-title--container {
-        text-align: center;
+        text-align: left;
         margin: clamp(32px, 8vw, 60px) clamp(15px, 6vw, 0px)
             clamp(24px, 6vw, 60px);
         h1 {
-            font-size: clamp(2rem, 6vw, 52px);
-            font-weight: normal;
+            font-size: clamp(64px, 6vw, 52px);
+            font-weight: bold;
             line-height: 1.1;
         }
         h3 {
-            font-size: clamp(1rem, 3vw, 28px);
-            color: #594a4e;
+            font-size: clamp(32px, 3vw, 28px);
+            color: #1e1e1e;
             font-weight: normal;
-            padding: 0 clamp(0px, 4vw, 40px);
+        }
+        h2 {
+            font-size: clamp(32px, 3vw, 28px);
+            font-weight: normal;
+            font-family:
+                "Source Code Pro", "Lucida Sans", "Lucida Sans Regular",
+                "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana,
+                sans-serif;
         }
     }
     .tag-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
         row-gap: 8px;
-        font-size: clamp(0.8rem, 2vw, 1rem);
-        padding: 0 clamp(12px, 4vw, 0px);
+        font-size: clamp(24px, 2vw, 1rem);
+        font-family:
+            "Source Code Pro", "Lucida Sans", "Lucida Sans Regular",
+            "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
     }
 
     .hero-image-help-text {
