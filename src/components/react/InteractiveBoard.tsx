@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
-import { motion, AnimatePresence, useSpring } from "framer-motion";
+import { motion, AnimatePresence, useSpring, useMotionValue } from "framer-motion";
 import { navigate } from "astro:transitions/client";
 
 const ARC_SLOTS = [
@@ -12,13 +12,64 @@ const ARC_SLOTS = [
     { xPct: 0.18, yPct: 0.70, rotate: 12 },
 ];
 
-export default function InteractiveBoard({ projects, siteTitle }: { projects: any[]; siteTitle: string }) {
+// ---- Views (dock arrows cycle through these: projects -> art -> blog -> projects)
+type View = "projects" | "art" | "blog";
+const VIEWS: View[] = ["projects", "art", "blog"];
+// URL hash per view. Rename here if you want different URLs.
+const VIEW_HASH: Record<View, string> = { projects: "", art: "#/art", blog: "#/blog" };
+
+const viewFromHash = (hash: string): View => {
+    if (hash === VIEW_HASH.art) return "art";
+    if (hash === VIEW_HASH.blog) return "blog";
+    return "projects";
+};
+
+// +1 = forward (content slides left), -1 = backward (slides right). Wraps around.
+const directionBetween = (from: View, to: View) => {
+    const diff = (VIEWS.indexOf(to) - VIEWS.indexOf(from) + VIEWS.length) % VIEWS.length;
+    return diff === 1 ? 1 : -1;
+};
+
+// dir === 0 -> plain fade (first load / canvas<->grid toggle); otherwise slide
+const SLIDE_EASE = [0.22, 1, 0.36, 1] as const;
+const gridSlide = {
+    initial: (dir: number) =>
+        dir === 0 ? { opacity: 0, x: 0 } : { opacity: 1, x: dir > 0 ? "100%" : "-100%" },
+    animate: (dir: number) => ({
+        opacity: 1,
+        x: 0,
+        transition: dir === 0 ? { duration: 0.25 } : { duration: 0.5, ease: SLIDE_EASE },
+    }),
+    exit: (dir: number) =>
+        dir === 0
+            ? { opacity: 0, transition: { duration: 0.25 } }
+            : { x: dir > 0 ? "-100%" : "100%", transition: { duration: 0.5, ease: SLIDE_EASE } },
+};
+
+type BoardProps = {
+    projects: any[];
+    art?: any[];
+    blog?: any[];
+    siteTitle: string;
+};
+
+export default function InteractiveBoard({ projects, art = [], blog = [], siteTitle }: BoardProps) {
     const [mode, setMode] = useState<"canvas" | "grid">("canvas");
+    const [view, setView] = useState<View>("projects");
+    const [slideDir, setSlideDir] = useState(0);
     const [positions, setPositions] = useState<any[]>([]);
-    const [isReady, setIsReady] = useState(false);
+    const [readyView, setReadyView] = useState<View | null>(null);
     const [cursorMode, setCursorMode] = useState<"idle" | "hover" | "dragging">("idle");
     const [isMobile, setIsMobile] = useState(false);
     const isDragging = useRef(false);
+
+    const items = view === "art" ? art : view === "blog" ? blog : projects;
+    // images for the current view have finished preloading
+    const isReady = readyView === view;
+
+    // Latest view, readable from event listeners without stale closures
+    const viewRef = useRef<View>("projects");
+    viewRef.current = view;
 
     // Random jitter per card, generated once so resizes don't re-roll it
     const jitter = useRef<{ x: number; y: number; r: number }[]>([]);
@@ -30,13 +81,50 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
     const cursorX = useSpring(-100, springConfig);
     const cursorY = useSpring(-100, springConfig);
 
-    // Detect mobile viewport and default to grid mode
+    // Desktop header scrolls with the grid (not sticky): its y follows the grid's scrollTop
+    const headerY = useMotionValue(0);
+    useEffect(() => {
+        headerY.set(0);
+    }, [mode, view]);
+
+    // Detect mobile viewport, default to grid mode, and read the view from the URL hash
     useLayoutEffect(() => {
+        setView(viewFromHash(window.location.hash));
         if (window.innerWidth < 768) {
             setIsMobile(true);
             setMode("grid");
         }
     }, []);
+
+    // Back/forward or manually edited hash -> follow it
+    useEffect(() => {
+        const syncFromHash = () => {
+            const next = viewFromHash(window.location.hash);
+            if (next === viewRef.current) return;
+            setSlideDir(directionBetween(viewRef.current, next));
+            setView(next);
+        };
+        window.addEventListener("hashchange", syncFromHash);
+        window.addEventListener("popstate", syncFromHash);
+        return () => {
+            window.removeEventListener("hashchange", syncFromHash);
+            window.removeEventListener("popstate", syncFromHash);
+        };
+    }, []);
+
+    const goTo = (offset: 1 | -1) => {
+        const current = viewRef.current;
+        const next = VIEWS[(VIEWS.indexOf(current) + offset + VIEWS.length) % VIEWS.length];
+        viewRef.current = next;
+        setSlideDir(offset);
+        setView(next);
+        // replaceState (not push) keeps Astro's router state intact
+        window.history.replaceState(
+            window.history.state,
+            "",
+            window.location.pathname + window.location.search + VIEW_HASH[next],
+        );
+    };
 
     // Track mobile viewport for grid/header sizing (independent of the
     // canvas/grid mode switch above — this just controls how "grid" mode
@@ -64,7 +152,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        return projects.map((_, index) => {
+        return items.map((_, index) => {
             const slot = ARC_SLOTS[index % ARC_SLOTS.length];
 
             if (!jitter.current[index]) {
@@ -115,11 +203,12 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
             clearTimeout(resetTimer);
             window.removeEventListener("resize", onResize);
         };
-    }, [projects]);
+    }, [items]);
 
-    // Image preloading
+    // Image preloading (per view)
     useEffect(() => {
-        const imagePromises = projects
+        const forView = view;
+        const imagePromises = items
             .filter((p) => p.src)
             .map((p) => {
                 return new Promise((resolve) => {
@@ -131,13 +220,13 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
             });
 
         Promise.all(imagePromises).then(() => {
-            setIsReady(true);
+            setReadyView(forView);
         });
-    }, [projects]);
+    }, [items, view]);
 
     const openProject = (project: any) => {
-        if (isDragging.current) return;
-        navigate(`/projects/${project.id}`);
+        if (isDragging.current || !project.href) return;
+        navigate(project.href);
     };
 
     const handleDragStart = () => {
@@ -213,7 +302,19 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                 </AnimatePresence>
             </motion.div>
 
-            {/* Gliding Intro Text Header (glide is desktop only; instant on mobile) */}
+            {/* Gliding Intro Text Header (desktop only; on mobile grid the header
+                lives inside the scrolling container). The outer wrapper's y follows
+                the grid's scroll so the header scrolls away with the cards. */}
+            {!(isMobile && mode === "grid") && (
+            <motion.div
+                style={{
+                    position: "absolute",
+                    inset: 0,
+                    y: headerY,
+                    pointerEvents: "none",
+                    zIndex: 30,
+                }}
+            >
             <motion.div
                 layout
                 initial={false}
@@ -297,12 +398,14 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                     UIUX / Product Designer | 5 years
                 </p>
             </motion.div>
+            </motion.div>
+            )}
 
             {/* Mode 1: Interactive Canvas */}
             <AnimatePresence>
                 {mode === "canvas" && isReady && positions.length > 0 && (
-                    <motion.div key="canvas-container">
-                        {projects.map((project, index) => (
+                    <motion.div key={`canvas-${view}`}>
+                        {items.map((project, index) => (
                             <motion.div
                                 key={project.id}
                                 drag
@@ -401,35 +504,66 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                 )}
             </AnimatePresence>
 
-            {/* Mode 2: Card Grid Layout */}
-            <AnimatePresence>
+            {/* Mode 2: Card Grid Layout (slides left/right when the view changes) */}
+            <AnimatePresence custom={slideDir}>
                 {mode === "grid" && (
                     <motion.div
-                        key="grid-container"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                        key={`grid-${view}`}
+                        custom={slideDir}
+                        variants={gridSlide}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        onScroll={(e) => {
+                            if (!isMobile) headerY.set(-e.currentTarget.scrollTop);
+                        }}
                         style={{
                             position: "absolute",
                             inset: 0,
                             overflowY: "auto",
                             /* Top padding clears the Hello text; smaller on
-                               mobile since the header itself is smaller there. */
+                               mobile since the header is part of the scroll there. */
                             padding: isMobile
-                                ? "150px 20px 110px 20px"
+                                ? "24px 20px 110px 20px"
                                 : "230px 48px 120px 48px",
                             boxSizing: "border-box",
                             zIndex: 15,
-                            /* Fade cards as they scroll near the top header */
-                            maskImage: isMobile
-                                ? "linear-gradient(to bottom, transparent 0px, transparent 70px, black 150px, black 100%)"
-                                : "linear-gradient(to bottom, transparent 0px, transparent 120px, black 220px, black 100%)",
-                            WebkitMaskImage: isMobile
-                                ? "linear-gradient(to bottom, transparent 0px, transparent 70px, black 150px, black 100%)"
-                                : "linear-gradient(to bottom, transparent 0px, transparent 120px, black 220px, black 100%)",
                         }}
                     >
+                        {isMobile && (
+                            <div style={{ position: "relative", marginBottom: "28px", userSelect: "none" }}>
+                                <h2
+                                    style={{
+                                        fontFamily: '"Pixelify Sans", sans-serif',
+                                        fontSize: "1.8rem",
+                                        margin: 0,
+                                        lineHeight: 1.15,
+                                        textShadow:
+                                            "2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff",
+                                    }}
+                                >
+                                    <span style={{ position: "relative", display: "inline-block" }}>
+                                        Hello,
+                                        <img
+                                            src="/site-icons/mouse.svg"
+                                            alt=""
+                                            aria-hidden="true"
+                                            style={{
+                                                position: "absolute",
+                                                top: "-36px",
+                                                left: "75%",
+                                                pointerEvents: "none",
+                                            }}
+                                        />
+                                    </span>
+                                    <br />
+                                    I'm {siteTitle}
+                                </h2>
+                                <p style={{ fontSize: "0.85rem", margin: "6px 0 0 0", color: "#333" }}>
+                                    UIUX / Product Designer | 5 years
+                                </p>
+                            </div>
+                        )}
                         <motion.div
                             style={{
                                 display: "grid",
@@ -441,18 +575,37 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                                 margin: "0 auto",
                             }}
                         >
-                            {projects.map((project, idx) => (
+                            {items.map((project, idx) => (
                                 <motion.div
                                     key={`grid-${project.id}`}
-                                    initial={{ opacity: 0, scale: 0.85, y: 30 }}
-                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.85, y: 20 }}
-                                    transition={{
-                                        type: "spring",
-                                        stiffness: 220,
-                                        damping: 20,
-                                        delay: idx * 0.04,
+                                    /* no per-card entrance/exit while the whole grid slides */
+                                    initial={
+                                        slideDir !== 0
+                                            ? false
+                                            : isMobile
+                                            ? { opacity: 0 }
+                                            : { opacity: 0, scale: 0.85, y: 30 }
+                                    }
+                                    animate={isMobile ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+                                    variants={{
+                                        exit: (dir: number) =>
+                                            dir !== 0
+                                                ? {}
+                                                : isMobile
+                                                ? { opacity: 0 }
+                                                : { opacity: 0, scale: 0.85, y: 20 },
                                     }}
+                                    exit="exit"
+                                    transition={
+                                        isMobile
+                                            ? { duration: 0.2 }
+                                            : {
+                                                  type: "spring",
+                                                  stiffness: 220,
+                                                  damping: 20,
+                                                  delay: idx * 0.04,
+                                              }
+                                    }
                                     whileHover={!isMobile ? { y: -4 } : undefined}
                                     whileTap={isMobile ? { scale: 0.96 } : undefined}
                                     onClick={() => openProject(project)}
@@ -464,7 +617,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                                                   borderRadius: "14px",
                                                   boxShadow: "4px 4px 0px #111",
                                                   overflow: "hidden",
-                                                  cursor: "pointer",
+                                                  cursor: project.href ? "pointer" : "default",
                                                   display: "flex",
                                                   flexDirection: "column",
                                               }
@@ -478,7 +631,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                                                   alignItems: "center",
                                                   justifyContent: "center",
                                                   padding: "20px",
-                                                  cursor: "pointer",
+                                                  cursor: project.href ? "pointer" : "default",
                                                   position: "relative",
                                                   overflow: "hidden",
                                               }
@@ -543,16 +696,18 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                                                 >
                                                     {project.title}
                                                 </span>
-                                                <span
-                                                    style={{
-                                                        fontSize: "0.85rem",
-                                                        color: "#3b7cff",
-                                                        flexShrink: 0,
-                                                    }}
-                                                    aria-hidden="true"
-                                                >
-                                                    ↗
-                                                </span>
+                                                {project.href && (
+                                                    <span
+                                                        style={{
+                                                            fontSize: "0.85rem",
+                                                            color: "#3b7cff",
+                                                            flexShrink: 0,
+                                                        }}
+                                                        aria-hidden="true"
+                                                    >
+                                                        ↗
+                                                    </span>
+                                                )}
                                             </div>
                                         </>
                                     ) : project.src ? (
@@ -578,88 +733,180 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                 )}
             </AnimatePresence>
 
-            {/* Bottom Dock Control — canvas/grid toggle is irrelevant on mobile
-                since it's always grid there, so the dock is hidden entirely. */}
-            {!isMobile && (
-                <nav
-                    style={{
-                        position: "fixed",
-                        bottom: "80px",
-                        left: "50%",
-                        transform: "translateX(-50%)",
-                        display: "flex",
-                        alignItems: "center",
-                        background: "#ffffff",
-                        border: "2px solid #111",
-                        borderRadius: "8px",
-                        boxShadow: "3px 3px 0px #111",
-                        zIndex: 100,
-                        padding: "4px 6px",
-                        gap: "2px",
-                    }}
-                >
-                    <button
-                        type="button"
-                        aria-label="Previous view"
-                        style={{
-                            background: "none",
-                            border: "none",
-                            padding: "6px 10px",
-                            cursor: "pointer",
-                            fontSize: "0.85rem",
-                        }}
-                    >
-                        ᐊ
-                    </button>
+            {/* Bottom Dock Control */}
+                        {!isMobile && (
+                            <nav
+                                style={{
+                                    position: "fixed",
+                                    bottom: "80px",
+                                    left: "50%",
+                                    transform: "translateX(-50%)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    background: "#ffffff",
+                                    border: "1.5px solid #111111",
+                                    borderRadius: "8px",
+                                    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)",
+                                    zIndex: 100,
+                                    padding: "4px 8px",
+                                    height: "44px",
+                                    boxSizing: "border-box",
+                                    gap: "6px",
+                                }}
+                            >
+                                {/* Previous View Arrow */}
+                                <button
+                                    type="button"
+                                    aria-label="Previous view"
+                                    onClick={() => goTo(-1)}
+                                    style={{
+                                        background: "transparent",
+                                        border: "none",
+                                        padding: "6px 8px",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        opacity: 0.85,
+                                        transition: "opacity 0.15s ease",
+                                    }}
+                                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                                    onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.85")}
+                                >
+                                    <img
+                                        src="/site-icons/left-arrow.svg"
+                                        alt=""
+                                        aria-hidden="true"
+                                        style={{ width: "16px", height: "16px", display: "block" }}
+                                    />
+                                </button>
 
-                    <button
-                        type="button"
-                        aria-label="Scatter canvas view"
-                        onClick={() => setMode("canvas")}
-                        style={{
-                            background: mode === "canvas" ? "#f0f0f0" : "transparent",
-                            border: "none",
-                            padding: "6px 10px",
-                            cursor: "pointer",
-                            borderRadius: "4px",
-                            fontSize: "0.85rem",
-                        }}
-                    >
-                        ⚅
-                    </button>
+                                {/* Solid Divider */}
+                                <div
+                                    style={{
+                                        width: "1px",
+                                        height: "22px",
+                                        backgroundColor: "#111111",
+                                        margin: "0 2px",
+                                    }}
+                                />
 
-                    <button
-                        type="button"
-                        aria-label="Card grid view"
-                        onClick={() => setMode("grid")}
-                        style={{
-                            background: mode === "grid" ? "#f0f0f0" : "transparent",
-                            border: "none",
-                            padding: "6px 10px",
-                            cursor: "pointer",
-                            borderRadius: "4px",
-                            fontSize: "0.85rem",
-                            fontWeight: "bold",
-                        }}
-                    >
-                        ⊞
-                    </button>
+                                {/* Canvas / Scatter View Button */}
+                                <button
+                                    type="button"
+                                    aria-label="Canvas view"
+                                    onClick={() => {
+                                        setSlideDir(0);
+                                        setMode("canvas");
+                                    }}
+                                    style={{
+                                        background: "transparent",
+                                        border: "none",
+                                        padding: "6px 10px",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        opacity: mode === "canvas" ? 1 : 0.45,
+                                        transition: "opacity 0.15s ease",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (mode !== "canvas") e.currentTarget.style.opacity = "0.75";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (mode !== "canvas") e.currentTarget.style.opacity = "0.45";
+                                    }}
+                                >
+                                    <img
+                                        src="/site-icons/list.svg"
+                                        alt=""
+                                        aria-hidden="true"
+                                        style={{ width: "20px", height: "20px", display: "block" }}
+                                    />
+                                </button>
 
-                    <button
-                        type="button"
-                        aria-label="Next view"
-                        style={{
-                            background: "none",
-                            border: "none",
-                            padding: "6px 10px",
-                            cursor: "pointer",
-                            fontSize: "0.85rem",
-                        }}
-                    >
-                        ᐅ
-                    </button>
-                </nav>
-            )}
+                                {/* Dotted Center Divider */}
+                                <div
+                                    style={{
+                                        width: "0px",
+                                        height: "22px",
+                                        borderLeft: "1.5px dotted #111111",
+                                        margin: "0 2px",
+                                    }}
+                                />
+
+                                {/* Grid View Button */}
+                                <button
+                                    type="button"
+                                    aria-label="Grid view"
+                                    onClick={() => {
+                                        setSlideDir(0);
+                                        setMode("grid");
+                                    }}
+                                    style={{
+                                        background: "transparent",
+                                        border: "none",
+                                        padding: "6px 10px",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        opacity: mode === "grid" ? 1 : 0.45,
+                                        transition: "opacity 0.15s ease",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (mode !== "grid") e.currentTarget.style.opacity = "0.75";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (mode !== "grid") e.currentTarget.style.opacity = "0.45";
+                                    }}
+                                >
+                                    <img
+                                        src="/site-icons/grid.svg"
+                                        alt=""
+                                        aria-hidden="true"
+                                        style={{ width: "20px", height: "20px", display: "block" }}
+                                    />
+                                </button>
+
+                                {/* Solid Divider */}
+                                <div
+                                    style={{
+                                        width: "1px",
+                                        height: "22px",
+                                        backgroundColor: "#111111",
+                                        margin: "0 2px",
+                                    }}
+                                />
+
+                                {/* Next View Arrow */}
+                                <button
+                                    type="button"
+                                    aria-label="Next view"
+                                    onClick={() => goTo(1)}
+                                    style={{
+                                        background: "transparent",
+                                        border: "none",
+                                        padding: "6px 8px",
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        opacity: 0.85,
+                                        transition: "opacity 0.15s ease",
+                                    }}
+                                    onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                                    onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.85")}
+                                >
+                                    <img
+                                        src="/site-icons/right-arrow.svg"
+                                        alt=""
+                                        aria-hidden="true"
+                                        style={{ width: "16px", height: "16px", display: "block" }}
+                                    />
+                                </button>
+                            </nav>
+                        )}
         </div>
     );
 }

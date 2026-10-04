@@ -6,25 +6,32 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { getCollection } from "astro:content";
 import InteractiveBoard from "../components/react/InteractiveBoard.tsx";
 export const prerender = true;
-const projects = await getCollection("project");
 
-const boardData = projects.map((project) => {
-    const resolvedSrc =
-        typeof project.data.heroImage === "object" &&
-        project.data.heroImage !== null
-            ? project.data.heroImage.src
-            : typeof project.data.src === "object" && project.data.src !== null
-              ? project.data.src.src
-              : project.data.heroImage || project.data.src || "";
+const [projects, art, blog] = await Promise.all([
+    getCollection("project"),
+    getCollection("art"),
+    getCollection("blog"),
+]);
 
-    return {
-        id: project.id,
-        title: project.data.title,
-        body: project.body,
-        src: resolvedSrc,
-        accentColor: project.data.colors?.[0] || "#1e1e1e",
-    };
+const resolveSrc = (data: any): string => {
+    if (typeof data.heroImage === "object" && data.heroImage !== null)
+        return data.heroImage.src;
+    if (typeof data.src === "object" && data.src !== null) return data.src.src;
+    return data.heroImage || data.src || "";
+};
+
+// href = where a click goes (null = card isn't clickable)
+const toItem = (entry: any, href: string | null) => ({
+    id: entry.id,
+    title: entry.data.title,
+    src: resolveSrc(entry.data),
+    accentColor: entry.data.colors?.[0] || "#1e1e1e",
+    href,
 });
+
+const projectItems = projects.map((p) => toItem(p, `/projects/${p.id}`));
+const artItems = art.map((a) => toItem(a, null));
+const blogItems = blog.map((b) => toItem(b, `/blog/${b.id}`));
 ---
 
 <!doctype html>
@@ -38,7 +45,9 @@ const boardData = projects.map((project) => {
             <div>
                 <InteractiveBoard
                     client:load
-                    projects={boardData}
+                    projects={projectItems}
+                    art={artItems}
+                    blog={blogItems}
                     siteTitle={SITE_TITLE}
                 />
             </div>
