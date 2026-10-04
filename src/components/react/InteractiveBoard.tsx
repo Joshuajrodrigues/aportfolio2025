@@ -20,6 +20,11 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
     const [isMobile, setIsMobile] = useState(false);
     const isDragging = useRef(false);
 
+    // Random jitter per card, generated once so resizes don't re-roll it
+    const jitter = useRef<{ x: number; y: number; r: number }[]>([]);
+    // True briefly after a resize so cards move together instead of staggering
+    const isResizing = useRef(false);
+
     // Follower spring
     const springConfig = { damping: 28, stiffness: 350, mass: 0.5 };
     const cursorX = useSpring(-100, springConfig);
@@ -28,6 +33,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
     // Detect mobile viewport and default to grid mode
     useLayoutEffect(() => {
         if (window.innerWidth < 768) {
+            setIsMobile(true);
             setMode("grid");
         }
     }, []);
@@ -52,20 +58,26 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, [cursorX, cursorY]);
 
-    useEffect(() => {
+    const computePositions = () => {
         const maxCardDim = 250;
         const padding = 20;
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        const newPositions = projects.map((_, index) => {
+        return projects.map((_, index) => {
             const slot = ARC_SLOTS[index % ARC_SLOTS.length];
-            const jitterX = Math.random() * 40 - 20;
-            const jitterY = Math.random() * 40 - 20;
-            const jitterRotate = Math.random() * 10 - 5;
 
-            let x = viewportWidth * slot.xPct - maxCardDim / 2 + jitterX;
-            let y = viewportHeight * slot.yPct - maxCardDim / 2 + jitterY;
+            if (!jitter.current[index]) {
+                jitter.current[index] = {
+                    x: Math.random() * 40 - 20,
+                    y: Math.random() * 40 - 20,
+                    r: Math.random() * 10 - 5,
+                };
+            }
+            const j = jitter.current[index];
+
+            let x = viewportWidth * slot.xPct - maxCardDim / 2 + j.x;
+            let y = viewportHeight * slot.yPct - maxCardDim / 2 + j.y;
 
             const maxX = viewportWidth - maxCardDim - padding;
             const maxY = viewportHeight - maxCardDim - padding;
@@ -73,12 +85,40 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
             return {
                 x: Math.max(padding, Math.min(x, maxX)),
                 y: Math.max(padding, Math.min(y, maxY)),
-                rotate: slot.rotate + jitterRotate,
+                rotate: slot.rotate + j.r,
             };
         });
+    };
 
-        setPositions(newPositions);
+    // Positions + debounced re-position on resize
+    useEffect(() => {
+        setPositions(computePositions());
 
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        let resetTimer: ReturnType<typeof setTimeout> | undefined;
+
+        const onResize = () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                isResizing.current = true;
+                setPositions(computePositions());
+                clearTimeout(resetTimer);
+                resetTimer = setTimeout(() => {
+                    isResizing.current = false;
+                }, 600);
+            }, 200);
+        };
+
+        window.addEventListener("resize", onResize);
+        return () => {
+            clearTimeout(timer);
+            clearTimeout(resetTimer);
+            window.removeEventListener("resize", onResize);
+        };
+    }, [projects]);
+
+    // Image preloading
+    useEffect(() => {
         const imagePromises = projects
             .filter((p) => p.src)
             .map((p) => {
@@ -173,7 +213,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                 </AnimatePresence>
             </motion.div>
 
-            {/* Gliding Intro Text Header */}
+            {/* Gliding Intro Text Header (glide is desktop only; instant on mobile) */}
             <motion.div
                 layout
                 initial={false}
@@ -199,7 +239,11 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                               y: "0%",
                           }
                 }
-                transition={{ type: "spring", stiffness: 120, damping: 18 }}
+                transition={
+                    isMobile
+                        ? { duration: 0 }
+                        : { type: "spring", stiffness: 120, damping: 18 }
+                }
                 style={{
                     position: "absolute",
                     textAlign: mode === "canvas" ? "center" : "left",
@@ -220,7 +264,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                                 : "2.4rem",
                         margin: 0,
                         lineHeight: mode === "grid" && isMobile ? 1.15 : undefined,
-                        transition: "font-size 0.3s ease",
+                        transition: isMobile ? "none" : "font-size 0.3s ease",
                         textShadow:
                             "2px 2px 0 #fff, -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff",
                     }}
@@ -298,7 +342,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
                                     type: "spring",
                                     stiffness: 120,
                                     damping: 14,
-                                    delay: index * 0.08,
+                                    delay: isResizing.current ? 0 : index * 0.08,
                                 }}
                                 whileHover={{ scale: 1.05, zIndex: 50 }}
                                 whileTap={{ scale: 0.95 }}
