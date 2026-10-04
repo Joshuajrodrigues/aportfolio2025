@@ -2,9 +2,9 @@
 import type { CollectionEntry } from "astro:content";
 import type { MarkdownHeading } from "astro";
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
+
 import Footer from "../components/Footer.astro";
-import { Image } from "astro:assets";
+
 export const prerender = true;
 type Props = CollectionEntry<"project">["data"] & {
     headings?: MarkdownHeading[];
@@ -45,32 +45,43 @@ console.log("navLabels", navLabels);
         <BaseHead title={title} description={description} image={heroSrc} />
     </head>
 
-    <body>
+    <body class="site-container">
         <header class="work-header">
             <span class="work-header-crumb">
                 {type} / {title}
             </span>
-            <a href="/work" class="back-link" data-back>
-                Back
-                <span class="icon-placeholder" aria-hidden="true"></span>
+            <a href="/" class="back-link" data-back>
+                <span>Back</span>
+                <img
+                    src="/site-icons/back2.svg"
+                    alt=""
+                    class="back-icon"
+                    width="20"
+                    height="20"
+                    aria-hidden="true"
+                />
             </a>
         </header>
         <main>
             <article>
                 <section class="project-title--container">
-                    <h3>{title}</h3>
-                    <h1>{tagline}</h1>
-                    <h2>{description}</h2>
-                    <div class="tag-container mt-15 bold">
-                        {tags?.map((tag: string, i: number) => (
-                            <>
-                                <span>{tag}</span>
-                                {i < tags.length - 1 && (
-                                    <span class="dot ml-15 mr-15">•</span>
-                                )}
-                            </>
-                        ))}
-                    </div>
+                    <span class="project-eyebrow">{title}</span>
+                    <h1 class="project-headline">{tagline}</h1>
+                    <p class="project-description">{description}</p>
+                    {tags && tags.length > 0 && (
+                        <div class="tag-container">
+                            {tags.map((tag: string, i: number) => (
+                                <>
+                                    <span>{tag}</span>
+                                    {i < tags.length - 1 && (
+                                        <span class="dot" aria-hidden="true">
+                                            •
+                                        </span>
+                                    )}
+                                </>
+                            ))}
+                        </div>
+                    )}
                 </section>
 
                 <div class="hero-bleed">
@@ -226,52 +237,92 @@ console.log("navLabels", navLabels);
     main {
         padding: 1em;
     }
-    /* ---------- Work header ---------- */
     .work-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px clamp(15px, 4vw, 28px);
-
-        border-bottom: 2px dashed gray;
-
-        font-size: clamp(24px, 2vw, 1.1rem);
+        /* Aligns horizontal padding directly with .project-title--container */
+        padding: 16px 32px;
+        border-bottom: 2px dashed rgba(0, 0, 0, 0.2);
+        font-size: clamp(0.95rem, 1.8vw, 1.1rem);
     }
+
     .back-link {
         display: inline-flex;
         align-items: center;
         gap: 8px;
         color: inherit;
         text-decoration: none;
+        line-height: 1;
     }
-    .icon-placeholder {
-        width: 24px;
-        height: 24px;
+
+    .back-icon {
+        width: 20px;
+        height: 20px;
         display: inline-block;
     }
 
-    /* ---------- Title block ---------- */
+    /* ---------- Title block & spacing ---------- */
+    .project-title--container {
+        text-align: left;
+        /* Clean margin structure aligned to layout gutters */
+        margin: clamp(36px, 6vw, 64px) clamp(15px, 8vw, 70px)
+            clamp(28px, 4vw, 44px);
+        display: flex;
+        flex-direction: column;
+    }
 
     .project-eyebrow {
-        margin: 0 0 clamp(20px, 4vw, 36px);
-        font-family: var(--font-pixel, monospace);
-        font-size: clamp(1rem, 2.5vw, 1.4rem);
+        font-size: clamp(calc((32 / 16) * 1rem), 2vw, 1.25rem);
+        color: #1e1e1e;
+        font-weight: 500;
+        margin-bottom: clamp(12px, 2vw, 18px);
     }
+
     .project-headline {
-        font-family: var(--font-pixel-bold, var(--font-pixel, monospace));
-        font-size: clamp(2rem, 6vw, 4rem);
-        font-weight: normal;
-        line-height: 1.05;
-        margin: 0 0 clamp(16px, 3vw, 28px);
+        font-size: clamp(1.5rem, 7vw, 3.75rem);
+        font-weight: bold;
+        overflow-wrap: normal;
+        word-break: normal;
+        hyphens: manual;
+        /* Increased line-height so pixel ascenders and descenders do not touch */
+        line-height: 1.15;
+        color: #1e1e1e;
+        margin: 0 0 clamp(16px, 2.5vw, 24px) 0;
     }
+
+    .project-description {
+        font-family: "Source Code Pro", monospace;
+        font-size: clamp(1rem, 2vw, 1.35rem);
+        font-weight: normal;
+
+        line-height: 1.55;
+        color: #33272a;
+
+        margin: 0 0 clamp(18px, 3vw, 28px) 0;
+    }
+
     .tag-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: flex-start;
         align-items: center;
-        row-gap: 8px;
-        font-size: clamp(0.8rem, 2vw, 1rem);
+        gap: 12px 10px;
+        font-size: clamp(0.85rem, 1.6vw, 1rem);
+        font-weight: 600;
+        color: #594a4e;
         padding: 0;
+        margin: 0;
+    }
+
+    .dot {
+        opacity: 0.5;
+        user-select: none;
+    }
+
+    @media (max-width: 480px) {
+        .project-title--container {
+            margin: 24px 15px 32px;
+        }
     }
     /* ---------- Sticky section nav ---------- */
     .section-nav {
@@ -333,6 +384,7 @@ console.log("navLabels", navLabels);
     }
     .section-nav-label {
         display: inline-block;
+        font-family: "Source Code Pro", monospace;
     }
 
     /* ---------- Mobile: collapsing "now reading" pills ---------- */
@@ -435,9 +487,7 @@ console.log("navLabels", navLabels);
         margin: clamp(32px, 8vw, 60px) clamp(15px, 6vw, 0px)
             clamp(24px, 6vw, 60px);
         h1 {
-            font-size: clamp(64px, 6vw, 52px);
             font-weight: bold;
-            line-height: 1.1;
         }
         h3 {
             font-size: clamp(32px, 3vw, 28px);

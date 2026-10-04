@@ -8,7 +8,8 @@ const ARC_SLOTS = [
     { xPct: 0.50, yPct: 0.10, rotate: -4 },
     { xPct: 0.74, yPct: 0.16, rotate: 8 },
     { xPct: 0.82, yPct: 0.42, rotate: -8 },
-    { xPct: 0.72, yPct: 0.70, rotate: 12 },
+    { xPct: 0.80, yPct: 0.75, rotate: 12 },
+    { xPct: 0.18, yPct: 0.70, rotate: 12 },
 ];
 
 export default function InteractiveBoard({ projects, siteTitle }: { projects: any[]; siteTitle: string }) {

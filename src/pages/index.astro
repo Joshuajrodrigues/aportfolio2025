@@ -35,11 +35,13 @@ const boardData = projects.map((project) => {
     <body>
         <Header />
         <main id="board">
-            <InteractiveBoard
-                client:load
-                projects={boardData}
-                siteTitle={SITE_TITLE}
-            />
+            <div>
+                <InteractiveBoard
+                    client:load
+                    projects={boardData}
+                    siteTitle={SITE_TITLE}
+                />
+            </div>
         </main>
         <Footer />
     </body>
