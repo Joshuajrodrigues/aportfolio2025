@@ -29,8 +29,8 @@ const { headerColor } = Astro.props;
         </div>
         <div class="mobile-header menu">
             <Resume />
-            <SayHi id="mobilemodal"> Say Hi </SayHi>
-            <MenuButton />
+            <!-- <SayHi id="mobilemodal"> Say Hi </SayHi>
+            <MenuButton /> -->
         </div>
     </nav>
     <div id="toast-holder"></div>
@@ -169,6 +169,9 @@ const { headerColor } = Astro.props;
     @media (max-width: 720px) {
         .desktop-header {
             display: none;
+        }
+        nav {
+            height: 50px;
         }
         .mobile-header {
             display: flex;

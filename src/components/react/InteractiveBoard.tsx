@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { motion, AnimatePresence, useSpring } from "framer-motion";
 import { navigate } from "astro:transitions/client";
 
@@ -26,7 +26,7 @@ export default function InteractiveBoard({ projects, siteTitle }: { projects: an
     const cursorY = useSpring(-100, springConfig);
 
     // Detect mobile viewport and default to grid mode
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (window.innerWidth < 768) {
             setMode("grid");
         }

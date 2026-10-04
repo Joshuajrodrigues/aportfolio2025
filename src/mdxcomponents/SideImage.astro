@@ -3,6 +3,9 @@
 import { Image } from "astro:assets";
 import Band from "./Band.astro";
 const { image, alt = "", bg = "grey", reverse = false } = Astro.props;
+
+const src =
+    typeof image === "object" && image !== null ? image.src : image || "";
 ---
 
 <Band bg={bg}>
@@ -10,10 +13,10 @@ const { image, alt = "", bg = "grey", reverse = false } = Astro.props;
         <div class="text">
             <slot />
         </div>
-        <Image
-            src={image}
+        <img
+            src={src}
             alt={alt}
-            widths={[400, 800]}
+
             sizes="(max-width: 780px) 100vw, 40vw"
         />
     </div>
