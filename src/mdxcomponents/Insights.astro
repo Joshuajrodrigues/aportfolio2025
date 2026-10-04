@@ -1,0 +1,15 @@
+---
+// src/mdxcomponents/Insights.astro
+---
+
+<div class="insights">
+    <slot />
+</div>
+<style>
+    .insights {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin: 24px 0;
+    }
+</style>

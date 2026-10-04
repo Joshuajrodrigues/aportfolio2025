@@ -1,0 +1,41 @@
+---
+// src/mdxcomponents/Band.astro
+const { bg = "green", icon } = Astro.props;
+const colors = { green: "#e9efe3", grey: "#f5f5f5", white: "#ffffff" };
+const style =
+    `--bg:${colors[bg] ?? bg};` +
+    (icon ? `--icon:url(${icon});--icon-size:32px;` : "");
+---
+
+<section class="band" style={style}>
+    <div class="inner">
+        <slot />
+    </div>
+</section>
+
+<style>
+    .band {
+        width: 100vw;
+        margin-left: calc(50% - 50vw); /* same trick as .hero-bleed */
+        background: var(--bg);
+        padding: clamp(24px, 5vw, 48px) 0;
+    }
+    .inner {
+        padding-inline: clamp(15px, 8vw, 70px);
+    }
+    .band :global(h1) {
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .band :global(h1)::before {
+        content: "";
+        width: var(--icon-size, 0);
+        height: var(--icon-size, 0);
+        background: var(--icon) center / contain no-repeat;
+    }
+    .band :global(p:last-child) {
+        margin-bottom: 0;
+    }
+</style>

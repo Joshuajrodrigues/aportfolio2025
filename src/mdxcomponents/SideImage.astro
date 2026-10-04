@@ -1,0 +1,44 @@
+---
+// src/mdxcomponents/SideImage.astro
+import { Image } from "astro:assets";
+import Band from "./Band.astro";
+const { image, alt = "", bg = "grey", reverse = false } = Astro.props;
+---
+
+<Band bg={bg}>
+    <div class:list={["grid", { reverse }]}>
+        <div class="text">
+            <slot />
+        </div>
+        <Image
+            src={image}
+            alt={alt}
+            widths={[400, 800]}
+            sizes="(max-width: 780px) 100vw, 40vw"
+        />
+    </div>
+</Band>
+
+<style>
+    .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        align-items: center;
+    }
+    .reverse .text {
+        order: 2;
+    }
+    img {
+        width: 100%;
+        height: auto;
+    }
+    @media (max-width: 780px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+        .reverse .text {
+            order: 0;
+        }
+    }
+</style>

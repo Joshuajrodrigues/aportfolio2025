@@ -1,0 +1,28 @@
+---
+// src/mdxcomponents/Insight.astro
+const { icon } = Astro.props;
+---
+
+<div class="card">
+    {icon && (
+        <img src={icon} alt="" aria-hidden="true" width="40" height="40" />
+    )}
+    <div>
+        <slot />
+    </div>
+</div>
+<style>
+    .card {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        padding: 14px 16px;
+        border: 1px solid #111;
+        background: linear-gradient(120deg, #fff 30%, #e9efe3 60%, #cfe0ee);
+    }
+    .card :global(p) {
+        margin: 0;
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+</style>

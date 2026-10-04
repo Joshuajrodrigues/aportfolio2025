@@ -1,0 +1,46 @@
+---
+// src/mdxcomponents/Quote.astro
+import Band from "./Band.astro";
+const {
+    author = "Interview participant",
+    icon = "/site-icons/quote-icon.svg",
+} = Astro.props;
+---
+
+<Band bg="green">
+    <figure>
+        <img src={icon} alt="" aria-hidden="true" width="32" height="32" />
+        <blockquote>
+            <slot />
+        </blockquote>
+        <figcaption>- {author}</figcaption>
+    </figure>
+</Band>
+
+<style>
+    figure {
+        margin: 0;
+        text-align: center;
+    }
+    img {
+        display: block;
+        margin: 0 auto 12px;
+    }
+    blockquote {
+        margin: 0 auto;
+
+        border: 0;
+        padding: 0;
+    }
+    blockquote :global(p) {
+        font-family: "Pixeloid Sans", sans-serif !important;
+        font-size: clamp(20px, 14px + 1.9vw, 38px) !important;
+
+        line-height: 40px !important;
+        margin: 0;
+    }
+    figcaption {
+        margin-top: 20px;
+        font-size: 1rem;
+    }
+</style>
