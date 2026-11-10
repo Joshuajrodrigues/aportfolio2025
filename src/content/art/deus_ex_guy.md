@@ -1,6 +1,6 @@
 ---
 title: "Deus Ex Sorta Guy"
-type: "art"
+type: "hide"
 src: "/src/content/allImages/art/deus_ex_guy.webp"
 colors: ["#e8e8e8ff"]
 ---

@@ -1,0 +1,79 @@
+---
+title: "Boomodoro"
+description: "Reinviting rest into the center of the workday."
+pubDate: "Oct 24 2026"
+featured: true
+heroImage: "/src/content/allImages/project/boomodorohero.webp"
+heroHelpText: " "
+src: "/src/content/allImages/project/boomodorothumbnail.webp"
+type: "project"
+contentBlocks: []
+caraousel: []
+tags: ["Graphic Design", "Project Planning"]
+colors: ["#EBF1E5"]
+---
+
+import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
+import suddenImage from '../allImages/project/solarpagecover.webp';
+import SimplePictureCard from '../../components/SimplePictureCard.astro'
+import CenteredImage from '../../mdxcomponents/CenterImage.astro'
+import Carousel from '../../mdxcomponents/svelte/Carousel.jsx'
+import car1 from '../allImages/project/solargamsung_carousel/solarpage0_1.webp'
+import car2 from '../allImages/project/solargamsung_carousel/solarpage2_3.webp'
+import car3 from '../allImages/project/solargamsung_carousel/solarpage4_5.webp'
+import car4 from '../allImages/project/solargamsung_carousel/solarpage2.webp'
+import car5 from '../allImages/project/solargamsung_carousel/solarpage8_9.webp'
+import car6 from '../allImages/project/solargamsung_carousel/solarpage10_11.webp'
+import car7 from '../allImages/project/solargamsung_carousel/solarpage12_13.webp'
+import car8 from '../allImages/project/solarpagecover.webp'
+
+
+
+
+<p slot="para1" >
+
+# A timer that can focus on rest
+The modern workday has often rewarded people’s ability to stay focused and enduring physical or mental discomfort to achieve just one more task. Desk-work is rarely predictable and often works through waves and rhythms. These changes are rarely accounted for in time-management timers that are often relied upon by people wanting more structure. The existing timers focus on fixed work cycles, streaks, gamified scores and reminders as ways to improve the work experience. People now, more than ever want to focus on their rest and restorative activities as much as they do on their work and chores. Fatigue, posture issues, lack of focus, pain and minimal attention to hydration and food has affected people more than ever. Extended period of sitting at a desk, engrossed in a task can feel necessary when the task list grows, but rest and rhythm are what truly helps in the sustainability of a persons work. The gap between existing timers and a need for prioritizing rest led to Boomodoro.
+</p>
+
+
+{/*
+ you can use this instead of img, same way as image, hide type will hide the type, if you want to add headting pass it this way and comment
+ the other code by hightlighting it and using ctrl+k+c
+<SimplePictureCard title={"Tshirt"} tags={["Boo"]}  art={true} slot="image" src={suddenImage.src} alt="Image alt" />
+ */}
+ 
+<HalfWidthPara>
+</HalfWidthPara>
+
+# A timer that can focus on rest
+The modern workday has often rewarded people’s ability to stay focused and enduring physical or mental discomfort to achieve just one more task. Desk-work is rarely predictable and often works through waves and rhythms. These changes are rarely accounted for in time-management timers that are often relied upon by people wanting more structure. The existing timers focus on fixed work cycles, streaks, gamified scores and reminders as ways to improve the work experience. People now, more than ever want to focus on their rest and restorative activities as much as they do on their work and chores.
+
+Fatigue, posture issues, lack of focus, pain and minimal attention to hydration and food has affected people more than ever. Extended period of sitting at a desk, engrossed in a task can feel necessary when the task list grows, but rest and rhythm are what truly helps in the sustainability of a persons work. The gap between existing timers and a need for prioritizing rest led to Boomodoro.
+
+
+# Why this project ?
+Time-management and productivity tools are widely used but most are geared toward a certain style of work that has increasingly disenchanted me and many of my fellow desk-workers. Through that personal note, I became interested in this topic and found that there was a larger opportunity to support those wanting to prioritize rest over endurance, rhythm over intensity.
+
+
+# The Hiccup
+How can we help people create a more sustainable work-rest transition without turning rest into another productivity task?
+
+
+# The Research
+Through Diary Studies and Interviews, the following insights emerged.
+
+- Work completion appears to act as a psychological boundary for breaks
+
+- Physical discomfort can become the mechanism that prompts movement
+
+- Break opportunities are sometimes fit within the workflow
+
+- Guilt about not meeting rigid restorative goals can add to work overwhelm as well
+
+
+# The Research
+People should be able to actively include rest into their workday without making it just another task to keep track of. Introducing rhythm, flexibility and taking away the guilt in taking a break (or not taking it the ‘right way’) can help desk-workers work sustainably.
+
+
+<Carousel images={[car8,car1,car2,car3,car4,car5,car6,car7,'https://data.akankshagajankar.com/vid.MP4']} theme={"#8AB5E7"} client:only="react" />
