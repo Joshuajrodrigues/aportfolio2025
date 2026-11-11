@@ -9,23 +9,26 @@ src: "/src/content/allImages/project/boomodorothumbnail.webp"
 type: "project"
 contentBlocks: []
 caraousel: []
-tags: ["Graphic Design", "Project Planning"]
+tags: ["Product Design", "Project Planning"]
 colors: ["#EBF1E5"]
 ---
 
 import HalfWidthPara from "../../mdxcomponents/HalfWidthPara.astro";
-import suddenImage from '../allImages/project/solarpagecover.webp';
+
 import SimplePictureCard from '../../components/SimplePictureCard.astro'
 import CenteredImage from '../../mdxcomponents/CenterImage.astro'
+
+import suddenImage from '../allImages/project/boomodoro_anatomy.webp';
+import suddenImage2 from '../allImages/project/boomodoro_list.webp';
+
+
 import Carousel from '../../mdxcomponents/svelte/Carousel.jsx'
-import car1 from '../allImages/project/solargamsung_carousel/solarpage0_1.webp'
-import car2 from '../allImages/project/solargamsung_carousel/solarpage2_3.webp'
-import car3 from '../allImages/project/solargamsung_carousel/solarpage4_5.webp'
-import car4 from '../allImages/project/solargamsung_carousel/solarpage2.webp'
-import car5 from '../allImages/project/solargamsung_carousel/solarpage8_9.webp'
-import car6 from '../allImages/project/solargamsung_carousel/solarpage10_11.webp'
-import car7 from '../allImages/project/solargamsung_carousel/solarpage12_13.webp'
-import car8 from '../allImages/project/solarpagecover.webp'
+import car1 from '../allImages/project/boomodorocarousel/boomo1.webp'
+import car2 from '../allImages/project/boomodorocarousel/boomo2.webp'
+import car3 from '../allImages/project/boomodorocarousel/boomo3.webp'
+import car4 from '../allImages/project/boomodorocarousel/boomo4.webp'
+import car5 from '../allImages/project/boomodorocarousel/boomo5.webp'
+
 
 
 
@@ -72,8 +75,12 @@ Through Diary Studies and Interviews, the following insights emerged.
 - Guilt about not meeting rigid restorative goals can add to work overwhelm as well
 
 
+
 # The Research
 People should be able to actively include rest into their workday without making it just another task to keep track of. Introducing rhythm, flexibility and taking away the guilt in taking a break (or not taking it the ‘right way’) can help desk-workers work sustainably.
 
+<CenteredImage imageUrl={suddenImage} /> 
+<CenteredImage imageUrl={suddenImage2} />
 
-<Carousel images={[car8,car1,car2,car3,car4,car5,car6,car7,'https://data.akankshagajankar.com/vid.MP4']} theme={"#8AB5E7"} client:only="react" />
+
+<Carousel images={[car1,car2,car3,car4,car5]} theme={"#b5cae1"} client:only="react" />
